@@ -63,6 +63,7 @@ h2:first-child{margin-top:2px}
 .hero .big{font-size:56px;font-weight:bold;line-height:1}
 .hero .lbl{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:13px;letter-spacing:1px;text-transform:uppercase;opacity:.85;margin-top:6px}
 .hero .when{font-size:15px;margin-top:8px;opacity:.95}
+.hero .abtn{background:rgba(255,255,255,.16);color:var(--accent-ink);border:1px solid rgba(255,255,255,.3);margin-top:12px}
 .daterow{display:flex;align-items:center;gap:12px}
 .daterow .chip{
   flex:0 0 62px;text-align:center;background:var(--gold);color:var(--gold-ink);
@@ -179,7 +180,6 @@ body.dark nav button.on{color:#8fb0ee}
 .set-row{display:flex;align-items:center;justify-content:space-between;padding:13px 2px;border-bottom:1px solid var(--line);font-size:16px;gap:10px}
 .set-row:last-child{border-bottom:none}
 .set-row .sub{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;color:var(--muted);margin-top:2px}
-.footer-sig{text-align:center;color:var(--muted);font-size:13px;margin:26px 0 6px;font-style:italic}
 .tour-bg{position:fixed;inset:0;background:rgba(15,18,28,.55);display:none;z-index:80;align-items:flex-end;justify-content:center}
 .tour-bg.show{display:flex}
 .tour{
@@ -212,7 +212,7 @@ body.dark nav button.on{color:#8fb0ee}
   </div>
   <div class="h-right">
     <button class="iconbtn" id="themeBtn" aria-label="Toggle theme">◐</button>
-    <span class="badge" id="verBadge">v1.2</span>
+    <span class="badge" id="verBadge">v1.3</span>
   </div>
 </header>
 
@@ -229,6 +229,7 @@ body.dark nav button.on{color:#8fb0ee}
       <div class="big" id="heroDays">–</div>
       <div class="lbl" id="heroLbl">days until Election Day</div>
       <div class="when" id="heroWhen"></div>
+      <button class="abtn" id="shareCountBtn">↗ Share the countdown</button>
     </div>
     <h2>Key dates · Nov 2026 General</h2>
     <div id="dateList"></div>
@@ -278,6 +279,14 @@ body.dark nav button.on{color:#8fb0ee}
       <div class="m-counts" id="mCounts"></div>
       <div class="rep-actions"><button class="abtn" id="shareMonthBtn">↗ Share my month</button></div>
     </div>
+    <div class="card">
+      <div class="rep-head"><div class="grow">
+        <div class="rep-name" id="yTitle"></div>
+        <div class="rep-office"><span id="yTotal">0</span> actions so far this year</div>
+      </div></div>
+      <div class="rep-notes" id="yCounts" style="margin-top:10px"></div>
+      <div class="rep-actions"><button class="abtn ghost" id="shareYearBtn">↗ Share my year</button></div>
+    </div>
     <h2>Tap to log an action</h2>
     <div class="loggrid" id="logGrid"></div>
     <button class="addbtn" id="addTypeBtn">＋ New action type</button>
@@ -306,6 +315,12 @@ body.dark nav button.on{color:#8fb0ee}
         <button class="abtn ghost" id="resetRepsBtn">Reset</button>
       </div>
     </div>
+    <h2>Share this app</h2>
+    <div class="card">
+      <svg viewBox="0 0 41 41" width="200" height="200" style="display:block;margin:0 auto;background:#fff;border-radius:8px" shape-rendering="crispEdges"><rect width="41" height="41" fill="#fff"/><path d="M4 4h7v1h-7zM13 4h1v1h-1zM15 4h1v1h-1zM17 4h1v1h-1zM21 4h4v1h-4zM27 4h1v1h-1zM30 4h7v1h-7zM4 5h1v1h-1zM10 5h1v1h-1zM14 5h2v1h-2zM17 5h5v1h-5zM24 5h1v1h-1zM26 5h1v1h-1zM30 5h1v1h-1zM36 5h1v1h-1zM4 6h1v1h-1zM6 6h3v1h-3zM10 6h1v1h-1zM12 6h6v1h-6zM20 6h5v1h-5zM30 6h1v1h-1zM32 6h3v1h-3zM36 6h1v1h-1zM4 7h1v1h-1zM6 7h3v1h-3zM10 7h1v1h-1zM12 7h1v1h-1zM15 7h2v1h-2zM18 7h1v1h-1zM20 7h1v1h-1zM24 7h3v1h-3zM28 7h1v1h-1zM30 7h1v1h-1zM32 7h3v1h-3zM36 7h1v1h-1zM4 8h1v1h-1zM6 8h3v1h-3zM10 8h1v1h-1zM12 8h3v1h-3zM16 8h2v1h-2zM19 8h1v1h-1zM21 8h2v1h-2zM25 8h1v1h-1zM28 8h1v1h-1zM30 8h1v1h-1zM32 8h3v1h-3zM36 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM12 9h1v1h-1zM17 9h4v1h-4zM22 9h1v1h-1zM24 9h1v1h-1zM30 9h1v1h-1zM36 9h1v1h-1zM4 10h7v1h-7zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h1v1h-1zM28 10h1v1h-1zM30 10h7v1h-7zM12 11h1v1h-1zM14 11h1v1h-1zM18 11h2v1h-2zM25 11h3v1h-3zM4 12h1v1h-1zM6 12h5v1h-5zM15 12h5v1h-5zM21 12h1v1h-1zM26 12h2v1h-2zM30 12h5v1h-5zM6 13h3v1h-3zM11 13h1v1h-1zM13 13h1v1h-1zM20 13h1v1h-1zM23 13h3v1h-3zM27 13h1v1h-1zM30 13h2v1h-2zM33 13h2v1h-2zM36 13h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM14 14h1v1h-1zM16 14h1v1h-1zM19 14h2v1h-2zM22 14h1v1h-1zM25 14h1v1h-1zM28 14h3v1h-3zM32 14h1v1h-1zM34 14h2v1h-2zM4 15h2v1h-2zM9 15h1v1h-1zM11 15h1v1h-1zM16 15h1v1h-1zM18 15h2v1h-2zM23 15h7v1h-7zM32 15h3v1h-3zM36 15h1v1h-1zM5 16h1v1h-1zM7 16h1v1h-1zM9 16h2v1h-2zM13 16h2v1h-2zM22 16h2v1h-2zM25 16h1v1h-1zM28 16h2v1h-2zM31 16h3v1h-3zM35 16h1v1h-1zM5 17h2v1h-2zM9 17h1v1h-1zM11 17h2v1h-2zM15 17h2v1h-2zM18 17h3v1h-3zM24 17h1v1h-1zM26 17h5v1h-5zM35 17h2v1h-2zM4 18h2v1h-2zM9 18h2v1h-2zM15 18h1v1h-1zM23 18h1v1h-1zM25 18h1v1h-1zM29 18h2v1h-2zM32 18h4v1h-4zM4 19h1v1h-1zM13 19h3v1h-3zM18 19h1v1h-1zM20 19h1v1h-1zM22 19h4v1h-4zM27 19h4v1h-4zM32 19h3v1h-3zM4 20h1v1h-1zM7 20h2v1h-2zM10 20h3v1h-3zM14 20h1v1h-1zM16 20h3v1h-3zM21 20h1v1h-1zM23 20h1v1h-1zM26 20h1v1h-1zM28 20h2v1h-2zM31 20h2v1h-2zM36 20h1v1h-1zM5 21h1v1h-1zM7 21h3v1h-3zM14 21h3v1h-3zM18 21h1v1h-1zM20 21h4v1h-4zM27 21h1v1h-1zM30 21h2v1h-2zM33 21h4v1h-4zM4 22h1v1h-1zM7 22h1v1h-1zM9 22h2v1h-2zM12 22h3v1h-3zM17 22h3v1h-3zM21 22h1v1h-1zM26 22h1v1h-1zM28 22h1v1h-1zM31 22h2v1h-2zM34 22h2v1h-2zM6 23h1v1h-1zM8 23h1v1h-1zM11 23h1v1h-1zM17 23h1v1h-1zM20 23h5v1h-5zM31 23h5v1h-5zM5 24h2v1h-2zM10 24h4v1h-4zM20 24h1v1h-1zM23 24h4v1h-4zM29 24h1v1h-1zM31 24h3v1h-3zM36 24h1v1h-1zM4 25h2v1h-2zM8 25h2v1h-2zM11 25h1v1h-1zM13 25h4v1h-4zM19 25h1v1h-1zM21 25h2v1h-2zM25 25h1v1h-1zM27 25h1v1h-1zM30 25h1v1h-1zM34 25h1v1h-1zM36 25h1v1h-1zM4 26h1v1h-1zM9 26h3v1h-3zM16 26h1v1h-1zM19 26h2v1h-2zM22 26h1v1h-1zM24 26h2v1h-2zM29 26h2v1h-2zM32 26h2v1h-2zM35 26h1v1h-1zM4 27h1v1h-1zM7 27h3v1h-3zM13 27h5v1h-5zM19 27h1v1h-1zM22 27h1v1h-1zM25 27h5v1h-5zM31 27h1v1h-1zM34 27h1v1h-1zM4 28h1v1h-1zM6 28h3v1h-3zM10 28h2v1h-2zM13 28h1v1h-1zM16 28h2v1h-2zM19 28h1v1h-1zM21 28h1v1h-1zM26 28h1v1h-1zM28 28h5v1h-5zM35 28h2v1h-2zM12 29h1v1h-1zM15 29h4v1h-4zM23 29h3v1h-3zM27 29h2v1h-2zM32 29h1v1h-1zM34 29h1v1h-1zM36 29h1v1h-1zM4 30h7v1h-7zM13 30h2v1h-2zM18 30h2v1h-2zM22 30h1v1h-1zM24 30h2v1h-2zM27 30h2v1h-2zM30 30h1v1h-1zM32 30h1v1h-1zM34 30h2v1h-2zM4 31h1v1h-1zM10 31h1v1h-1zM12 31h1v1h-1zM14 31h5v1h-5zM25 31h4v1h-4zM32 31h5v1h-5zM4 32h1v1h-1zM6 32h3v1h-3zM10 32h1v1h-1zM12 32h2v1h-2zM15 32h1v1h-1zM17 32h3v1h-3zM22 32h1v1h-1zM25 32h1v1h-1zM28 32h6v1h-6zM4 33h1v1h-1zM6 33h3v1h-3zM10 33h1v1h-1zM12 33h2v1h-2zM16 33h1v1h-1zM19 33h2v1h-2zM24 33h1v1h-1zM26 33h2v1h-2zM29 33h1v1h-1zM32 33h2v1h-2zM36 33h1v1h-1zM4 34h1v1h-1zM6 34h3v1h-3zM10 34h1v1h-1zM12 34h1v1h-1zM14 34h1v1h-1zM16 34h1v1h-1zM23 34h1v1h-1zM26 34h2v1h-2zM30 34h2v1h-2zM33 34h2v1h-2zM4 35h1v1h-1zM10 35h1v1h-1zM13 35h2v1h-2zM17 35h1v1h-1zM20 35h1v1h-1zM23 35h3v1h-3zM27 35h1v1h-1zM32 35h3v1h-3zM4 36h7v1h-7zM12 36h3v1h-3zM17 36h1v1h-1zM21 36h1v1h-1zM23 36h1v1h-1zM26 36h4v1h-4zM31 36h1v1h-1zM35 36h1v1h-1z" fill="#20242e"/></svg>
+      <div class="verify" style="margin:12px 0 4px">Have a friend scan this with their camera,<br>or send them the link.</div>
+      <div class="rep-actions" style="justify-content:center"><button class="abtn mail" id="shareAppBtn">↗ Send the link</button></div>
+    </div>
     <h2>Backup</h2>
     <div class="card">
       <div class="set-row">
@@ -318,7 +333,6 @@ body.dark nav button.on{color:#8fb0ee}
         <input type="file" id="importFile" accept=".json,application/json" style="display:none">
       </div>
     </div>
-    <div class="footer-sig">Made for you by Mot ♥</div>
   </section>
 </main>
 
@@ -351,8 +365,8 @@ body.dark nav button.on{color:#8fb0ee}
 
 <script>
 'use strict';
-/* ============ Civic Compass · v1.2 · Jul 21 2026 ============ */
-var VERSION = 'v1.2 · Jul 21';
+/* ============ Civic Compass · v1.3 · Jul 21 2026 ============ */
+var VERSION = 'v1.3 · Jul 21';
 var DATA_VERIFIED = 'July 21, 2026';
 
 /* ---------- guarded storage ---------- */
@@ -550,6 +564,16 @@ function renderGreet(){
   $('greet').textContent = prefs.name ? ('Hi, ' + prefs.name + '!') : 'Civic Compass';
 }
 $('verBadge').onclick = function(){ toast('Civic Compass ' + VERSION); };
+var APP_URL = 'https://motbuchanan.github.io/civic-compass/';
+$('shareCountBtn').onclick = function(){
+  var d = daysUntil(ELECTION_DAY);
+  var txt;
+  if(d > 1) txt = d + ' days until Election Day (' + niceDate(ELECTION_DAY) + ') — are you registered? VoteOhio.gov';
+  else if(d === 1) txt = 'Tomorrow is Election Day — polls open 6:30 AM to 7:30 PM. Make a plan!';
+  else if(d === 0) txt = 'It\u2019s Election Day! Polls are open 6:30 AM to 7:30 PM. Go vote!';
+  else txt = 'Election Day has passed — check VoteOhio.gov for what\u2019s next.';
+  shareText(txt);
+};
 
 /* ---------- nav ---------- */
 var navBtns = document.querySelectorAll('nav button');
@@ -586,7 +610,7 @@ function renderDates(){
 
   var stale = daysUntil(ELECTION_DAY) < 0;
   $('verifyLine').innerHTML =
-    (stale ? '<b>This election has passed — ask Mot for a date refresh.</b><br>' : '') +
+    (stale ? '<b>This election has passed — check VoteOhio.gov for what\u2019s next.</b><br>' : '') +
     'Dates last verified ' + esc(DATA_VERIFIED) + '. Always confirm at ' +
     '<a href="https://www.voteohio.gov" target="_blank" rel="noopener">VoteOhio.gov</a>.';
 }
@@ -688,7 +712,8 @@ function renderEvents(){
     if(meta.length) html += '<div class="ev-meta">' + esc(meta.join(' · ')) + '</div>';
     html += '</div><button class="editpen" data-evedit="' + esc(ev.id) + '" aria-label="Edit">✎</button></div>';
     if(ev.notes) html += '<div class="ev-notes">' + esc(ev.notes) + '</div>';
-    html += '<div class="rep-actions"><button class="abtn ghost" data-evshare="' + esc(ev.id) + '">↗ Share</button></div>';
+    html += '<div class="rep-actions"><button class="abtn ghost" data-evshare="' + esc(ev.id) + '">↗ Share</button>' +
+      '<button class="abtn ghost" data-evcal="' + esc(ev.id) + '">📅 Add to calendar</button></div>';
     html += '</div>';
   });
   $('eventList').innerHTML = html;
@@ -704,6 +729,68 @@ function renderEvents(){
       shareText(txt);
     };
   });
+  document.querySelectorAll('[data-evcal]').forEach(function(b){
+    b.onclick = function(){
+      var ev = events.filter(function(e){ return e.id === b.getAttribute('data-evcal'); })[0];
+      if(!ev) return;
+      if(!ev.date){ toast('Give the event a date first'); return; }
+      downloadFile(icsFilename(ev), 'text/calendar', buildICS(ev));
+      toast('Open the downloaded file to add it to your calendar');
+    };
+  });
+}
+/* ---------- .ics calendar export ---------- */
+var WD_ICS = ['SU','MO','TU','WE','TH','FR','SA'];
+function pad2(n){ return n < 10 ? '0' + n : '' + n; }
+function icsEsc(s){
+  return String(s || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
+}
+function icsFilename(ev){
+  var slug = (ev.title || 'event').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
+  return (slug || 'event') + '.ics';
+}
+function buildICS(ev){
+  var occ = new Date(nextOccurrence(ev, new Date()));
+  var y = occ.getFullYear(), mo = pad2(occ.getMonth() + 1), da = pad2(occ.getDate());
+  var lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Civic Compass//EN', 'BEGIN:VEVENT'];
+  lines.push('UID:' + ev.id + '@civic-compass');
+  var now = new Date();
+  lines.push('DTSTAMP:' + now.getUTCFullYear() + pad2(now.getUTCMonth() + 1) + pad2(now.getUTCDate()) +
+    'T' + pad2(now.getUTCHours()) + pad2(now.getUTCMinutes()) + '00Z');
+  if(ev.time){
+    var hm = ev.time.split(':');
+    lines.push('DTSTART:' + y + mo + da + 'T' + pad2(+hm[0]) + pad2(+hm[1]) + '00');
+    var end = new Date(occ.getFullYear(), occ.getMonth(), occ.getDate(), +hm[0] + 1, +hm[1]);
+    lines.push('DTEND:' + end.getFullYear() + pad2(end.getMonth() + 1) + pad2(end.getDate()) +
+      'T' + pad2(end.getHours()) + pad2(end.getMinutes()) + '00');
+  } else {
+    lines.push('DTSTART;VALUE=DATE:' + y + mo + da);
+    var nd = new Date(occ.getFullYear(), occ.getMonth(), occ.getDate() + 1);
+    lines.push('DTEND;VALUE=DATE:' + nd.getFullYear() + pad2(nd.getMonth() + 1) + pad2(nd.getDate()));
+  }
+  var r = ev.repeat || 'none';
+  var base = midnight(ev.date);
+  var wd = WD_ICS[base.getDay()];
+  if(r === 'weekly') lines.push('RRULE:FREQ=WEEKLY');
+  else if(r === 'biweekly') lines.push('RRULE:FREQ=WEEKLY;INTERVAL=2');
+  else if(r === 'monthly-date') lines.push('RRULE:FREQ=MONTHLY;BYMONTHDAY=' + base.getDate());
+  else if(r === 'monthly-nth') lines.push('RRULE:FREQ=MONTHLY;BYDAY=' + Math.ceil(base.getDate() / 7) + wd);
+  else if(r === 'first-third') lines.push('RRULE:FREQ=MONTHLY;BYDAY=1' + wd + ',3' + wd);
+  lines.push('SUMMARY:' + icsEsc(ev.title));
+  if(ev.place) lines.push('LOCATION:' + icsEsc(ev.place));
+  if(ev.notes) lines.push('DESCRIPTION:' + icsEsc(ev.notes));
+  lines.push('END:VEVENT', 'END:VCALENDAR');
+  return lines.join('\r\n');
+}
+function downloadFile(name, mime, text){
+  try{
+    var blob = new Blob([text], {type:mime});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+  }catch(e){ toast('Download didn\u2019t work on this browser'); }
 }
 function shareText(txt){
   if(navigator.share){
@@ -730,9 +817,12 @@ function monthEntries(){
 function monthName(){
   return new Date().toLocaleDateString('en-US',{month:'long',year:'numeric'});
 }
-function monthSummaryText(){
-  var ents = monthEntries();
-  if(!ents.length) return 'My ' + monthName() + ' civic actions: just getting started!';
+function yearEntries(){
+  var y = new Date().getFullYear();
+  return log.filter(function(en){ return new Date(en.ts).getFullYear() === y; });
+}
+function tallyText(ents, label){
+  if(!ents.length) return 'My ' + label + ' civic actions: just getting started!';
   var counts = {};
   ents.forEach(function(en){
     var key = en.l || en.k;
@@ -741,8 +831,9 @@ function monthSummaryText(){
   });
   var bits = [];
   for(var key in counts){ bits.push((counts[key].e ? counts[key].e + ' ' : '') + counts[key].n + ' ' + key.toLowerCase()); }
-  return 'My ' + monthName() + ' civic actions: ' + bits.join(' · ') + ' — ' + ents.length + ' total';
+  return 'My ' + label + ' civic actions: ' + bits.join(' · ') + ' — ' + ents.length + ' total';
 }
+function monthSummaryText(){ return tallyText(monthEntries(), monthName()); }
 function renderLog(){
   var ents = monthEntries();
   $('mTitle').textContent = monthName();
@@ -758,6 +849,19 @@ function renderLog(){
     chtml += (counts[key].e ? counts[key].e + ' ' : '') + esc(key) + ' × ' + counts[key].n + '<br>';
   }
   $('mCounts').innerHTML = chtml || '<span style="opacity:.8">Tap a button below to log your first action.</span>';
+
+  var yents = yearEntries();
+  $('yTitle').textContent = new Date().getFullYear() + ' so far';
+  $('yTotal').textContent = yents.length;
+  var ycounts = {};
+  yents.forEach(function(en){
+    var key = en.l || en.k;
+    if(!ycounts[key]) ycounts[key] = {n:0, e:en.e || ''};
+    ycounts[key].n++;
+  });
+  var yhtml = '';
+  for(var ykey in ycounts){ yhtml += (ycounts[ykey].e ? ycounts[ykey].e + ' ' : '') + esc(ykey) + ' × ' + ycounts[ykey].n + '<br>'; }
+  $('yCounts').innerHTML = yhtml || 'Everything you log builds toward this.';
 
   var ghtml = '';
   logTypes.forEach(function(t){
@@ -813,6 +917,7 @@ function renderLog(){
   });
 }
 $('shareMonthBtn').onclick = function(){ shareText(monthSummaryText()); };
+$('shareYearBtn').onclick = function(){ shareText(tallyText(yearEntries(), '' + new Date().getFullYear())); };
 $('addTypeBtn').onclick = function(){
   openModal(
     '<h3>New action type</h3>' +
@@ -994,6 +1099,13 @@ $('importFile').addEventListener('change', function(){
 });
 
 /* ---------- settings ---------- */
+$('shareAppBtn').onclick = function(){
+  if(navigator.share){
+    navigator.share({title:'Civic Compass', url:APP_URL}).catch(function(){});
+  } else {
+    shareText(APP_URL);
+  }
+};
 $('nameBtn').onclick = function(){
   var n = prompt('What should I call you?', prefs.name || '');
   if(n === null) return;

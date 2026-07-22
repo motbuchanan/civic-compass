@@ -6,7 +6,7 @@ action log with monthly tallies. All data lives on the device (localStorage);
 backup/restore is built in under More.
 
 ## Files
-- `index.html` — the entire app (v1.2)
+- `index.html` — the entire app (v1.3)
 - `sw.js` — offline cache. **CACHE name must match the app version on every deploy.**
 - `manifest.json`, `icon-192.png`, `icon-512.png` — PWA install (Android install prompt; iOS uses the apple-touch-icon)
 
