@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1b2a4a">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Civic Compass · Wadsworth</title>
+<style>
+:root{
+  --bg:#f6f2ea; --card:#ffffff; --ink:#20242e; --muted:#6b7180;
+  --accent:#1b2a4a; --accent-ink:#f6f2ea;
+  --gold:#c9a227; --gold-ink:#20242e;
+  --line:#e5dfd2; --danger:#b3402e; --ok:#2e7d4f;
+  --shadow:0 2px 10px rgba(32,36,46,.08);
+}
+body.dark{
+  --bg:#141824; --card:#1e2432; --ink:#eae6dc; --muted:#9aa1b0;
+  --accent:#3d5a99; --accent-ink:#f6f2ea;
+  --line:#2c3446; --shadow:0 2px 10px rgba(0,0,0,.35);
+}
+/* gold surfaces keep dark ink in BOTH themes (hardcoded on-color) */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:Georgia,'Times New Roman',serif; background:var(--bg); color:var(--ink);
+  display:flex;flex-direction:column;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+header{
+  background:var(--accent); color:var(--accent-ink);
+  padding:calc(14px + env(safe-area-inset-top)) 16px 14px; display:flex; align-items:center; gap:12px;
+}
+header svg{flex:0 0 34px}
+.h-title{font-size:20px;font-weight:bold;letter-spacing:.3px}
+.h-sub{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;opacity:.85}
+.h-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.badge{
+  font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:11px;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
+  padding:3px 8px;border-radius:20px;cursor:pointer;user-select:none
+}
+.iconbtn{
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);color:var(--accent-ink);
+  width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer;line-height:1
+}
+main{flex:1;overflow-y:auto;padding:16px 14px 92px;max-width:640px;width:100%;margin:0 auto}
+.panel{display:none}
+.panel.active{display:block}
+h2{font-size:15px;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted);margin:20px 2px 10px;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-weight:600}
+h2:first-child{margin-top:2px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow)
+}
+.hero{
+  background:var(--accent);color:var(--accent-ink);text-align:center;
+  border:none;padding:22px 16px
+}
+.hero .big{font-size:56px;font-weight:bold;line-height:1}
+.hero .lbl{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:13px;letter-spacing:1px;text-transform:uppercase;opacity:.85;margin-top:6px}
+.hero .when{font-size:15px;margin-top:8px;opacity:.95}
+.daterow{display:flex;align-items:center;gap:12px}
+.daterow .chip{
+  flex:0 0 62px;text-align:center;background:var(--gold);color:var(--gold-ink);
+  border-radius:10px;padding:7px 4px;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif
+}
+.daterow .chip b{display:block;font-size:19px;line-height:1.1}
+.daterow .chip span{font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+.daterow .chip.past{background:var(--line);color:var(--muted)}
+.daterow .dt-t{font-size:16px;font-weight:bold}
+.daterow .dt-s{font-size:13px;color:var(--muted);margin-top:2px;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+.verify{
+  font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;color:var(--muted);
+  text-align:center;margin:14px 0 4px;line-height:1.6
+}
+.verify a{color:var(--accent);font-weight:600}
+body.dark .verify a{color:#8fb0ee}
+a.linkrow{
+  display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)
+}
+a.linkrow .lr-e{font-size:24px;flex:0 0 32px;text-align:center}
+a.linkrow .lr-t{font-size:16px;font-weight:bold}
+a.linkrow .lr-s{font-size:12px;color:var(--muted);font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;margin-top:2px}
+a.linkrow .lr-a{margin-left:auto;color:var(--muted);font-size:18px}
+.rep-name{font-size:17px;font-weight:bold}
+.rep-office{font-size:13px;color:var(--muted);font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;margin-top:2px}
+.rep-notes{font-size:14px;margin-top:8px;padding:8px 10px;background:var(--bg);border-radius:8px;white-space:pre-wrap}
+.rep-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.abtn{
+  font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:13px;font-weight:600;
+  border:none;border-radius:20px;padding:9px 15px;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:5px
+}
+.abtn.call{background:var(--ok);color:#fff}
+.abtn.mail{background:var(--accent);color:var(--accent-ink)}
+.abtn.web{background:var(--gold);color:var(--gold-ink)}
+.abtn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.rep-head{display:flex;align-items:flex-start}
+.rep-head .grow{flex:1;min-width:0}
+.editpen{background:none;border:none;font-size:16px;cursor:pointer;color:var(--muted);padding:4px}
+.fillin{border:2px dashed var(--gold);background:transparent}
+.addbtn{
+  width:100%;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:14px;font-weight:600;
+  background:transparent;color:var(--muted);border:2px dashed var(--line);border-radius:14px;
+  padding:12px;cursor:pointer;margin-bottom:10px
+}
+.ev-empty{text-align:center;color:var(--muted);padding:26px 10px;font-size:15px;line-height:1.6}
+.ev-next{border-left:5px solid var(--gold)}
+.ev-title{font-size:17px;font-weight:bold}
+.ev-meta{font-size:13px;color:var(--muted);font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;margin-top:3px}
+.ev-notes{font-size:14px;margin-top:6px;white-space:pre-wrap}
+.ev-past{opacity:.55}
+.nextlbl{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold-ink);background:var(--gold);display:inline-block;padding:2px 8px;border-radius:10px;margin-bottom:6px}
+.monthcard{background:var(--accent);color:var(--accent-ink);border:none}
+.monthcard .m-title{font-size:18px;font-weight:bold}
+.monthcard .m-counts{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:15px;margin-top:8px;line-height:1.7}
+.monthcard .m-total{font-size:34px;font-weight:bold;margin-top:6px}
+.monthcard .m-tlbl{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.85}
+.monthcard .rep-actions .abtn{background:rgba(255,255,255,.16);color:var(--accent-ink);border:1px solid rgba(255,255,255,.3)}
+.loggrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.logbtn{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+  padding:16px 10px;text-align:center;cursor:pointer;position:relative
+}
+.logbtn .lb-e{font-size:30px;line-height:1}
+.logbtn .lb-l{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:14px;font-weight:600;margin-top:6px;color:var(--ink)}
+.logbtn .lb-c{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:11px;color:var(--muted);margin-top:2px}
+.logbtn .lb-x{position:absolute;top:6px;right:9px;color:var(--muted);font-size:13px;background:none;border:none;cursor:pointer;padding:3px}
+.histrow{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--line);font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:14px}
+.histrow:last-child{border-bottom:none}
+.histrow .hr-x{margin-left:auto;background:none;border:none;color:var(--muted);font-size:15px;cursor:pointer;padding:4px}
+nav{
+  position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);
+  display:flex;justify-content:space-around;
+  padding:6px 0 calc(6px + env(safe-area-inset-bottom));z-index:20
+}
+nav button{
+  background:none;border:none;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  font-size:10px;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:6px 10px;border-radius:12px
+}
+nav button .ic{font-size:21px;line-height:1}
+nav button.on{color:var(--accent);font-weight:700}
+body.dark nav button.on{color:#8fb0ee}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:40;align-items:flex-end;justify-content:center}
+.modal-bg.show{display:flex}
+.modal{
+  background:var(--card);width:100%;max-width:640px;border-radius:18px 18px 0 0;
+  padding:20px 18px calc(20px + env(safe-area-inset-bottom));max-height:88vh;overflow-y:auto
+}
+.modal h3{font-size:18px;margin-bottom:14px}
+.modal label{display:block;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;font-weight:600;color:var(--muted);margin:12px 0 4px;text-transform:uppercase;letter-spacing:.6px}
+.modal input,.modal textarea,.modal select{
+  width:100%;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;
+  padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)
+}
+.modal textarea{min-height:70px;resize:vertical}
+.modal-row{display:flex;gap:10px;margin-top:18px}
+.modal-row .abtn{flex:1;justify-content:center;padding:13px}
+.del-link{display:block;text-align:center;margin-top:14px;color:var(--danger);font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:14px;background:none;border:none;cursor:pointer;width:100%}
+.toast{
+  position:fixed;bottom:88px;left:50%;transform:translateX(-50%);
+  background:var(--ink);color:var(--bg);font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  font-size:14px;padding:10px 18px;border-radius:24px;opacity:0;transition:opacity .25s;z-index:60;pointer-events:none;
+  max-width:88vw;text-align:center
+}
+.toast.show{opacity:1}
+.installbar{
+  background:var(--gold);color:var(--gold-ink);border-radius:14px;padding:12px 14px;margin-bottom:14px;
+  font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:14px;line-height:1.5;display:none
+}
+.installbar.show{display:block}
+.installbar b{display:block;margin-bottom:2px}
+.installbar button{float:right;background:none;border:none;font-size:16px;cursor:pointer;color:var(--gold-ink);padding:0 0 0 10px}
+.set-row{display:flex;align-items:center;justify-content:space-between;padding:13px 2px;border-bottom:1px solid var(--line);font-size:16px;gap:10px}
+.set-row:last-child{border-bottom:none}
+.set-row .sub{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;color:var(--muted);margin-top:2px}
+.footer-sig{text-align:center;color:var(--muted);font-size:13px;margin:26px 0 6px;font-style:italic}
+.tour-bg{position:fixed;inset:0;background:rgba(15,18,28,.55);display:none;z-index:80;align-items:flex-end;justify-content:center}
+.tour-bg.show{display:flex}
+.tour{
+  background:var(--card);width:100%;max-width:640px;border-radius:18px 18px 0 0;
+  padding:24px 20px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -4px 24px rgba(0,0,0,.25)
+}
+.tour .t-e{font-size:40px;text-align:center}
+.tour .t-t{font-size:20px;font-weight:bold;text-align:center;margin-top:8px}
+.tour .t-b{font-size:15px;line-height:1.6;text-align:center;color:var(--muted);margin-top:8px;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+.tour .t-dots{display:flex;justify-content:center;gap:7px;margin:16px 0 4px}
+.tour .t-dots span{width:8px;height:8px;border-radius:50%;background:var(--line)}
+.tour .t-dots span.on{background:var(--gold)}
+.tour .t-row{display:flex;gap:10px;margin-top:16px;align-items:center}
+.tour .t-row .abtn{justify-content:center;padding:13px 18px}
+.tour .t-row .grow1{flex:1}
+</style>
+</head>
+<body>
+
+<header>
+  <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
+    <circle cx="20" cy="20" r="18" fill="none" stroke="#c9a227" stroke-width="2.5"/>
+    <polygon points="20,7 24,20 20,33 16,20" fill="#c9a227"/>
+    <polygon points="20,7 24,20 20,20" fill="#f6f2ea"/>
+    <circle cx="20" cy="20" r="2.6" fill="#f6f2ea"/>
+  </svg>
+  <div>
+    <div class="h-title" id="greet">Civic Compass</div>
+    <div class="h-sub">Wadsworth · Medina County · Ohio</div>
+  </div>
+  <div class="h-right">
+    <button class="iconbtn" id="themeBtn" aria-label="Toggle theme">◐</button>
+    <span class="badge" id="verBadge">v1.2</span>
+  </div>
+</header>
+
+<main>
+  <div class="installbar" id="installBar">
+    <button id="installDismiss" aria-label="Dismiss">✕</button>
+    <b>Keep me on your home screen</b>
+    <span id="installText"></span>
+  </div>
+
+  <!-- DATES -->
+  <section class="panel active" id="p-dates">
+    <div class="card hero">
+      <div class="big" id="heroDays">–</div>
+      <div class="lbl" id="heroLbl">days until Election Day</div>
+      <div class="when" id="heroWhen"></div>
+    </div>
+    <h2>Key dates · Nov 2026 General</h2>
+    <div id="dateList"></div>
+    <div class="verify" id="verifyLine"></div>
+    <h2>Voter toolbox</h2>
+    <a class="card linkrow" href="https://voterlookup.ohiosos.gov" target="_blank" rel="noopener">
+      <span class="lr-e">✅</span><span><span class="lr-t">Check my registration</span><br><span class="lr-s">Ohio Secretary of State · also shows your polling place</span></span><span class="lr-a">›</span>
+    </a>
+    <a class="card linkrow" href="https://lookup.boe.ohio.gov/vtrapp/medina/" target="_blank" rel="noopener">
+      <span class="lr-e">🗳</span><span><span class="lr-t">My sample ballot</span><br><span class="lr-s">Medina County ballot &amp; precinct lookup</span></span><span class="lr-a">›</span>
+    </a>
+    <a class="card linkrow" href="https://www.boe.ohio.gov/medina" target="_blank" rel="noopener">
+      <span class="lr-e">📬</span><span><span class="lr-t">Absentee &amp; early voting</span><br><span class="lr-s">Medina County Board of Elections</span></span><span class="lr-a">›</span>
+    </a>
+    <a class="card linkrow" href="https://www.voteohio.gov" target="_blank" rel="noopener">
+      <span class="lr-e">🌐</span><span><span class="lr-t">VoteOhio.gov</span><br><span class="lr-s">The state's official voting hub</span></span><span class="lr-a">›</span>
+    </a>
+    <h2>Around town</h2>
+    <a class="card linkrow" href="https://www.wadsworthcity.com/AgendaCenter" target="_blank" rel="noopener">
+      <span class="lr-e">📄</span><span><span class="lr-t">Council agendas &amp; minutes</span><br><span class="lr-s">City of Wadsworth Agenda Center</span></span><span class="lr-a">›</span>
+    </a>
+    <a class="card linkrow" href="https://medina-gazette.com" target="_blank" rel="noopener">
+      <span class="lr-e">📰</span><span><span class="lr-t">Medina County Gazette</span><br><span class="lr-s">Local news</span></span><span class="lr-a">›</span>
+    </a>
+    <a class="card linkrow" href="https://wadsworthcommunityradio.com" target="_blank" rel="noopener">
+      <span class="lr-e">📻</span><span><span class="lr-t">Wadsworth Community Radio</span><br><span class="lr-s">Local coverage &amp; election results</span></span><span class="lr-a">›</span>
+    </a>
+  </section>
+
+  <!-- REPS -->
+  <section class="panel" id="p-reps">
+    <div id="repList"></div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="panel" id="p-events">
+    <button class="addbtn" id="addEventBtn">＋ Add an event</button>
+    <div id="eventList"></div>
+  </section>
+
+  <!-- LOG -->
+  <section class="panel" id="p-log">
+    <div class="card monthcard">
+      <div class="m-title" id="mTitle"></div>
+      <div class="m-total" id="mTotal">0</div>
+      <div class="m-tlbl">actions this month</div>
+      <div class="m-counts" id="mCounts"></div>
+      <div class="rep-actions"><button class="abtn" id="shareMonthBtn">↗ Share my month</button></div>
+    </div>
+    <h2>Tap to log an action</h2>
+    <div class="loggrid" id="logGrid"></div>
+    <button class="addbtn" id="addTypeBtn">＋ New action type</button>
+    <h2>History</h2>
+    <div class="card" id="histCard"></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="panel" id="p-settings">
+    <h2>Settings</h2>
+    <div class="card">
+      <div class="set-row">
+        <div>Your name<div class="sub">Shown in the header greeting</div></div>
+        <button class="abtn ghost" id="nameBtn">Edit</button>
+      </div>
+      <div class="set-row">
+        <div>How to install<div class="sub">Put this app on your home screen</div></div>
+        <button class="abtn ghost" id="howInstallBtn">Show</button>
+      </div>
+      <div class="set-row">
+        <div>App tour<div class="sub">Replay the welcome walkthrough</div></div>
+        <button class="abtn ghost" id="tourAgainBtn">Play</button>
+      </div>
+      <div class="set-row">
+        <div>Reset officials to defaults<div class="sub">Undo your edits to the Reps tab</div></div>
+        <button class="abtn ghost" id="resetRepsBtn">Reset</button>
+      </div>
+    </div>
+    <h2>Backup</h2>
+    <div class="card">
+      <div class="set-row">
+        <div>Save a backup<div class="sub">Downloads one file with all your data</div></div>
+        <button class="abtn ghost" id="exportBtn">Save</button>
+      </div>
+      <div class="set-row">
+        <div>Restore from backup<div class="sub">Load a backup file on a new phone</div></div>
+        <button class="abtn ghost" id="importBtn">Load</button>
+        <input type="file" id="importFile" accept=".json,application/json" style="display:none">
+      </div>
+    </div>
+    <div class="footer-sig">Made for you by Mot ♥</div>
+  </section>
+</main>
+
+<nav>
+  <button data-p="dates" class="on"><span class="ic">🗓</span>Dates</button>
+  <button data-p="reps"><span class="ic">🏛</span>Reps</button>
+  <button data-p="events"><span class="ic">📌</span>Events</button>
+  <button data-p="log"><span class="ic">✅</span>Log</button>
+  <button data-p="settings"><span class="ic">⚙︎</span>More</button>
+</nav>
+
+<div class="tour-bg" id="tourBg">
+  <div class="tour">
+    <div class="t-e" id="tourE"></div>
+    <div class="t-t" id="tourT"></div>
+    <div class="t-b" id="tourB"></div>
+    <div class="t-dots" id="tourDots"></div>
+    <div class="t-row">
+      <button class="abtn ghost" id="tourSkip">Skip</button>
+      <span class="grow1"></span>
+      <button class="abtn ghost" id="tourBack">Back</button>
+      <button class="abtn mail" id="tourNext">Next</button>
+    </div>
+  </div>
+</div>
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modalBox"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+/* ============ Civic Compass · v1.2 · Jul 21 2026 ============ */
+var VERSION = 'v1.2 · Jul 21';
+var DATA_VERIFIED = 'July 21, 2026';
+
+/* ---------- guarded storage ---------- */
+var mem = {};
+function sGet(k){
+  try{ var v = localStorage.getItem(k); return v === null ? (k in mem ? mem[k] : null) : v; }
+  catch(e){ return k in mem ? mem[k] : null; }
+}
+function sSet(k,v){
+  mem[k] = v;
+  try{ localStorage.setItem(k,v); }catch(e){}
+}
+function jGet(k,fallback){
+  var raw = sGet(k);
+  if(raw === null) return fallback;
+  try{ return JSON.parse(raw); }catch(e){ return fallback; }
+}
+function jSet(k,obj){ sSet(k, JSON.stringify(obj)); }
+
+var K_REPS='cc_v1_reps', K_EVENTS='cc_v1_events', K_PREFS='cc_v1_prefs',
+    K_LOG='cc_v1_log', K_TYPES='cc_v1_logtypes';
+
+/* ---------- key dates (verified against Ohio SOS-sourced info, Jul 21 2026) ---------- */
+var KEY_DATES = [
+  {t:'Voter registration deadline', s:'Register or update your address by 9 PM · VoteOhio.gov', d:'2026-10-05'},
+  {t:'Early in-person voting begins', s:'Medina County Board of Elections, Medina', d:'2026-10-06'},
+  {t:'Absentee ballot request deadline', s:'Application must reach the Board of Elections by 8:30 PM', d:'2026-10-27'},
+  {t:'Last day of early voting', s:'Early in-person voting ends at 2 PM', d:'2026-11-02'},
+  {t:'Election Day', s:'Polls open 6:30 AM – 7:30 PM statewide. Mail ballots must be RECEIVED by 7:30 PM.', d:'2026-11-03'}
+];
+var ELECTION_DAY = '2026-11-03';
+
+/* ---------- default officials (verified Jul 21 2026; every card editable) ---------- */
+function defaultReps(){
+  return [
+    {sec:'City of Wadsworth', items:[
+      {id:'r1', name:'Robin Laubaugh', office:'Mayor', phone:'330-335-1521', email:'', web:'https://www.wadsworthcity.com', notes:''},
+      {id:'r2', name:'Daniel Rospert', office:'Council President', phone:'330-335-2759', email:'', web:'https://www.wadsworthcity.com', notes:'Council meets 1st & 3rd Tuesdays. Clerk: 330-335-2759.'},
+      {id:'r3', name:'Mike Reese', office:'Council · Ward 1', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
+      {id:'r4', name:'', office:'Council · Ward 2', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:'Tap the pencil to fill in your Ward 2 member — find them on the city website.', fillin:true},
+      {id:'r5', name:'Jeanne Hines', office:'Council · Ward 3', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
+      {id:'r6', name:'Angela May', office:'Council · Ward 4', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
+      {id:'r7', name:'Berger · Maxwell · Stugmyer', office:'Council · At-Large (3 seats)', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:'Zach Berger, Chris Maxwell, Thomas Stugmyer'}
+    ]},
+    {sec:'Medina County', items:[
+      {id:'r8', name:'Board of Elections', office:'Voter records · ballots · precincts', phone:'', email:'', web:'https://www.boe.ohio.gov/medina', notes:'Early voting happens here.'}
+    ]},
+    {sec:'State of Ohio', items:[
+      {id:'r9', name:'Mike DeWine', office:'Governor (term-limited · seat on the Nov ballot)', phone:'', email:'', web:'https://governor.ohio.gov', notes:''},
+      {id:'r10', name:'Mark Romanchuk', office:'State Senator · District 22', phone:'', email:'', web:'https://www.ohiosenate.gov', notes:''},
+      {id:'r11', name:'', office:'State Representative · Ohio House', phone:'', email:'', web:'https://www.ohiohouse.gov', notes:'District lines shifted recently — look up your address at ohiohouse.gov, then tap the pencil to save your rep here.', fillin:true}
+    ]},
+    {sec:'Federal', items:[
+      {id:'r12', name:'Jon Husted', office:'U.S. Senator (seat on the Nov ballot)', phone:'202-224-3121', email:'', web:'https://www.senate.gov', notes:'Capitol switchboard — ask for the senator\u2019s office.'},
+      {id:'r13', name:'Bernie Moreno', office:'U.S. Senator', phone:'202-224-3121', email:'', web:'https://www.senate.gov', notes:'Capitol switchboard — ask for the senator\u2019s office.'},
+      {id:'r14', name:'Max Miller', office:'U.S. Representative · OH-7', phone:'202-224-3121', email:'', web:'https://www.house.gov', notes:'Capitol switchboard — ask for the representative\u2019s office.'}
+    ]}
+  ];
+}
+function defaultLogTypes(){
+  return [
+    {k:'call', e:'📞', l:'Call made'},
+    {k:'postcard', e:'📮', l:'Postcard'},
+    {k:'door', e:'🚪', l:'Doors knocked'},
+    {k:'meeting', e:'🤝', l:'Meeting'}
+  ];
+}
+
+/* ---------- state ---------- */
+var reps = jGet(K_REPS, null) || defaultReps();
+var events = jGet(K_EVENTS, []);
+var prefs = jGet(K_PREFS, {theme:'', name:'', installDismissed:false, seeded:false});
+var log = jGet(K_LOG, []);
+var logTypes = jGet(K_TYPES, null) || defaultLogTypes();
+
+/* one-time starter event: council nights */
+if(!prefs.seeded){
+  if(events.length === 0){
+    events.push({
+      id:'e-council', title:'Wadsworth City Council', date:'2026-07-07', time:'',
+      place:'City Hall', notes:'Agendas: wadsworthcity.com/AgendaCenter', repeat:'first-third'
+    });
+    jSet(K_EVENTS, events);
+  }
+  prefs.seeded = true; jSet(K_PREFS, prefs);
+}
+
+/* ---------- helpers ---------- */
+function $(id){ return document.getElementById(id); }
+function esc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function toast(msg){
+  var t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+function midnight(iso){
+  var p = iso.split('-');
+  return new Date(+p[0], +p[1]-1, +p[2]);
+}
+function daysUntil(iso){
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round((midnight(iso) - today) / 86400000);
+}
+function niceDate(iso){
+  return midnight(iso).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+}
+function niceDateFull(iso){
+  return midnight(iso).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+}
+function niceTs(ts){
+  return new Date(ts).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}) +
+    ' · ' + new Date(ts).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+}
+var WD_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function ordinal(n){ return n===1?'1st':n===2?'2nd':n===3?'3rd':n+'th'; }
+
+/* ---------- recurrence engine (unit-tested) ---------- */
+function nthWeekdayOfMonth(y,m,weekday,n){
+  var d = new Date(y,m,1);
+  var offset = (weekday - d.getDay() + 7) % 7;
+  var day = 1 + offset + (n-1)*7;
+  var dt = new Date(y,m,day);
+  return dt.getMonth() === m ? dt : null;
+}
+function nextOccurrence(ev, from){
+  if(!ev.date) return 0;
+  var rule = ev.repeat || 'none';
+  var base = midnight(ev.date);
+  var timeMs = 86399000;
+  if(ev.time){ var hm = ev.time.split(':'); timeMs = (+hm[0])*3600000 + (+hm[1])*60000; }
+  if(rule === 'none') return base.getTime() + timeMs;
+  var fromDay = new Date(from.getFullYear(), from.getMonth(), from.getDate());
+  if(rule === 'weekly' || rule === 'biweekly'){
+    var step = (rule === 'weekly' ? 7 : 14) * 86400000;
+    var cur = base.getTime();
+    while(cur + timeMs < from.getTime()) cur += step;
+    return cur + timeMs;
+  }
+  if(rule === 'monthly-date'){
+    var dom = base.getDate();
+    var y = fromDay.getFullYear(), m = fromDay.getMonth();
+    for(var i=0;i<48;i++){
+      var cand = new Date(y, m, dom);
+      if(cand.getMonth() === m && cand.getTime() >= base.getTime() && cand.getTime() + timeMs >= from.getTime())
+        return cand.getTime() + timeMs;
+      m++; if(m > 11){ m = 0; y++; }
+    }
+    return base.getTime() + timeMs;
+  }
+  var wd = base.getDay();
+  var ns = rule === 'first-third' ? [1,3] : [Math.ceil(base.getDate()/7)];
+  var y2 = fromDay.getFullYear(), m2 = fromDay.getMonth();
+  for(var j=0;j<48;j++){
+    var best = null;
+    for(var q=0;q<ns.length;q++){
+      var c = nthWeekdayOfMonth(y2, m2, wd, ns[q]);
+      if(c && c.getTime() >= base.getTime() && c.getTime() + timeMs >= from.getTime()){
+        if(best === null || c.getTime() < best) best = c.getTime();
+      }
+    }
+    if(best !== null) return best + timeMs;
+    m2++; if(m2 > 11){ m2 = 0; y2++; }
+  }
+  return base.getTime() + timeMs;
+}
+function repeatLabel(ev){
+  var r = ev.repeat || 'none';
+  if(r === 'none') return '';
+  if(r === 'weekly') return 'Every week';
+  if(r === 'biweekly') return 'Every 2 weeks';
+  if(r === 'monthly-date') return 'Monthly';
+  var base = midnight(ev.date);
+  var wd = WD_SHORT[base.getDay()];
+  if(r === 'first-third') return '1st & 3rd ' + wd;
+  return ordinal(Math.ceil(base.getDate()/7)) + ' ' + wd + ' monthly';
+}
+
+/* ---------- theme ---------- */
+function applyTheme(){
+  var t = prefs.theme;
+  if(!t){ t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; }
+  document.body.classList.toggle('dark', t === 'dark');
+}
+$('themeBtn').onclick = function(){
+  prefs.theme = document.body.classList.contains('dark') ? 'light' : 'dark';
+  jSet(K_PREFS, prefs); applyTheme();
+};
+
+/* ---------- header / version ---------- */
+function renderGreet(){
+  $('greet').textContent = prefs.name ? ('Hi, ' + prefs.name + '!') : 'Civic Compass';
+}
+$('verBadge').onclick = function(){ toast('Civic Compass ' + VERSION); };
+
+/* ---------- nav ---------- */
+var navBtns = document.querySelectorAll('nav button');
+function showPanel(p){
+  document.querySelectorAll('.panel').forEach(function(el){ el.classList.remove('active'); });
+  $('p-' + p).classList.add('active');
+  navBtns.forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-p') === p); });
+}
+navBtns.forEach(function(b){
+  b.onclick = function(){ showPanel(b.getAttribute('data-p')); };
+});
+
+/* ---------- DATES ---------- */
+function renderDates(){
+  var dTo = daysUntil(ELECTION_DAY);
+  if(dTo > 1){ $('heroDays').textContent = dTo; $('heroLbl').textContent = 'days until Election Day'; }
+  else if(dTo === 1){ $('heroDays').textContent = '1'; $('heroLbl').textContent = 'day until Election Day'; }
+  else if(dTo === 0){ $('heroDays').textContent = 'TODAY'; $('heroLbl').textContent = 'is Election Day — go vote!'; }
+  else { $('heroDays').textContent = '✓'; $('heroLbl').textContent = 'Election Day has passed'; }
+  $('heroWhen').textContent = niceDateFull(ELECTION_DAY);
+
+  var html = '';
+  KEY_DATES.forEach(function(kd){
+    var d = daysUntil(kd.d);
+    var chip;
+    if(d > 0) chip = '<div class="chip"><b>' + d + '</b><span>day' + (d===1?'':'s') + '</span></div>';
+    else if(d === 0) chip = '<div class="chip"><b>NOW</b><span>today</span></div>';
+    else chip = '<div class="chip past"><b>✓</b><span>done</span></div>';
+    html += '<div class="card daterow">' + chip +
+      '<div><div class="dt-t">' + esc(kd.t) + '</div>' +
+      '<div class="dt-s">' + esc(niceDate(kd.d)) + ' · ' + esc(kd.s) + '</div></div></div>';
+  });
+  $('dateList').innerHTML = html;
+
+  var stale = daysUntil(ELECTION_DAY) < 0;
+  $('verifyLine').innerHTML =
+    (stale ? '<b>This election has passed — ask Mot for a date refresh.</b><br>' : '') +
+    'Dates last verified ' + esc(DATA_VERIFIED) + '. Always confirm at ' +
+    '<a href="https://www.voteohio.gov" target="_blank" rel="noopener">VoteOhio.gov</a>.';
+}
+
+/* ---------- REPS ---------- */
+function findRep(id){
+  for(var i=0;i<reps.length;i++){
+    for(var j=0;j<reps[i].items.length;j++){
+      if(reps[i].items[j].id === id) return {sec:i, idx:j, rep:reps[i].items[j]};
+    }
+  }
+  return null;
+}
+function renderReps(){
+  var html = '';
+  reps.forEach(function(section, si){
+    html += '<h2>' + esc(section.sec) + '</h2>';
+    section.items.forEach(function(r){
+      var isFill = r.fillin && !r.name;
+      html += '<div class="card' + (isFill ? ' fillin' : '') + '">';
+      html += '<div class="rep-head"><div class="grow">';
+      html += '<div class="rep-name">' + esc(r.name || 'Fill me in') + '</div>';
+      html += '<div class="rep-office">' + esc(r.office) + '</div>';
+      html += '</div><button class="editpen" data-edit="' + esc(r.id) + '" aria-label="Edit">✎</button></div>';
+      if(r.notes) html += '<div class="rep-notes">' + esc(r.notes) + '</div>';
+      var acts = '';
+      if(r.phone) acts += '<a class="abtn call" href="tel:' + esc(r.phone.replace(/[^0-9+]/g,'')) + '">📞 Call</a>';
+      if(r.email) acts += '<a class="abtn mail" href="mailto:' + esc(r.email) + '">✉️ Email</a>';
+      if(r.web) acts += '<a class="abtn web" href="' + esc(r.web) + '" target="_blank" rel="noopener">🌐 Website</a>';
+      if(acts) html += '<div class="rep-actions">' + acts + '</div>';
+      html += '</div>';
+    });
+    html += '<button class="addbtn" data-addsec="' + si + '">＋ Add a card to ' + esc(section.sec) + '</button>';
+  });
+  $('repList').innerHTML = html;
+
+  document.querySelectorAll('[data-edit]').forEach(function(b){
+    b.onclick = function(){ openRepModal(b.getAttribute('data-edit')); };
+  });
+  document.querySelectorAll('[data-addsec]').forEach(function(b){
+    b.onclick = function(){ openRepModal(null, +b.getAttribute('data-addsec')); };
+  });
+}
+
+/* ---------- EVENTS ---------- */
+function niceTime(hhmm){
+  var hm = hhmm.split(':'); var h = +hm[0]; var m = hm[1];
+  var ap = h >= 12 ? 'PM' : 'AM'; h = h % 12; if(h === 0) h = 12;
+  return h + ':' + m + ' ' + ap;
+}
+function occDateISO(ts){
+  var x = new Date(ts);
+  var mm = String(x.getMonth()+1); if(mm.length < 2) mm = '0' + mm;
+  var dd = String(x.getDate()); if(dd.length < 2) dd = '0' + dd;
+  return x.getFullYear() + '-' + mm + '-' + dd;
+}
+function eventShareText(ev, occTs){
+  var parts = [ev.title];
+  var dISO = occTs ? occDateISO(occTs) : ev.date;
+  if(dISO) parts.push(niceDate(dISO) + (ev.time ? ' · ' + niceTime(ev.time) : ''));
+  var rl = repeatLabel(ev);
+  if(rl) parts.push(rl);
+  if(ev.place) parts.push(ev.place);
+  if(ev.notes) parts.push(ev.notes);
+  return parts.join(' — ');
+}
+function renderEvents(){
+  if(!events.length){
+    $('eventList').innerHTML = '<div class="card ev-empty">Nothing here yet.<br>Add meetings, rallies, fundraisers,<br>postcard nights — anything coming up.</div>';
+    return;
+  }
+  var now = new Date();
+  var nowTs = now.getTime();
+  var decorated = events.map(function(ev){
+    var occ = nextOccurrence(ev, now);
+    var isRepeat = (ev.repeat || 'none') !== 'none';
+    var past = !isRepeat && occ < nowTs;
+    return {ev:ev, occ:occ, past:past};
+  });
+  var upcoming = decorated.filter(function(d){ return !d.past; })
+    .sort(function(a,b){ return a.occ - b.occ; });
+  var past = decorated.filter(function(d){ return d.past; })
+    .sort(function(a,b){ return b.occ - a.occ; });
+  var nextId = upcoming.length ? upcoming[0].ev.id : null;
+
+  var html = '';
+  upcoming.concat(past).forEach(function(d){
+    var ev = d.ev;
+    var isNext = ev.id === nextId;
+    html += '<div class="card' + (isNext ? ' ev-next' : '') + (d.past ? ' ev-past' : '') + '">';
+    if(isNext) html += '<span class="nextlbl">Up next</span>';
+    html += '<div class="rep-head"><div class="grow">';
+    html += '<div class="ev-title">' + esc(ev.title) + '</div>';
+    var meta = [];
+    if(ev.date) meta.push(niceDate(occDateISO(d.occ)) + (ev.time ? ' · ' + niceTime(ev.time) : ''));
+    var rl = repeatLabel(ev);
+    if(rl) meta.push('↻ ' + rl);
+    if(ev.place) meta.push(ev.place);
+    if(meta.length) html += '<div class="ev-meta">' + esc(meta.join(' · ')) + '</div>';
+    html += '</div><button class="editpen" data-evedit="' + esc(ev.id) + '" aria-label="Edit">✎</button></div>';
+    if(ev.notes) html += '<div class="ev-notes">' + esc(ev.notes) + '</div>';
+    html += '<div class="rep-actions"><button class="abtn ghost" data-evshare="' + esc(ev.id) + '">↗ Share</button></div>';
+    html += '</div>';
+  });
+  $('eventList').innerHTML = html;
+
+  document.querySelectorAll('[data-evedit]').forEach(function(b){
+    b.onclick = function(){ openEventModal(b.getAttribute('data-evedit')); };
+  });
+  document.querySelectorAll('[data-evshare]').forEach(function(b){
+    b.onclick = function(){
+      var ev = events.filter(function(e){ return e.id === b.getAttribute('data-evshare'); })[0];
+      if(!ev) return;
+      var txt = eventShareText(ev, nextOccurrence(ev, new Date()));
+      shareText(txt);
+    };
+  });
+}
+function shareText(txt){
+  if(navigator.share){
+    navigator.share({text:txt}).catch(function(){});
+  } else if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){ toast('Copied — paste it anywhere'); }, function(){ toast(txt); });
+  } else {
+    toast(txt);
+  }
+}
+
+/* ---------- LOG ---------- */
+function typeByKey(k){
+  return logTypes.filter(function(t){ return t.k === k; })[0] || null;
+}
+function monthEntries(){
+  var now = new Date();
+  var y = now.getFullYear(), m = now.getMonth();
+  return log.filter(function(en){
+    var d = new Date(en.ts);
+    return d.getFullYear() === y && d.getMonth() === m;
+  });
+}
+function monthName(){
+  return new Date().toLocaleDateString('en-US',{month:'long',year:'numeric'});
+}
+function monthSummaryText(){
+  var ents = monthEntries();
+  if(!ents.length) return 'My ' + monthName() + ' civic actions: just getting started!';
+  var counts = {};
+  ents.forEach(function(en){
+    var key = en.l || en.k;
+    if(!counts[key]) counts[key] = {n:0, e:en.e || ''};
+    counts[key].n++;
+  });
+  var bits = [];
+  for(var key in counts){ bits.push((counts[key].e ? counts[key].e + ' ' : '') + counts[key].n + ' ' + key.toLowerCase()); }
+  return 'My ' + monthName() + ' civic actions: ' + bits.join(' · ') + ' — ' + ents.length + ' total';
+}
+function renderLog(){
+  var ents = monthEntries();
+  $('mTitle').textContent = monthName();
+  $('mTotal').textContent = ents.length;
+  var counts = {};
+  ents.forEach(function(en){
+    var key = en.l || en.k;
+    if(!counts[key]) counts[key] = {n:0, e:en.e || ''};
+    counts[key].n++;
+  });
+  var chtml = '';
+  for(var key in counts){
+    chtml += (counts[key].e ? counts[key].e + ' ' : '') + esc(key) + ' × ' + counts[key].n + '<br>';
+  }
+  $('mCounts').innerHTML = chtml || '<span style="opacity:.8">Tap a button below to log your first action.</span>';
+
+  var ghtml = '';
+  logTypes.forEach(function(t){
+    var monthCount = ents.filter(function(en){ return en.k === t.k; }).length;
+    ghtml += '<div class="logbtn" data-logk="' + esc(t.k) + '">';
+    if(t.custom) ghtml += '<button class="lb-x" data-delt="' + esc(t.k) + '" aria-label="Remove type">✕</button>';
+    ghtml += '<div class="lb-e">' + esc(t.e) + '</div><div class="lb-l">' + esc(t.l) + '</div>';
+    ghtml += '<div class="lb-c">' + monthCount + ' this month</div></div>';
+  });
+  $('logGrid').innerHTML = ghtml;
+
+  document.querySelectorAll('[data-logk]').forEach(function(b){
+    b.onclick = function(e){
+      if(e.target && e.target.getAttribute && e.target.getAttribute('data-delt')) return;
+      var t = typeByKey(b.getAttribute('data-logk'));
+      if(!t) return;
+      log.push({id:'a' + Date.now(), k:t.k, e:t.e, l:t.l, ts:Date.now()});
+      jSet(K_LOG, log);
+      renderLog();
+      var n = monthEntries().filter(function(en){ return en.k === t.k; }).length;
+      toast(t.e + ' +1 ' + t.l + ' — ' + n + ' this month');
+    };
+  });
+  document.querySelectorAll('[data-delt]').forEach(function(b){
+    b.onclick = function(ev2){
+      ev2.stopPropagation();
+      var k = b.getAttribute('data-delt');
+      var t = typeByKey(k);
+      if(!t) return;
+      if(!confirm('Remove the "' + t.l + '" button? Your past entries stay in history.')) return;
+      logTypes = logTypes.filter(function(x){ return x.k !== k; });
+      jSet(K_TYPES, logTypes); renderLog(); toast('Removed');
+    };
+  });
+
+  var hist = log.slice().sort(function(a,b){ return b.ts - a.ts; });
+  var shown = hist.slice(0, 40);
+  var hhtml = '';
+  shown.forEach(function(en){
+    hhtml += '<div class="histrow"><span>' + esc(en.e || '') + '</span><span>' + esc(en.l || en.k) +
+      '</span><span style="color:var(--muted)">' + esc(niceTs(en.ts)) + '</span>' +
+      '<button class="hr-x" data-delh="' + esc(en.id) + '" aria-label="Delete entry">✕</button></div>';
+  });
+  if(!hist.length) hhtml = '<div class="ev-empty" style="padding:14px">No actions logged yet.</div>';
+  else if(hist.length > 40) hhtml += '<div class="histrow" style="color:var(--muted)">+ ' + (hist.length - 40) + ' older entries kept in your data</div>';
+  $('histCard').innerHTML = hhtml;
+
+  document.querySelectorAll('[data-delh]').forEach(function(b){
+    b.onclick = function(){
+      log = log.filter(function(en){ return en.id !== b.getAttribute('data-delh'); });
+      jSet(K_LOG, log); renderLog();
+    };
+  });
+}
+$('shareMonthBtn').onclick = function(){ shareText(monthSummaryText()); };
+$('addTypeBtn').onclick = function(){
+  openModal(
+    '<h3>New action type</h3>' +
+    '<label>Emoji</label><input id="f-emoji" maxlength="4" placeholder="✊">' +
+    '<label>Name</label><input id="f-tname" placeholder="Letters to the editor">' +
+    '<div class="modal-row">' +
+      '<button class="abtn ghost" id="f-cancel">Cancel</button>' +
+      '<button class="abtn mail" id="f-save">Add</button>' +
+    '</div>'
+  );
+  $('f-cancel').onclick = closeModal;
+  $('f-save').onclick = function(){
+    var l = $('f-tname').value.trim();
+    if(!l){ toast('Give it a name first'); return; }
+    var e = $('f-emoji').value.trim() || '⭐';
+    logTypes.push({k:'c' + Date.now(), e:e, l:l, custom:true});
+    jSet(K_TYPES, logTypes); renderLog(); closeModal(); toast('Added');
+  };
+};
+
+/* ---------- modal plumbing ---------- */
+function openModal(html){
+  $('modalBox').innerHTML = html;
+  $('modalBg').classList.add('show');
+}
+function closeModal(){ $('modalBg').classList.remove('show'); }
+$('modalBg').addEventListener('click', function(e){ if(e.target === $('modalBg')) closeModal(); });
+
+/* ---------- rep modal ---------- */
+function openRepModal(id, secIdx){
+  var r = id ? (findRep(id) || {}).rep : {name:'',office:'',phone:'',email:'',web:'',notes:''};
+  if(!r) return;
+  openModal(
+    '<h3>' + (id ? 'Edit card' : 'New card') + '</h3>' +
+    '<label>Name</label><input id="f-name" value="' + esc(r.name) + '">' +
+    '<label>Office / role</label><input id="f-office" value="' + esc(r.office) + '">' +
+    '<label>Phone</label><input id="f-phone" inputmode="tel" value="' + esc(r.phone) + '">' +
+    '<label>Email</label><input id="f-email" inputmode="email" value="' + esc(r.email) + '">' +
+    '<label>Website</label><input id="f-web" inputmode="url" value="' + esc(r.web) + '">' +
+    '<label>My notes / talking points</label><textarea id="f-notes">' + esc(r.notes) + '</textarea>' +
+    '<div class="modal-row">' +
+      '<button class="abtn ghost" id="f-cancel">Cancel</button>' +
+      '<button class="abtn mail" id="f-save">Save</button>' +
+    '</div>' +
+    (id ? '<button class="del-link" id="f-del">Remove this card</button>' : '')
+  );
+  $('f-cancel').onclick = closeModal;
+  $('f-save').onclick = function(){
+    var vals = {
+      name: $('f-name').value.trim(), office: $('f-office').value.trim(),
+      phone: $('f-phone').value.trim(), email: $('f-email').value.trim(),
+      web: $('f-web').value.trim(), notes: $('f-notes').value.trim()
+    };
+    if(vals.web && !/^https?:\/\//i.test(vals.web)) vals.web = 'https://' + vals.web;
+    if(id){
+      var loc = findRep(id);
+      if(loc){
+        var keep = loc.rep;
+        for(var k in vals){ keep[k] = vals[k]; }
+        if(keep.name) delete keep.fillin;
+      }
+    } else {
+      vals.id = 'r' + Date.now();
+      reps[secIdx].items.push(vals);
+    }
+    jSet(K_REPS, reps); renderReps(); closeModal(); toast('Saved');
+  };
+  if(id){
+    $('f-del').onclick = function(){
+      if(!confirm('Remove this card?')) return;
+      var loc = findRep(id);
+      if(loc) reps[loc.sec].items.splice(loc.idx, 1);
+      jSet(K_REPS, reps); renderReps(); closeModal(); toast('Removed');
+    };
+  }
+}
+
+/* ---------- event modal ---------- */
+function openEventModal(id){
+  var ev = id ? events.filter(function(e){ return e.id === id; })[0] : {title:'',date:'',time:'',place:'',notes:'',repeat:'none'};
+  if(!ev) return;
+  var rsel = ev.repeat || 'none';
+  function opt(v, label){
+    return '<option value="' + v + '"' + (rsel === v ? ' selected' : '') + '>' + label + '</option>';
+  }
+  openModal(
+    '<h3>' + (id ? 'Edit event' : 'New event') + '</h3>' +
+    '<label>What is it?</label><input id="f-title" value="' + esc(ev.title) + '">' +
+    '<label>Date</label><input id="f-date" type="date" value="' + esc(ev.date) + '">' +
+    '<label>Time (optional)</label><input id="f-time" type="time" value="' + esc(ev.time) + '">' +
+    '<label>Repeats</label><select id="f-repeat">' +
+      opt('none', 'Doesn\u2019t repeat') +
+      opt('weekly', 'Every week') +
+      opt('biweekly', 'Every 2 weeks') +
+      opt('monthly-date', 'Monthly on this date') +
+      opt('monthly-nth', 'Monthly on this weekday (e.g. 3rd Tuesday)') +
+      opt('first-third', '1st & 3rd of this weekday (council-style)') +
+    '</select>' +
+    '<label>Where (optional)</label><input id="f-place" value="' + esc(ev.place) + '">' +
+    '<label>Notes (optional)</label><textarea id="f-notes">' + esc(ev.notes) + '</textarea>' +
+    '<div class="modal-row">' +
+      '<button class="abtn ghost" id="f-cancel">Cancel</button>' +
+      '<button class="abtn mail" id="f-save">Save</button>' +
+    '</div>' +
+    (id ? '<button class="del-link" id="f-del">Delete this event</button>' : '')
+  );
+  $('f-cancel').onclick = closeModal;
+  $('f-save').onclick = function(){
+    var title = $('f-title').value.trim();
+    if(!title){ toast('Give it a name first'); return; }
+    var rep = $('f-repeat').value;
+    var date = $('f-date').value;
+    if(rep !== 'none' && !date){ toast('A repeating event needs a starting date'); return; }
+    var vals = {
+      title:title, date:date, time:$('f-time').value,
+      place:$('f-place').value.trim(), notes:$('f-notes').value.trim(), repeat:rep
+    };
+    if(id){
+      var i = events.map(function(e){ return e.id; }).indexOf(id);
+      if(i >= 0){ vals.id = id; events[i] = vals; }
+    } else {
+      vals.id = 'e' + Date.now();
+      events.push(vals);
+    }
+    jSet(K_EVENTS, events); renderEvents(); closeModal(); toast('Saved');
+  };
+  if(id){
+    $('f-del').onclick = function(){
+      if(!confirm('Delete this event?')) return;
+      events = events.filter(function(e){ return e.id !== id; });
+      jSet(K_EVENTS, events); renderEvents(); closeModal(); toast('Deleted');
+    };
+  }
+}
+$('addEventBtn').onclick = function(){ openEventModal(null); };
+
+/* ---------- backup / restore ---------- */
+$('exportBtn').onclick = function(){
+  var data = {
+    app:'civic-compass', ver:VERSION, exported:new Date().toISOString(),
+    reps:reps, events:events, log:log, logTypes:logTypes, name:prefs.name || ''
+  };
+  try{
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    var d = new Date();
+    var stamp = d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
+    a.download = 'civic-compass-backup-' + stamp + '.json';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+    toast('Backup saved to your downloads');
+  }catch(e){ toast('Could not save a backup on this browser'); }
+};
+$('importBtn').onclick = function(){ $('importFile').click(); };
+$('importFile').addEventListener('change', function(){
+  var f = this.files && this.files[0];
+  this.value = '';
+  if(!f) return;
+  var reader = new FileReader();
+  reader.onload = function(){
+    var data;
+    try{ data = JSON.parse(reader.result); }catch(e){ toast('That file isn\u2019t a Civic Compass backup'); return; }
+    if(!data || data.app !== 'civic-compass'){ toast('That file isn\u2019t a Civic Compass backup'); return; }
+    if(!confirm('Replace everything in this app with the backup from ' + (data.exported ? data.exported.slice(0,10) : 'that file') + '?')) return;
+    if(Array.isArray(data.reps)) reps = data.reps;
+    if(Array.isArray(data.events)) events = data.events;
+    if(Array.isArray(data.log)) log = data.log;
+    if(Array.isArray(data.logTypes)) logTypes = data.logTypes;
+    if(typeof data.name === 'string') prefs.name = data.name;
+    prefs.seeded = true;
+    jSet(K_REPS, reps); jSet(K_EVENTS, events); jSet(K_LOG, log);
+    jSet(K_TYPES, logTypes); jSet(K_PREFS, prefs);
+    renderGreet(); renderReps(); renderEvents(); renderLog();
+    toast('Backup restored');
+  };
+  reader.onerror = function(){ toast('Could not read that file'); };
+  reader.readAsText(f);
+});
+
+/* ---------- settings ---------- */
+$('nameBtn').onclick = function(){
+  var n = prompt('What should I call you?', prefs.name || '');
+  if(n === null) return;
+  prefs.name = n.trim(); jSet(K_PREFS, prefs); renderGreet();
+};
+$('resetRepsBtn').onclick = function(){
+  if(!confirm('Put all official cards back to the originals? Your edits will be lost.')) return;
+  reps = defaultReps(); jSet(K_REPS, reps); renderReps(); toast('Officials reset');
+};
+
+/* ---------- install hint ---------- */
+function isIOS(){ return /iPad|iPhone|iPod/.test(navigator.userAgent); }
+function installInstructions(){
+  return isIOS()
+    ? 'In Safari, tap the Share button (square with an arrow), then \u201CAdd to Home Screen.\u201D'
+    : 'In Chrome, tap the \u22EE menu in the top corner, then \u201CAdd to Home screen.\u201D';
+}
+function setupInstallBar(){
+  var standalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  if(prefs.installDismissed || standalone) return;
+  $('installText').textContent = installInstructions();
+  $('installBar').classList.add('show');
+  $('installDismiss').onclick = function(){
+    prefs.installDismissed = true; jSet(K_PREFS, prefs);
+    $('installBar').classList.remove('show');
+  };
+}
+$('howInstallBtn').onclick = function(){ alert(installInstructions()); };
+
+/* ---------- welcome tour ---------- */
+var TOUR = [
+  {tab:'dates', e:'🧭', t:'Welcome to Civic Compass', b:'Your pocket guide to staying involved: election dates, the people who represent you, your events, and the actions you take. Everything lives on your phone — nothing is shared unless you share it.'},
+  {tab:'dates', e:'🗓', t:'Dates', b:'The countdown to Election Day, every deadline that matters, and one-tap links to check your registration or pull up your sample ballot.'},
+  {tab:'reps', e:'🏛', t:'Reps', b:'Cards for your city, county, state, and federal officials. Tap Call or Website to reach them. Tap the little pencil to edit any card or keep your own talking points. Two cards say \u201CFill me in\u201D — the pencil is how.'},
+  {tab:'events', e:'📌', t:'Events', b:'Keep meetings, rallies, and postcard nights here. Events can repeat — \u201C1st & 3rd Tuesday\u201D included — and Share drops one straight into any group chat.'},
+  {tab:'log', e:'✅', t:'Log', b:'Tap a button each time you make a call, write a postcard, or show up somewhere. At the end of the month, share your tally. It adds up faster than you think.'},
+  {tab:'settings', e:'💾', t:'One last thing', b:'Save a backup now and then from this More tab — it keeps everything safe if you ever switch phones. You can replay this tour from here too. That\u2019s it — go get \u2019em.'}
+];
+var tourStep = 0;
+function renderTour(){
+  var s = TOUR[tourStep];
+  showPanel(s.tab);
+  $('tourE').textContent = s.e;
+  $('tourT').textContent = s.t;
+  $('tourB').textContent = s.b;
+  var dots = '';
+  for(var i=0;i<TOUR.length;i++) dots += '<span class="' + (i === tourStep ? 'on' : '') + '"></span>';
+  $('tourDots').innerHTML = dots;
+  $('tourBack').style.visibility = tourStep === 0 ? 'hidden' : 'visible';
+  $('tourNext').textContent = tourStep === TOUR.length - 1 ? 'Done' : 'Next';
+  $('tourSkip').style.visibility = tourStep === TOUR.length - 1 ? 'hidden' : 'visible';
+}
+function startTour(){
+  tourStep = 0;
+  $('tourBg').classList.add('show');
+  renderTour();
+}
+function endTour(){
+  $('tourBg').classList.remove('show');
+  prefs.tourDone = true; jSet(K_PREFS, prefs);
+  showPanel('dates');
+}
+$('tourNext').onclick = function(){
+  if(tourStep === TOUR.length - 1){ endTour(); return; }
+  tourStep++; renderTour();
+};
+$('tourBack').onclick = function(){ if(tourStep > 0){ tourStep--; renderTour(); } };
+$('tourSkip').onclick = endTour;
+$('tourAgainBtn').onclick = startTour;
+
+/* ---------- service worker (https only; no-op elsewhere) ---------- */
+try{
+  if('serviceWorker' in navigator && location.protocol === 'https:'){
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  }
+}catch(e){}
+
+/* ---------- boot ---------- */
+applyTheme();
+renderGreet();
+$('verBadge').textContent = VERSION.split(' · ')[0];
+renderDates();
+renderReps();
+renderEvents();
+renderLog();
+setupInstallBar();
+setInterval(renderDates, 60000);
+if(!prefs.tourDone) startTour();
+</script>
+</body>
+</html>
