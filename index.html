@@ -15,12 +15,16 @@
   --accent:#1b2a4a; --accent-ink:#f6f2ea;
   --gold:#c9a227; --gold-ink:#20242e;
   --line:#e5dfd2; --danger:#b3402e; --ok:#2e7d4f;
-  --shadow:0 2px 10px rgba(32,36,46,.08);
+  --shadow:0 1px 2px rgba(32,36,46,.05), 0 5px 16px rgba(32,36,46,.10);
+  --hl:rgba(255,255,255,.75);
+  --hgrad:linear-gradient(155deg,#25375f 0%,#1b2a4a 55%,#151f38 100%);
 }
 body.dark{
   --bg:#141824; --card:#1e2432; --ink:#eae6dc; --muted:#9aa1b0;
   --accent:#3d5a99; --accent-ink:#f6f2ea;
-  --line:#2c3446; --shadow:0 2px 10px rgba(0,0,0,.35);
+  --line:#2c3446; --shadow:0 1px 2px rgba(0,0,0,.4), 0 7px 20px rgba(0,0,0,.42);
+  --hl:rgba(255,255,255,.06);
+  --hgrad:linear-gradient(155deg,#2f4472 0%,#233259 55%,#182543 100%);
 }
 /* gold surfaces keep dark ink in BOTH themes (hardcoded on-color) */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -31,9 +35,14 @@ body{
   padding-bottom:env(safe-area-inset-bottom);
 }
 header{
-  background:var(--accent); color:var(--accent-ink);
+  background:var(--hgrad); color:var(--accent-ink);
   padding:calc(14px + env(safe-area-inset-top)) 16px 14px; display:flex; align-items:center; gap:12px;
+  position:relative; overflow:hidden;
+  border-bottom:2px solid rgba(201,162,39,.55);
 }
+header::before{content:'';position:absolute;right:-36px;top:-52px;width:150px;height:150px;border:2px solid rgba(255,255,255,.07);border-radius:50%;pointer-events:none}
+header::after{content:'';position:absolute;right:-6px;top:-22px;width:90px;height:90px;border:1.5px solid rgba(255,255,255,.06);border-radius:50%;pointer-events:none}
+header > *{position:relative;z-index:1}
 header svg{flex:0 0 34px}
 .h-title{font-size:20px;font-weight:bold;letter-spacing:.3px}
 .h-sub{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;opacity:.85}
@@ -50,16 +59,22 @@ header svg{flex:0 0 34px}
 main{flex:1;overflow-y:auto;padding:16px 14px 92px;max-width:640px;width:100%;margin:0 auto}
 .panel{display:none}
 .panel.active{display:block}
-h2{font-size:15px;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted);margin:20px 2px 10px;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-weight:600}
+h2{font-size:15px;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted);margin:20px 2px 10px;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-weight:600;display:flex;align-items:center;gap:10px}
+h2::after{content:'';flex:1;height:1px;background:linear-gradient(90deg, rgba(201,162,39,.55), transparent)}
 h2:first-child{margin-top:2px}
 .card{
   background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow)
+  padding:14px 16px;margin-bottom:10px;
+  box-shadow:inset 0 1px 0 var(--hl), var(--shadow)
 }
 .hero{
-  background:var(--accent);color:var(--accent-ink);text-align:center;
-  border:none;padding:22px 16px
+  background:var(--hgrad);color:var(--accent-ink);text-align:center;
+  border:none;padding:22px 16px;position:relative;overflow:hidden
 }
+.hero::before{content:'';position:absolute;top:-46%;left:50%;transform:translateX(-50%);width:280px;height:280px;background:radial-gradient(circle, rgba(201,162,39,.30), transparent 62%);pointer-events:none}
+.hero > *{position:relative}
+.hero{min-height:238px;display:flex;flex-direction:column;justify-content:center}
+.hero .dial{position:absolute;top:50%;left:50%;width:198px;height:198px;transform:translate(-50%,-50%);opacity:.6;pointer-events:none}
 .hero .big{font-size:56px;font-weight:bold;line-height:1}
 .hero .lbl{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:13px;letter-spacing:1px;text-transform:uppercase;opacity:.85;margin-top:6px}
 .hero .when{font-size:15px;margin-top:8px;opacity:.95}
@@ -84,6 +99,10 @@ a.linkrow{
   display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)
 }
 a.linkrow .lr-e{font-size:24px;flex:0 0 32px;text-align:center}
+.lr-ic{flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.4);display:flex;align-items:center;justify-content:center;color:var(--gold)}
+.lr-ic svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ic-s{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.nav-ic{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 a.linkrow .lr-t{font-size:16px;font-weight:bold}
 a.linkrow .lr-s{font-size:12px;color:var(--muted);font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;margin-top:2px}
 a.linkrow .lr-a{margin-left:auto;color:var(--muted);font-size:18px}
@@ -100,6 +119,10 @@ a.linkrow .lr-a{margin-left:auto;color:var(--muted);font-size:18px}
 .abtn.mail{background:var(--accent);color:var(--accent-ink)}
 .abtn.web{background:var(--gold);color:var(--gold-ink)}
 .abtn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.abtn,.iconbtn,nav button,.logbtn,a.linkrow,.editpen{transition:transform .1s ease-out}
+.abtn:active,.iconbtn:active,nav button:active,.editpen:active{transform:scale(.93)}
+.logbtn:active{transform:scale(.96)}
+a.linkrow:active{transform:scale(.98)}
 .rep-head{display:flex;align-items:flex-start}
 .rep-head .grow{flex:1;min-width:0}
 .editpen{background:none;border:none;font-size:16px;cursor:pointer;color:var(--muted);padding:4px}
@@ -164,12 +187,13 @@ body.dark nav button.on{color:#8fb0ee}
 .modal-row .abtn{flex:1;justify-content:center;padding:13px}
 .del-link{display:block;text-align:center;margin-top:14px;color:var(--danger);font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:14px;background:none;border:none;cursor:pointer;width:100%}
 .toast{
-  position:fixed;bottom:88px;left:50%;transform:translateX(-50%);
+  position:fixed;bottom:88px;left:50%;
   background:var(--ink);color:var(--bg);font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
-  font-size:14px;padding:10px 18px;border-radius:24px;opacity:0;transition:opacity .25s;z-index:60;pointer-events:none;
+  font-size:14px;padding:10px 18px;border-radius:24px;opacity:0;
+  transform:translate(-50%,10px);transition:opacity .25s,transform .25s ease-out;z-index:60;pointer-events:none;
   max-width:88vw;text-align:center
 }
-.toast.show{opacity:1}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 .installbar{
   background:var(--gold);color:var(--gold-ink);border-radius:14px;padding:12px 14px;margin-bottom:14px;
   font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:14px;line-height:1.5;display:none
@@ -195,16 +219,87 @@ body.dark nav button.on{color:#8fb0ee}
 .tour .t-row{display:flex;gap:10px;margin-top:16px;align-items:center}
 .tour .t-row .abtn{justify-content:center;padding:13px 18px}
 .tour .t-row .grow1{flex:1}
+.opt{display:block;width:100%;text-align:left;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;padding:13px 14px;margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);cursor:pointer}
+.opt.sel{border-color:var(--gold);background:rgba(201,162,39,.14);font-weight:600}
+.plan-card{border-left:5px solid var(--gold)}
+.plan-line{font-size:15px;margin-top:6px}
+.plan-line b{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);display:block}
+.plan-cta{border:2px dashed var(--gold);background:transparent;text-align:center;padding:18px 16px;cursor:pointer}
+.plan-cta .pc-t{font-size:17px;font-weight:bold;margin-top:8px}
+.plan-cta .pc-s{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:13px;color:var(--muted);margin-top:4px}
+.plan-cta .lr-ic{margin:0 auto}
+.ring{position:relative;width:96px;height:96px;margin:8px auto 2px}
+.ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.ring .m-total{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin-top:0}
+#ringFg{transition:stroke-dashoffset .6s cubic-bezier(.22,.9,.3,1)}
+.toast.action{pointer-events:auto}
+.toast .t-undo{font-weight:800;text-decoration:underline;color:inherit;background:none;border:none;font-size:14px;margin-left:12px;cursor:pointer}
+.about-body{font-size:15px;line-height:1.65}
+.about-body p{margin-bottom:12px}
+.about-body .a-cred{font-style:italic;color:var(--muted);margin-top:16px}
+.about-body a{color:var(--accent);font-weight:600}
+body.dark .about-body a{color:#8fb0ee}
+.m-best{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;margin-top:8px;opacity:.85}
+.m-enc{font-size:14px;font-style:italic;margin-top:10px;opacity:.9}
+.chip.soon{background:#e2892b !important;color:#241a08 !important}
+.chip.urgent{background:#c94f3d !important;color:#fff !important}
+.spark{position:fixed;width:6px;height:6px;border-radius:50%;z-index:90;pointer-events:none;animation:sparkFly .5s ease-out forwards}
+.confetti{position:fixed;top:-14px;width:8px;height:13px;z-index:90;pointer-events:none;border-radius:2px;animation:confFall linear forwards}
+@keyframes sparkFly{to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+@keyframes confFall{to{transform:translateY(108vh) rotate(560deg);opacity:.5}}
+@media (prefers-reduced-motion: no-preference){
+  .panel.entering{animation:panelIn .28s cubic-bezier(.22,.9,.3,1)}
+  .panel.entering .card{animation:cardIn .34s cubic-bezier(.22,.9,.3,1) backwards}
+  .panel.entering .card:nth-child(1){animation-delay:.02s}
+  .panel.entering .card:nth-child(2){animation-delay:.05s}
+  .panel.entering .card:nth-child(3){animation-delay:.08s}
+  .panel.entering .card:nth-child(4){animation-delay:.11s}
+  .panel.entering .card:nth-child(5){animation-delay:.14s}
+  .panel.entering .card:nth-child(6){animation-delay:.17s}
+  .panel.entering .card:nth-child(7){animation-delay:.20s}
+  .panel.entering .card:nth-child(8){animation-delay:.23s}
+  .panel.entering .card:nth-child(n+9){animation-delay:.25s}
+  .panel.entering .chip{animation:chipPop .34s cubic-bezier(.34,1.4,.5,1) backwards;animation-delay:.16s}
+  .modal-bg.show .modal{animation:sheetUp .32s cubic-bezier(.34,1.35,.5,1)}
+  .tour-bg.show .tour{animation:sheetUp .38s cubic-bezier(.34,1.35,.5,1)}
+  #needleG{transform-origin:20px 20px;animation:needleSettle 1.5s cubic-bezier(.4,.9,.5,1) .2s both}
+  .logbtn.pop{animation:btnPop .32s cubic-bezier(.34,1.5,.5,1)}
+  .chip.soon{animation:chipPulse 2.6s ease-in-out infinite}
+  .chip.urgent{animation:chipPulse 1.8s ease-in-out infinite}
+}
+@keyframes panelIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes chipPop{from{transform:scale(1.18)}to{transform:scale(1)}}
+@keyframes sheetUp{from{transform:translateY(44px);opacity:.6}to{transform:none;opacity:1}}
+@keyframes needleSettle{0%{transform:rotate(-42deg)}55%{transform:rotate(10deg)}80%{transform:rotate(-5deg)}100%{transform:rotate(0)}}
+@keyframes btnPop{0%{transform:scale(1)}35%{transform:scale(1.12,.9)}70%{transform:scale(.97,1.05)}100%{transform:scale(1)}}
+@keyframes chipPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 </style>
 </head>
 <body>
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24"><path d="M4 10l8-6 8 6M5.5 10v7M9.75 10v7M14.25 10v7M18.5 10v7M4 19.5h16"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21c-4.2-4.6-6.5-7.6-6.5-10.5a6.5 6.5 0 0 1 13 0c0 2.9-2.3 5.9-6.5 10.5z"/><circle cx="12" cy="10.3" r="2.4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.2 12.3l2.6 2.6 5-5.6"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><path d="M4 7.5h16M4 12h16M4 16.5h16"/><circle cx="9" cy="7.5" r="1.8" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.8" fill="currentColor" stroke="none"/><circle cx="7.5" cy="16.5" r="1.8" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.8 3.5H4.5A1.5 1.5 0 0 0 3 5c0 8.8 7.2 16 16 16a1.5 1.5 0 0 0 1.5-1.5v-2.3l-4-1.6-1.9 1.9c-2.7-1.3-4.8-3.4-6.1-6.1l1.9-1.9z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 7l8 5.5L20 7"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><ellipse cx="12" cy="12" rx="3.8" ry="8.5"/></symbol>
+  <symbol id="i-ballot" viewBox="0 0 24 24"><rect x="4" y="11.5" width="16" height="8" rx="1.5"/><path d="M8.5 11.5V5.5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v6M10.5 7.5h3"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6.5 3.5h7l4 4v13h-11z"/><path d="M13.5 3.5V8h4M9 12h6M9 15.5h6"/></symbol>
+  <symbol id="i-news" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M7 9h10M7 12h10M7 15h6"/></symbol>
+  <symbol id="i-radio" viewBox="0 0 24 24"><rect x="3.5" y="8.5" width="17" height="11" rx="2"/><circle cx="15.8" cy="14" r="2.6"/><path d="M6.5 12h4M6.5 16h4M6 8.5L16 4"/></symbol>
+</svg>
 
 <header>
   <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
     <circle cx="20" cy="20" r="18" fill="none" stroke="#c9a227" stroke-width="2.5"/>
-    <polygon points="20,7 24,20 20,33 16,20" fill="#c9a227"/>
-    <polygon points="20,7 24,20 20,20" fill="#f6f2ea"/>
-    <circle cx="20" cy="20" r="2.6" fill="#f6f2ea"/>
+    <g id="needleG">
+      <polygon points="20,7 24,20 20,33 16,20" fill="#c9a227"/>
+      <polygon points="20,7 24,20 20,20" fill="#f6f2ea"/>
+      <circle cx="20" cy="20" r="2.6" fill="#f6f2ea"/>
+    </g>
   </svg>
   <div>
     <div class="h-title" id="greet">Civic Compass</div>
@@ -212,7 +307,7 @@ body.dark nav button.on{color:#8fb0ee}
   </div>
   <div class="h-right">
     <button class="iconbtn" id="themeBtn" aria-label="Toggle theme">◐</button>
-    <span class="badge" id="verBadge">v1.3</span>
+    <span class="badge" id="verBadge">v1.7</span>
   </div>
 </header>
 
@@ -226,36 +321,38 @@ body.dark nav button.on{color:#8fb0ee}
   <!-- DATES -->
   <section class="panel active" id="p-dates">
     <div class="card hero">
+      <svg class="dial" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="86" fill="none" stroke="rgba(201,162,39,.32)" stroke-width="1.4"/><g stroke="rgba(201,162,39,.5)"><line x1="143.0" y1="25.5" x2="139.5" y2="31.6" stroke-width="1.4"/><line x1="174.5" y1="57.0" x2="168.4" y2="60.5" stroke-width="1.4"/><line x1="186.0" y1="100.0" x2="174.0" y2="100.0" stroke-width="2.4"/><line x1="174.5" y1="143.0" x2="168.4" y2="139.5" stroke-width="1.4"/><line x1="143.0" y1="174.5" x2="139.5" y2="168.4" stroke-width="1.4"/><line x1="100.0" y1="186.0" x2="100.0" y2="174.0" stroke-width="2.4"/><line x1="57.0" y1="174.5" x2="60.5" y2="168.4" stroke-width="1.4"/><line x1="25.5" y1="143.0" x2="31.6" y2="139.5" stroke-width="1.4"/><line x1="14.0" y1="100.0" x2="26.0" y2="100.0" stroke-width="2.4"/><line x1="25.5" y1="57.0" x2="31.6" y2="60.5" stroke-width="1.4"/><line x1="57.0" y1="25.5" x2="60.5" y2="31.6" stroke-width="1.4"/></g><text x="100" y="30" text-anchor="middle" fill="rgba(201,162,39,.85)" font-size="15" font-family="Georgia,serif">N</text></svg>
       <div class="big" id="heroDays">–</div>
       <div class="lbl" id="heroLbl">days until Election Day</div>
       <div class="when" id="heroWhen"></div>
       <button class="abtn" id="shareCountBtn">↗ Share the countdown</button>
     </div>
+    <div id="planSlot"></div>
     <h2>Key dates · Nov 2026 General</h2>
     <div id="dateList"></div>
     <div class="verify" id="verifyLine"></div>
     <h2>Voter toolbox</h2>
     <a class="card linkrow" href="https://voterlookup.ohiosos.gov" target="_blank" rel="noopener">
-      <span class="lr-e">✅</span><span><span class="lr-t">Check my registration</span><br><span class="lr-s">Ohio Secretary of State · also shows your polling place</span></span><span class="lr-a">›</span>
+      <span class="lr-ic"><svg><use href="#i-check"></use></svg></span><span><span class="lr-t">Check my registration</span><br><span class="lr-s">Ohio Secretary of State · also shows your polling place</span></span><span class="lr-a">›</span>
     </a>
     <a class="card linkrow" href="https://lookup.boe.ohio.gov/vtrapp/medina/" target="_blank" rel="noopener">
-      <span class="lr-e">🗳</span><span><span class="lr-t">My sample ballot</span><br><span class="lr-s">Medina County ballot &amp; precinct lookup</span></span><span class="lr-a">›</span>
+      <span class="lr-ic"><svg><use href="#i-ballot"></use></svg></span><span><span class="lr-t">My sample ballot</span><br><span class="lr-s">Medina County ballot &amp; precinct lookup</span></span><span class="lr-a">›</span>
     </a>
     <a class="card linkrow" href="https://www.boe.ohio.gov/medina" target="_blank" rel="noopener">
-      <span class="lr-e">📬</span><span><span class="lr-t">Absentee &amp; early voting</span><br><span class="lr-s">Medina County Board of Elections</span></span><span class="lr-a">›</span>
+      <span class="lr-ic"><svg><use href="#i-mail"></use></svg></span><span><span class="lr-t">Absentee &amp; early voting</span><br><span class="lr-s">Medina County Board of Elections</span></span><span class="lr-a">›</span>
     </a>
     <a class="card linkrow" href="https://www.voteohio.gov" target="_blank" rel="noopener">
-      <span class="lr-e">🌐</span><span><span class="lr-t">VoteOhio.gov</span><br><span class="lr-s">The state's official voting hub</span></span><span class="lr-a">›</span>
+      <span class="lr-ic"><svg><use href="#i-globe"></use></svg></span><span><span class="lr-t">VoteOhio.gov</span><br><span class="lr-s">The state's official voting hub</span></span><span class="lr-a">›</span>
     </a>
     <h2>Around town</h2>
     <a class="card linkrow" href="https://www.wadsworthcity.com/AgendaCenter" target="_blank" rel="noopener">
-      <span class="lr-e">📄</span><span><span class="lr-t">Council agendas &amp; minutes</span><br><span class="lr-s">City of Wadsworth Agenda Center</span></span><span class="lr-a">›</span>
+      <span class="lr-ic"><svg><use href="#i-doc"></use></svg></span><span><span class="lr-t">Council agendas &amp; minutes</span><br><span class="lr-s">City of Wadsworth Agenda Center</span></span><span class="lr-a">›</span>
     </a>
     <a class="card linkrow" href="https://medina-gazette.com" target="_blank" rel="noopener">
-      <span class="lr-e">📰</span><span><span class="lr-t">Medina County Gazette</span><br><span class="lr-s">Local news</span></span><span class="lr-a">›</span>
+      <span class="lr-ic"><svg><use href="#i-news"></use></svg></span><span><span class="lr-t">Medina County Gazette</span><br><span class="lr-s">Local news</span></span><span class="lr-a">›</span>
     </a>
     <a class="card linkrow" href="https://wadsworthcommunityradio.com" target="_blank" rel="noopener">
-      <span class="lr-e">📻</span><span><span class="lr-t">Wadsworth Community Radio</span><br><span class="lr-s">Local coverage &amp; election results</span></span><span class="lr-a">›</span>
+      <span class="lr-ic"><svg><use href="#i-radio"></use></svg></span><span><span class="lr-t">Wadsworth Community Radio</span><br><span class="lr-s">Local coverage &amp; election results</span></span><span class="lr-a">›</span>
     </a>
   </section>
 
@@ -274,9 +371,17 @@ body.dark nav button.on{color:#8fb0ee}
   <section class="panel" id="p-log">
     <div class="card monthcard">
       <div class="m-title" id="mTitle"></div>
-      <div class="m-total" id="mTotal">0</div>
+      <div class="ring">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="6"/>
+          <circle id="ringFg" cx="50" cy="50" r="44" fill="none" stroke="#c9a227" stroke-width="6" stroke-linecap="round" stroke-dasharray="276.5" stroke-dashoffset="276.5"/>
+        </svg>
+        <div class="m-total" id="mTotal">0</div>
+      </div>
       <div class="m-tlbl">actions this month</div>
       <div class="m-counts" id="mCounts"></div>
+      <div class="m-best" id="mBest"></div>
+      <div class="m-enc" id="mEnc"></div>
       <div class="rep-actions"><button class="abtn" id="shareMonthBtn">↗ Share my month</button></div>
     </div>
     <div class="card">
@@ -305,6 +410,10 @@ body.dark nav button.on{color:#8fb0ee}
       <div class="set-row">
         <div>How to install<div class="sub">Put this app on your home screen</div></div>
         <button class="abtn ghost" id="howInstallBtn">Show</button>
+      </div>
+      <div class="set-row">
+        <div>About Civic Compass<div class="sub">What this is and who made it</div></div>
+        <button class="abtn ghost" id="aboutBtn">View</button>
       </div>
       <div class="set-row">
         <div>App tour<div class="sub">Replay the welcome walkthrough</div></div>
@@ -337,11 +446,11 @@ body.dark nav button.on{color:#8fb0ee}
 </main>
 
 <nav>
-  <button data-p="dates" class="on"><span class="ic">🗓</span>Dates</button>
-  <button data-p="reps"><span class="ic">🏛</span>Reps</button>
-  <button data-p="events"><span class="ic">📌</span>Events</button>
-  <button data-p="log"><span class="ic">✅</span>Log</button>
-  <button data-p="settings"><span class="ic">⚙︎</span>More</button>
+  <button data-p="dates" class="on"><svg class="nav-ic"><use href="#i-cal"></use></svg>Dates</button>
+  <button data-p="reps"><svg class="nav-ic"><use href="#i-bank"></use></svg>Reps</button>
+  <button data-p="events"><svg class="nav-ic"><use href="#i-pin"></use></svg>Events</button>
+  <button data-p="log"><svg class="nav-ic"><use href="#i-check"></use></svg>Log</button>
+  <button data-p="settings"><svg class="nav-ic"><use href="#i-more"></use></svg>More</button>
 </nav>
 
 <div class="tour-bg" id="tourBg">
@@ -365,9 +474,9 @@ body.dark nav button.on{color:#8fb0ee}
 
 <script>
 'use strict';
-/* ============ Civic Compass · v1.3 · Jul 21 2026 ============ */
-var VERSION = 'v1.3 · Jul 21';
-var DATA_VERIFIED = 'July 21, 2026';
+/* ============ Civic Compass · v1.7 · Aug 22 2026 ============ */
+var VERSION = 'v1.7 · Aug 22';
+var DATA_VERIFIED = 'August 22, 2026';
 
 /* ---------- guarded storage ---------- */
 var mem = {};
@@ -385,9 +494,21 @@ function jGet(k,fallback){
   try{ return JSON.parse(raw); }catch(e){ return fallback; }
 }
 function jSet(k,obj){ sSet(k, JSON.stringify(obj)); }
+var MOTION_OK = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+function animateCount(el, target, ms){
+  var start = null;
+  function frame(ts){
+    if(start === null) start = ts;
+    var p = Math.min(1, (ts - start) / ms);
+    var e2 = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * e2);
+    if(p < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
 
 var K_REPS='cc_v1_reps', K_EVENTS='cc_v1_events', K_PREFS='cc_v1_prefs',
-    K_LOG='cc_v1_log', K_TYPES='cc_v1_logtypes';
+    K_LOG='cc_v1_log', K_TYPES='cc_v1_logtypes', K_PLAN='cc_v1_plan';
 
 /* ---------- key dates (verified against Ohio SOS-sourced info, Jul 21 2026) ---------- */
 var KEY_DATES = [
@@ -404,9 +525,9 @@ function defaultReps(){
   return [
     {sec:'City of Wadsworth', items:[
       {id:'r1', name:'Robin Laubaugh', office:'Mayor', phone:'330-335-1521', email:'', web:'https://www.wadsworthcity.com', notes:''},
-      {id:'r2', name:'Daniel Rospert', office:'Council President', phone:'330-335-2759', email:'', web:'https://www.wadsworthcity.com', notes:'Council meets 1st & 3rd Tuesdays. Clerk: 330-335-2759.'},
+      {id:'r2', name:'Daniel Rospert', office:'Council President', phone:'330-335-2759', email:'', web:'https://www.wadsworthcity.com', notes:'Council meets 1st & 3rd Tuesdays. Clerk: 330-335-2759. Current council terms run Jan 2026 \u2013 Dec 2027.'},
       {id:'r3', name:'Mike Reese', office:'Council · Ward 1', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
-      {id:'r4', name:'', office:'Council · Ward 2', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:'Tap the pencil to fill in your Ward 2 member — find them on the city website.', fillin:true},
+      {id:'r4', name:'Jon Yurchiak', office:'Council · Ward 2', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
       {id:'r5', name:'Jeanne Hines', office:'Council · Ward 3', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
       {id:'r6', name:'Angela May', office:'Council · Ward 4', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
       {id:'r7', name:'Berger · Maxwell · Stugmyer', office:'Council · At-Large (3 seats)', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:'Zach Berger, Chris Maxwell, Thomas Stugmyer'}
@@ -417,7 +538,7 @@ function defaultReps(){
     {sec:'State of Ohio', items:[
       {id:'r9', name:'Mike DeWine', office:'Governor (term-limited · seat on the Nov ballot)', phone:'', email:'', web:'https://governor.ohio.gov', notes:''},
       {id:'r10', name:'Mark Romanchuk', office:'State Senator · District 22', phone:'', email:'', web:'https://www.ohiosenate.gov', notes:''},
-      {id:'r11', name:'', office:'State Representative · Ohio House', phone:'', email:'', web:'https://www.ohiohouse.gov', notes:'District lines shifted recently — look up your address at ohiohouse.gov, then tap the pencil to save your rep here.', fillin:true}
+      {id:'r11', name:'Sharon Ray', office:'State Representative · District 66', phone:'614-466-8140', email:'', web:'https://www.ohiohouse.gov', notes:'Lives in Wadsworth. Not seeking re-election \u2014 this seat is open on the Nov 2026 ballot.'}
     ]},
     {sec:'Federal', items:[
       {id:'r12', name:'Jon Husted', office:'U.S. Senator (seat on the Nov ballot)', phone:'202-224-3121', email:'', web:'https://www.senate.gov', notes:'Capitol switchboard — ask for the senator\u2019s office.'},
@@ -461,9 +582,9 @@ function esc(s){
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
-function toast(msg){
-  var t = $('toast'); t.textContent = msg; t.classList.add('show');
-  clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+function toast(msg, ms){
+  var t = $('toast'); t.textContent = msg; t.classList.remove('action'); t.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove('show'); }, ms || 2200);
 }
 function midnight(iso){
   var p = iso.split('-');
@@ -578,9 +699,28 @@ $('shareCountBtn').onclick = function(){
 /* ---------- nav ---------- */
 var navBtns = document.querySelectorAll('nav button');
 function showPanel(p){
-  document.querySelectorAll('.panel').forEach(function(el){ el.classList.remove('active'); });
-  $('p-' + p).classList.add('active');
+  document.querySelectorAll('.panel').forEach(function(el){ el.classList.remove('active', 'entering'); });
+  var el = $('p-' + p);
+  el.classList.add('active');
+  if(MOTION_OK){
+    el.classList.add('entering');
+    clearTimeout(showPanel._t);
+    showPanel._t = setTimeout(function(){ el.classList.remove('entering'); }, 480);
+  }
   navBtns.forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-p') === p); });
+  if(p === 'log' && MOTION_OK){
+    var fg = $('ringFg');
+    if(fg){
+      var end = fg.style.strokeDashoffset;
+      fg.style.transition = 'none';
+      fg.style.strokeDashoffset = '276.5';
+      void fg.offsetWidth;
+      fg.style.transition = '';
+      fg.style.strokeDashoffset = end;
+    }
+    animateCount($('mTotal'), monthEntries().length, 500);
+    animateCount($('yTotal'), yearEntries().length, 650);
+  }
 }
 navBtns.forEach(function(b){
   b.onclick = function(){ showPanel(b.getAttribute('data-p')); };
@@ -589,17 +729,26 @@ navBtns.forEach(function(b){
 /* ---------- DATES ---------- */
 function renderDates(){
   var dTo = daysUntil(ELECTION_DAY);
-  if(dTo > 1){ $('heroDays').textContent = dTo; $('heroLbl').textContent = 'days until Election Day'; }
+  if(dTo > 1){
+    if(!renderDates._done && MOTION_OK){ animateCount($('heroDays'), dTo, 750); }
+    else { $('heroDays').textContent = dTo; }
+    $('heroLbl').textContent = 'days until Election Day';
+  }
   else if(dTo === 1){ $('heroDays').textContent = '1'; $('heroLbl').textContent = 'day until Election Day'; }
   else if(dTo === 0){ $('heroDays').textContent = 'TODAY'; $('heroLbl').textContent = 'is Election Day — go vote!'; }
   else { $('heroDays').textContent = '✓'; $('heroLbl').textContent = 'Election Day has passed'; }
   $('heroWhen').textContent = niceDateFull(ELECTION_DAY);
+  renderDates._done = true;
 
   var html = '';
   KEY_DATES.forEach(function(kd){
     var d = daysUntil(kd.d);
     var chip;
-    if(d > 0) chip = '<div class="chip"><b>' + d + '</b><span>day' + (d===1?'':'s') + '</span></div>';
+    if(d > 0){
+      var ccls = 'chip';
+      if(d <= 30) ccls += (kd.d === '2026-10-05' ? ' urgent' : ' soon');
+      chip = '<div class="' + ccls + '"><b>' + d + '</b><span>day' + (d===1?'':'s') + '</span></div>';
+    }
     else if(d === 0) chip = '<div class="chip"><b>NOW</b><span>today</span></div>';
     else chip = '<div class="chip past"><b>✓</b><span>done</span></div>';
     html += '<div class="card daterow">' + chip +
@@ -637,9 +786,9 @@ function renderReps(){
       html += '</div><button class="editpen" data-edit="' + esc(r.id) + '" aria-label="Edit">✎</button></div>';
       if(r.notes) html += '<div class="rep-notes">' + esc(r.notes) + '</div>';
       var acts = '';
-      if(r.phone) acts += '<a class="abtn call" href="tel:' + esc(r.phone.replace(/[^0-9+]/g,'')) + '">📞 Call</a>';
-      if(r.email) acts += '<a class="abtn mail" href="mailto:' + esc(r.email) + '">✉️ Email</a>';
-      if(r.web) acts += '<a class="abtn web" href="' + esc(r.web) + '" target="_blank" rel="noopener">🌐 Website</a>';
+      if(r.phone) acts += '<a class="abtn call" href="tel:' + esc(r.phone.replace(/[^0-9+]/g,'')) + '"><svg class="ic-s"><use href="#i-phone"></use></svg>Call</a>';
+      if(r.email) acts += '<a class="abtn mail" href="mailto:' + esc(r.email) + '"><svg class="ic-s"><use href="#i-mail"></use></svg>Email</a>';
+      if(r.web) acts += '<a class="abtn web" href="' + esc(r.web) + '" target="_blank" rel="noopener"><svg class="ic-s"><use href="#i-globe"></use></svg>Website</a>';
       if(acts) html += '<div class="rep-actions">' + acts + '</div>';
       html += '</div>';
     });
@@ -713,7 +862,7 @@ function renderEvents(){
     html += '</div><button class="editpen" data-evedit="' + esc(ev.id) + '" aria-label="Edit">✎</button></div>';
     if(ev.notes) html += '<div class="ev-notes">' + esc(ev.notes) + '</div>';
     html += '<div class="rep-actions"><button class="abtn ghost" data-evshare="' + esc(ev.id) + '">↗ Share</button>' +
-      '<button class="abtn ghost" data-evcal="' + esc(ev.id) + '">📅 Add to calendar</button></div>';
+      '<button class="abtn ghost" data-evcal="' + esc(ev.id) + '"><svg class="ic-s"><use href="#i-cal"></use></svg>Add to calendar</button></div>';
     html += '</div>';
   });
   $('eventList').innerHTML = html;
@@ -834,7 +983,58 @@ function tallyText(ents, label){
   return 'My ' + label + ' civic actions: ' + bits.join(' · ') + ' — ' + ents.length + ' total';
 }
 function monthSummaryText(){ return tallyText(monthEntries(), monthName()); }
-function renderLog(){
+var MILESTONES = [1, 10, 25, 50, 100, 250, 500, 1000];
+var ENCOURAGE = [
+  'Showing up is most of the work.',
+  'Small actions stack.',
+  'The people who show up are the ones who decide.',
+  'One call is one more than none.',
+  'Democracy is a practice, not an event.',
+  'Somebody has to know the details. Might as well be you.',
+  'Every movement is mostly folding chairs and phone calls.',
+  'Local is where it actually happens.'
+];
+function dayOfYear(){
+  var now = new Date();
+  return Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+}
+function burst(x, y){
+  if(!MOTION_OK) return;
+  var colors = ['#c9a227', '#e6c65a', '#f6f2ea'];
+  for(var i = 0; i < 8; i++){
+    var s = document.createElement('span');
+    s.className = 'spark';
+    var a = (Math.PI * 2) * (i / 8) + Math.random() * 0.6;
+    var dist = 26 + Math.random() * 22;
+    s.style.left = x + 'px'; s.style.top = y + 'px';
+    s.style.setProperty('--dx', (Math.cos(a) * dist) + 'px');
+    s.style.setProperty('--dy', (Math.sin(a) * dist) + 'px');
+    s.style.background = colors[i % 3];
+    document.body.appendChild(s);
+    (function(el){ setTimeout(function(){ el.remove(); }, 600); })(s);
+  }
+}
+function confetti(){
+  if(!MOTION_OK) return;
+  var colors = ['#c9a227', '#e6c65a', '#1b2a4a', '#f6f2ea', '#2e7d4f'];
+  for(var i = 0; i < 60; i++){
+    var s = document.createElement('span');
+    s.className = 'confetti';
+    s.style.left = (Math.random() * 100) + 'vw';
+    s.style.background = colors[i % colors.length];
+    s.style.animationDuration = (1.4 + Math.random() * 0.9) + 's';
+    s.style.animationDelay = (Math.random() * 0.3) + 's';
+    document.body.appendChild(s);
+    (function(el){ setTimeout(function(){ el.remove(); }, 2800); })(s);
+  }
+}
+function celebrate(n){
+  confetti();
+  toast(n === 1
+    ? 'Your first action of ' + new Date().getFullYear() + '. It starts here.'
+    : '\uD83C\uDF89 That\u2019s ' + n + ' actions this year. Keep going.', 3500);
+}
+function updateLogNumbers(){
   var ents = monthEntries();
   $('mTitle').textContent = monthName();
   $('mTotal').textContent = ents.length;
@@ -850,8 +1050,22 @@ function renderLog(){
   }
   $('mCounts').innerHTML = chtml || '<span style="opacity:.8">Tap a button below to log your first action.</span>';
 
+  var now = new Date();
+  var best = null;
+  for(var m = 0; m < now.getMonth(); m++){
+    var n = log.filter(function(en){
+      var d = new Date(en.ts);
+      return d.getFullYear() === now.getFullYear() && d.getMonth() === m;
+    }).length;
+    if(n > 0 && (!best || n > best.n)) best = {m:m, n:n};
+  }
+  $('mBest').style.display = best ? '' : 'none';
+  if(best) $('mBest').textContent = 'Best month so far: ' +
+    new Date(now.getFullYear(), best.m, 1).toLocaleDateString('en-US', {month:'long'}) + ' · ' + best.n + ' actions';
+  $('mEnc').textContent = '\u201C' + ENCOURAGE[dayOfYear() % ENCOURAGE.length] + '\u201D';
+
   var yents = yearEntries();
-  $('yTitle').textContent = new Date().getFullYear() + ' so far';
+  $('yTitle').textContent = now.getFullYear() + ' so far';
   $('yTotal').textContent = yents.length;
   var ycounts = {};
   yents.forEach(function(en){
@@ -863,26 +1077,75 @@ function renderLog(){
   for(var ykey in ycounts){ yhtml += (ycounts[ykey].e ? ycounts[ykey].e + ' ' : '') + esc(ykey) + ' × ' + ycounts[ykey].n + '<br>'; }
   $('yCounts').innerHTML = yhtml || 'Everything you log builds toward this.';
 
+  logTypes.forEach(function(t){
+    var el = document.querySelector('[data-logk="' + t.k + '"] .lb-c');
+    if(el) el.textContent = ents.filter(function(en){ return en.k === t.k; }).length + ' this month';
+  });
+
+  var target = Math.max(best ? best.n : 0, 10);
+  var pct = Math.min(1, ents.length / target);
+  var C = 276.5;
+  var fg = $('ringFg');
+  if(fg) fg.style.strokeDashoffset = (C * (1 - pct)).toFixed(1);
+}
+function renderHistory(){
+  var hist = log.slice().sort(function(a,b){ return b.ts - a.ts; });
+  var shown = hist.slice(0, 40);
+  var hhtml = '';
+  shown.forEach(function(en){
+    hhtml += '<div class="histrow"><span>' + esc(en.e || '') + '</span><span>' + esc(en.l || en.k) +
+      '</span><span style="color:var(--muted)">' + esc(niceTs(en.ts)) + '</span>' +
+      '<button class="hr-x" data-delh="' + esc(en.id) + '" aria-label="Delete entry">✕</button></div>';
+  });
+  if(!hist.length) hhtml = '<div class="ev-empty" style="padding:14px">No actions logged yet.</div>';
+  else if(hist.length > 40) hhtml += '<div class="histrow" style="color:var(--muted)">+ ' + (hist.length - 40) + ' older entries kept in your data</div>';
+  $('histCard').innerHTML = hhtml;
+  document.querySelectorAll('[data-delh]').forEach(function(b){
+    b.onclick = function(){
+      log = log.filter(function(en){ return en.id !== b.getAttribute('data-delh'); });
+      jSet(K_LOG, log); updateLogNumbers(); renderHistory();
+    };
+  });
+}
+function renderLog(){
   var ghtml = '';
   logTypes.forEach(function(t){
-    var monthCount = ents.filter(function(en){ return en.k === t.k; }).length;
     ghtml += '<div class="logbtn" data-logk="' + esc(t.k) + '">';
     if(t.custom) ghtml += '<button class="lb-x" data-delt="' + esc(t.k) + '" aria-label="Remove type">✕</button>';
     ghtml += '<div class="lb-e">' + esc(t.e) + '</div><div class="lb-l">' + esc(t.l) + '</div>';
-    ghtml += '<div class="lb-c">' + monthCount + ' this month</div></div>';
+    ghtml += '<div class="lb-c"></div></div>';
   });
   $('logGrid').innerHTML = ghtml;
 
   document.querySelectorAll('[data-logk]').forEach(function(b){
-    b.onclick = function(e){
-      if(e.target && e.target.getAttribute && e.target.getAttribute('data-delt')) return;
+    b.onclick = function(e2){
+      if(e2.target && e2.target.getAttribute && e2.target.getAttribute('data-delt')) return;
       var t = typeByKey(b.getAttribute('data-logk'));
       if(!t) return;
       log.push({id:'a' + Date.now(), k:t.k, e:t.e, l:t.l, ts:Date.now()});
       jSet(K_LOG, log);
-      renderLog();
-      var n = monthEntries().filter(function(en){ return en.k === t.k; }).length;
-      toast(t.e + ' +1 ' + t.l + ' — ' + n + ' this month');
+      if(MOTION_OK){
+        b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');
+        var r = b.getBoundingClientRect();
+        burst(r.left + r.width/2, r.top + r.height/2);
+      }
+      updateLogNumbers();
+      renderHistory();
+      var newId = log[log.length - 1].id;
+      var yc = yearEntries().length;
+      if(MILESTONES.indexOf(yc) > -1){
+        buzz([20, 40, 20]);
+        celebrate(yc);
+      } else {
+        buzz(12);
+        var nMo = monthEntries().filter(function(en){ return en.k === t.k; }).length;
+        toastAction(t.e + ' +1 ' + t.l + ' — ' + nMo + ' this month', 'Undo', function(){
+          log = log.filter(function(en){ return en.id !== newId; });
+          jSet(K_LOG, log);
+          updateLogNumbers();
+          renderHistory();
+        });
+      }
     };
   });
   document.querySelectorAll('[data-delt]').forEach(function(b){
@@ -896,25 +1159,8 @@ function renderLog(){
       jSet(K_TYPES, logTypes); renderLog(); toast('Removed');
     };
   });
-
-  var hist = log.slice().sort(function(a,b){ return b.ts - a.ts; });
-  var shown = hist.slice(0, 40);
-  var hhtml = '';
-  shown.forEach(function(en){
-    hhtml += '<div class="histrow"><span>' + esc(en.e || '') + '</span><span>' + esc(en.l || en.k) +
-      '</span><span style="color:var(--muted)">' + esc(niceTs(en.ts)) + '</span>' +
-      '<button class="hr-x" data-delh="' + esc(en.id) + '" aria-label="Delete entry">✕</button></div>';
-  });
-  if(!hist.length) hhtml = '<div class="ev-empty" style="padding:14px">No actions logged yet.</div>';
-  else if(hist.length > 40) hhtml += '<div class="histrow" style="color:var(--muted)">+ ' + (hist.length - 40) + ' older entries kept in your data</div>';
-  $('histCard').innerHTML = hhtml;
-
-  document.querySelectorAll('[data-delh]').forEach(function(b){
-    b.onclick = function(){
-      log = log.filter(function(en){ return en.id !== b.getAttribute('data-delh'); });
-      jSet(K_LOG, log); renderLog();
-    };
-  });
+  updateLogNumbers();
+  renderHistory();
 }
 $('shareMonthBtn').onclick = function(){ shareText(monthSummaryText()); };
 $('shareYearBtn').onclick = function(){ shareText(tallyText(yearEntries(), '' + new Date().getFullYear())); };
@@ -1135,6 +1381,178 @@ function setupInstallBar(){
 }
 $('howInstallBtn').onclick = function(){ alert(installInstructions()); };
 
+/* ---------- actionable toast + haptics ---------- */
+function toastAction(msg, label, cb, ms){
+  var t = $('toast');
+  t.innerHTML = esc(msg) + '<button class="t-undo">' + esc(label) + '</button>';
+  t.classList.add('show', 'action');
+  t.querySelector('.t-undo').onclick = function(){
+    t.classList.remove('show', 'action');
+    cb();
+  };
+  clearTimeout(toast._t);
+  toast._t = setTimeout(function(){ t.classList.remove('show', 'action'); }, ms || 3200);
+}
+function buzz(pattern){
+  try{ if(navigator.vibrate) navigator.vibrate(pattern); }catch(e){}
+}
+
+/* ---------- voting plan ---------- */
+var plan = jGet(K_PLAN, null);
+var PLAN_METHODS = {
+  early:{t:'Early, in person', win:'Oct 6 \u2013 Nov 2 (last day ends 2 PM)'},
+  mail:{t:'By mail (absentee)', win:'Request by Oct 27 \u00b7 ballot must be RECEIVED by 7:30 PM Nov 3'},
+  eday:{t:'On Election Day', win:'Tue, Nov 3 \u00b7 polls open 6:30 AM \u2013 7:30 PM'}
+};
+var planDraft = null, planStep = 0;
+function renderPlan(){
+  var slot = $('planSlot');
+  if(!plan){
+    slot.innerHTML = '<div class="card plan-cta" id="planCta">' +
+      '<span class="lr-ic"><svg><use href="#i-ballot"></use></svg></span>' +
+      '<div class="pc-t">Make your voting plan</div>' +
+      '<div class="pc-s">One minute now, zero scrambling in November</div></div>';
+    $('planCta').onclick = function(){ openPlanWizard(); };
+    return;
+  }
+  var m = PLAN_METHODS[plan.method];
+  var html = '<div class="card plan-card">';
+  html += '<div class="rep-head"><div class="grow">';
+  html += '<div class="rep-name">My voting plan</div>';
+  html += '<div class="rep-office">' + esc(m.t) + '</div>';
+  html += '</div><button class="editpen" id="planEdit" aria-label="Edit plan">✎</button></div>';
+  if(plan.when) html += '<div class="plan-line"><b>When</b>' + esc(plan.when) + '</div>';
+  if(plan.method === 'early') html += '<div class="plan-line"><b>Where</b>Medina County Board of Elections</div>';
+  else if(plan.method === 'eday') html += '<div class="plan-line"><b>Where</b>' + (plan.place ? esc(plan.place) : '<a href="https://voterlookup.ohiosos.gov" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Look up your polling place</a>') + '</div>';
+  if(plan.notes) html += '<div class="plan-line"><b>Notes</b>' + esc(plan.notes) + '</div>';
+  html += '<div class="plan-line"><b>Deadlines</b>' + esc(m.win) + '</div>';
+  if(plan.registered === 'unsure') html += '<div class="plan-line"><b>First</b><a href="https://voterlookup.ohiosos.gov" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Check your registration</a> before Oct 5</div>';
+  html += '<div class="rep-actions"><button class="abtn ghost" id="planShare">↗ Share</button></div>';
+  html += '</div>';
+  slot.innerHTML = html;
+  $('planEdit').onclick = function(){ openPlanWizard(plan); };
+  $('planShare').onclick = function(){
+    var bits = ['My voting plan: ' + m.t.toLowerCase()];
+    if(plan.when) bits.push(plan.when);
+    if(plan.method === 'early') bits.push('Medina County Board of Elections');
+    if(plan.method === 'eday' && plan.place) bits.push(plan.place);
+    bits.push('Make yours: VoteOhio.gov');
+    shareText(bits.join(' \u2014 '));
+  };
+}
+function openPlanWizard(existing){
+  planDraft = existing ? JSON.parse(JSON.stringify(existing)) : {registered:'', method:'', when:'', place:'', notes:''};
+  planStep = 0;
+  renderPlanStep();
+}
+function pOpt(val, label, field){
+  var sel = planDraft[field] === val ? ' sel' : '';
+  return '<button class="opt' + sel + '" data-pv="' + val + '" data-pf="' + field + '">' + label + '</button>';
+}
+function renderPlanStep(){
+  var html = '';
+  if(planStep === 0){
+    html = '<h3>Are you registered at your current address?</h3>' +
+      pOpt('yes', 'Yes, I\u2019m registered', 'registered') +
+      pOpt('unsure', 'Not sure \u2014 I\u2019ll check', 'registered') +
+      '<div class="verify" style="text-align:left;margin-top:10px">Check in 30 seconds at <a href="https://voterlookup.ohiosos.gov" target="_blank" rel="noopener">voterlookup.ohiosos.gov</a>. Registration closes Oct 5.</div>';
+  } else if(planStep === 1){
+    html = '<h3>How will you vote?</h3>' +
+      pOpt('early', 'Early, in person', 'method') +
+      pOpt('mail', 'By mail (absentee)', 'method') +
+      pOpt('eday', 'On Election Day', 'method');
+  } else if(planStep === 2){
+    if(planDraft.method === 'early'){
+      html = '<h3>When will you go?</h3>' +
+        pOpt('The first day \u2014 Tue, Oct 6', 'The first day (Tue, Oct 6)', 'when') +
+        pOpt('A weekend in October', 'A weekend in October', 'when') +
+        pOpt('The last week (by Nov 2, 2 PM)', 'The last week (ends Nov 2, 2 PM)', 'when') +
+        '<div class="verify" style="text-align:left;margin-top:10px">Early voting happens at the Medina County Board of Elections.</div>';
+    } else if(planDraft.method === 'mail'){
+      html = '<h3>When will you send your request?</h3>' +
+        pOpt('Requesting my ballot this week', 'This week \u2014 get it done', 'when') +
+        pOpt('Requesting by early October', 'By early October', 'when') +
+        pOpt('Cutting it close \u2014 by Oct 27', 'Right before the Oct 27 deadline', 'when') +
+        '<div class="verify" style="text-align:left;margin-top:10px">Request forms: <a href="https://www.boe.ohio.gov/medina" target="_blank" rel="noopener">Medina County Board of Elections</a>. Your ballot must be RECEIVED by 7:30 PM on Nov 3.</div>';
+    } else {
+      html = '<h3>Election Day details</h3>' +
+        pOpt('Morning, before work', 'Morning (polls open 6:30 AM)', 'when') +
+        pOpt('Midday', 'Midday', 'when') +
+        pOpt('After work (by 7:30 PM)', 'After work (polls close 7:30 PM)', 'when') +
+        '<label>Your polling place (optional)</label><input id="pw-place" value="' + esc(planDraft.place) + '" placeholder="Look it up and paste it here">' +
+        '<div class="verify" style="text-align:left;margin-top:8px">Find it: <a href="https://voterlookup.ohiosos.gov" target="_blank" rel="noopener">voterlookup.ohiosos.gov</a></div>';
+    }
+  } else {
+    html = '<h3>Anything to arrange?</h3>' +
+      '<label>Notes (optional)</label><textarea id="pw-notes" placeholder="Ride, ID, time off, who\u2019s coming with you\u2026">' + esc(planDraft.notes) + '</textarea>';
+  }
+  var last = planStep === 3;
+  html += '<div class="modal-row">' +
+    '<button class="abtn ghost" id="pw-back">' + (planStep === 0 ? 'Cancel' : 'Back') + '</button>' +
+    '<button class="abtn mail" id="pw-next">' + (last ? 'Save my plan' : 'Next') + '</button>' +
+    '</div>';
+  if(plan && planStep === 0) html += '<button class="del-link" id="pw-del">Remove my plan</button>';
+  openModal(html);
+  document.querySelectorAll('[data-pv]').forEach(function(b){
+    b.onclick = function(){
+      planDraft[b.getAttribute('data-pf')] = b.getAttribute('data-pv');
+      renderPlanStep();
+    };
+  });
+  $('pw-back').onclick = function(){
+    if(planStep === 0){ closeModal(); return; }
+    if(planStep === 2 && $('pw-place')) planDraft.place = $('pw-place').value.trim();
+    if(planStep === 3 && $('pw-notes')) planDraft.notes = $('pw-notes').value.trim();
+    planStep--; renderPlanStep();
+  };
+  $('pw-next').onclick = function(){
+    if(planStep === 0 && !planDraft.registered){ toast('Pick one to keep going'); return; }
+    if(planStep === 1 && !planDraft.method){ toast('Pick one to keep going'); return; }
+    if(planStep === 2){
+      if($('pw-place')) planDraft.place = $('pw-place').value.trim();
+      if(!planDraft.when){ toast('Pick a time to keep going'); return; }
+    }
+    if(planStep === 3){
+      if($('pw-notes')) planDraft.notes = $('pw-notes').value.trim();
+      plan = planDraft;
+      plan.created = Date.now();
+      jSet(K_PLAN, plan);
+      closeModal(); renderPlan();
+      buzz(20);
+      toast('Plan saved. November-you says thanks.');
+      return;
+    }
+    planStep++;
+    renderPlanStep();
+  };
+  if(plan && planStep === 0 && $('pw-del')){
+    $('pw-del').onclick = function(){
+      if(!confirm('Remove your voting plan?')) return;
+      plan = null;
+      try{ localStorage.removeItem(K_PLAN); }catch(e){}
+      delete mem[K_PLAN];
+      closeModal(); renderPlan(); toast('Plan removed');
+    };
+  }
+}
+
+/* ---------- about ---------- */
+$('aboutBtn').onclick = function(){
+  openModal(
+    '<h3>About Civic Compass</h3>' +
+    '<div class="about-body">' +
+    '<p>Civic Compass is an independent, nonpartisan tool for keeping up with local civic life in Wadsworth and Medina County: election dates and deadlines, who represents you, and your own events and actions.</p>' +
+    '<p>It is not affiliated with any government office, board of elections, political party, or organization.</p>' +
+    '<p>Everything you enter stays on your phone. This app collects nothing, tracks nothing, and sends nothing anywhere. Sharing happens only when you tap Share.</p>' +
+    '<p>Dates and officials last verified ' + esc(DATA_VERIFIED) + ', from official sources: Ohio Secretary of State, Medina County Board of Elections, City of Wadsworth, and the Ohio General Assembly. Always confirm details at <a href="https://www.voteohio.gov" target="_blank" rel="noopener">VoteOhio.gov</a>.</p>' +
+    '<p>Civic Compass is built on a framework that can be tailored to any city, county, or district.</p>' +
+    '<p class="a-cred">An independent project by Mot Buchanan \u00b7 <a href="https://motbuchanan.com" target="_blank" rel="noopener">motbuchanan.com</a></p>' +
+    '</div>' +
+    '<div class="modal-row"><button class="abtn mail" id="ab-close">Close</button></div>'
+  );
+  $('ab-close').onclick = closeModal;
+};
+
 /* ---------- welcome tour ---------- */
 var TOUR = [
   {tab:'dates', e:'🧭', t:'Welcome to Civic Compass', b:'Your pocket guide to staying involved: election dates, the people who represent you, your events, and the actions you take. Everything lives on your phone — nothing is shared unless you share it.'},
@@ -1188,6 +1606,7 @@ applyTheme();
 renderGreet();
 $('verBadge').textContent = VERSION.split(' · ')[0];
 renderDates();
+renderPlan();
 renderReps();
 renderEvents();
 renderLog();
