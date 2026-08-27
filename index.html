@@ -234,6 +234,23 @@ body.dark nav button.on{color:#8fb0ee}
 #ringFg{transition:stroke-dashoffset .6s cubic-bezier(.22,.9,.3,1)}
 .toast.action{pointer-events:auto}
 .toast .t-undo{font-weight:800;text-decoration:underline;color:inherit;background:none;border:none;font-size:14px;margin-left:12px;cursor:pointer}
+.sess-bg{position:fixed;inset:0;background:var(--hgrad);z-index:70;display:none;flex-direction:column;padding:calc(16px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));color:var(--accent-ink)}
+.sess-bg.show{display:flex}
+.sess-top{text-align:center;margin-bottom:14px}
+.sess-loc{font-size:17px;font-weight:bold}
+.sess-timer{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:40px;font-weight:700;letter-spacing:1px;margin-top:2px}
+.sess-sub{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;opacity:.8;text-transform:uppercase;letter-spacing:1px}
+.sess-grid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;min-height:0}
+.sess-btn{position:relative;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.25);border-radius:18px;color:var(--accent-ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .1s ease-out}
+.sess-btn:active{transform:scale(.97)}
+.sess-btn .sb-e{font-size:30px}
+.sess-btn .sb-n{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:44px;font-weight:800;line-height:1;color:var(--gold)}
+.sess-btn .sb-l{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:13px;font-weight:600;opacity:.9}
+.sess-btn .sb-m{position:absolute;top:8px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.25);color:var(--accent-ink);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sess-end{margin-top:14px;width:100%;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;font-weight:700;background:var(--gold);color:var(--gold-ink);border:none;border-radius:14px;padding:16px;cursor:pointer}
+.script-card{cursor:pointer}
+.script-prev{font-size:14px;color:var(--muted);margin-top:4px;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.reader{font-size:19px;line-height:1.75;white-space:pre-wrap}
 .about-body{font-size:15px;line-height:1.65}
 .about-body p{margin-bottom:12px}
 .about-body .a-cred{font-style:italic;color:var(--muted);margin-top:16px}
@@ -307,7 +324,7 @@ body.dark .about-body a{color:#8fb0ee}
   </div>
   <div class="h-right">
     <button class="iconbtn" id="themeBtn" aria-label="Toggle theme">◐</button>
-    <span class="badge" id="verBadge">v1.7</span>
+    <span class="badge" id="verBadge">v1.8</span>
   </div>
 </header>
 
@@ -392,6 +409,10 @@ body.dark .about-body a{color:#8fb0ee}
       <div class="rep-notes" id="yCounts" style="margin-top:10px"></div>
       <div class="rep-actions"><button class="abtn ghost" id="shareYearBtn">↗ Share my year</button></div>
     </div>
+    <button class="addbtn" id="sessStart" style="border-color:var(--gold);color:var(--ink);font-size:15px">🚪 Start a canvass session</button>
+    <h2>Scripts &amp; talking points</h2>
+    <div id="scriptList"></div>
+    <button class="addbtn" id="addScriptBtn">＋ New script</button>
     <h2>Tap to log an action</h2>
     <div class="loggrid" id="logGrid"></div>
     <button class="addbtn" id="addTypeBtn">＋ New action type</button>
@@ -467,6 +488,15 @@ body.dark .about-body a{color:#8fb0ee}
     </div>
   </div>
 </div>
+<div class="sess-bg" id="sessBg">
+  <div class="sess-top">
+    <div class="sess-loc" id="sessLoc"></div>
+    <div class="sess-timer" id="sessTimer">0:00</div>
+    <div class="sess-sub">canvass session</div>
+  </div>
+  <div class="sess-grid" id="sessGrid"></div>
+  <button class="sess-end" id="sessEnd">End session</button>
+</div>
 <div class="modal-bg" id="modalBg">
   <div class="modal" id="modalBox"></div>
 </div>
@@ -474,8 +504,8 @@ body.dark .about-body a{color:#8fb0ee}
 
 <script>
 'use strict';
-/* ============ Civic Compass · v1.7 · Aug 22 2026 ============ */
-var VERSION = 'v1.7 · Aug 22';
+/* ============ Civic Compass · v1.8 · Aug 27 2026 ============ */
+var VERSION = 'v1.8 · Aug 27';
 var DATA_VERIFIED = 'August 22, 2026';
 
 /* ---------- guarded storage ---------- */
@@ -508,7 +538,8 @@ function animateCount(el, target, ms){
 }
 
 var K_REPS='cc_v1_reps', K_EVENTS='cc_v1_events', K_PREFS='cc_v1_prefs',
-    K_LOG='cc_v1_log', K_TYPES='cc_v1_logtypes', K_PLAN='cc_v1_plan';
+    K_LOG='cc_v1_log', K_TYPES='cc_v1_logtypes', K_PLAN='cc_v1_plan',
+    K_SCRIPTS='cc_v1_scripts', K_SESS='cc_v1_sessions', K_SESS_A='cc_v1_sess_active';
 
 /* ---------- key dates (verified against Ohio SOS-sourced info, Jul 21 2026) ---------- */
 var KEY_DATES = [
@@ -955,6 +986,11 @@ function shareText(txt){
 function typeByKey(k){
   return logTypes.filter(function(t){ return t.k === k; })[0] || null;
 }
+function cnt(list){
+  var s = 0;
+  for(var i = 0; i < list.length; i++) s += (list[i].n || 1);
+  return s;
+}
 function monthEntries(){
   var now = new Date();
   var y = now.getFullYear(), m = now.getMonth();
@@ -976,11 +1012,11 @@ function tallyText(ents, label){
   ents.forEach(function(en){
     var key = en.l || en.k;
     if(!counts[key]) counts[key] = {n:0, e:en.e || ''};
-    counts[key].n++;
+    counts[key].n += (en.n || 1);
   });
   var bits = [];
   for(var key in counts){ bits.push((counts[key].e ? counts[key].e + ' ' : '') + counts[key].n + ' ' + key.toLowerCase()); }
-  return 'My ' + label + ' civic actions: ' + bits.join(' · ') + ' — ' + ents.length + ' total';
+  return 'My ' + label + ' civic actions: ' + bits.join(' · ') + ' — ' + cnt(ents) + ' total';
 }
 function monthSummaryText(){ return tallyText(monthEntries(), monthName()); }
 var MILESTONES = [1, 10, 25, 50, 100, 250, 500, 1000];
@@ -1037,12 +1073,13 @@ function celebrate(n){
 function updateLogNumbers(){
   var ents = monthEntries();
   $('mTitle').textContent = monthName();
-  $('mTotal').textContent = ents.length;
+  var mTot = cnt(ents);
+  $('mTotal').textContent = mTot;
   var counts = {};
   ents.forEach(function(en){
     var key = en.l || en.k;
     if(!counts[key]) counts[key] = {n:0, e:en.e || ''};
-    counts[key].n++;
+    counts[key].n += (en.n || 1);
   });
   var chtml = '';
   for(var key in counts){
@@ -1053,10 +1090,10 @@ function updateLogNumbers(){
   var now = new Date();
   var best = null;
   for(var m = 0; m < now.getMonth(); m++){
-    var n = log.filter(function(en){
+    var n = cnt(log.filter(function(en){
       var d = new Date(en.ts);
       return d.getFullYear() === now.getFullYear() && d.getMonth() === m;
-    }).length;
+    }));
     if(n > 0 && (!best || n > best.n)) best = {m:m, n:n};
   }
   $('mBest').style.display = best ? '' : 'none';
@@ -1066,12 +1103,12 @@ function updateLogNumbers(){
 
   var yents = yearEntries();
   $('yTitle').textContent = now.getFullYear() + ' so far';
-  $('yTotal').textContent = yents.length;
+  $('yTotal').textContent = cnt(yents);
   var ycounts = {};
   yents.forEach(function(en){
     var key = en.l || en.k;
     if(!ycounts[key]) ycounts[key] = {n:0, e:en.e || ''};
-    ycounts[key].n++;
+    ycounts[key].n += (en.n || 1);
   });
   var yhtml = '';
   for(var ykey in ycounts){ yhtml += (ycounts[ykey].e ? ycounts[ykey].e + ' ' : '') + esc(ykey) + ' × ' + ycounts[ykey].n + '<br>'; }
@@ -1079,11 +1116,11 @@ function updateLogNumbers(){
 
   logTypes.forEach(function(t){
     var el = document.querySelector('[data-logk="' + t.k + '"] .lb-c');
-    if(el) el.textContent = ents.filter(function(en){ return en.k === t.k; }).length + ' this month';
+    if(el) el.textContent = cnt(ents.filter(function(en){ return en.k === t.k; })) + ' this month';
   });
 
   var target = Math.max(best ? best.n : 0, 10);
-  var pct = Math.min(1, ents.length / target);
+  var pct = Math.min(1, mTot / target);
   var C = 276.5;
   var fg = $('ringFg');
   if(fg) fg.style.strokeDashoffset = (C * (1 - pct)).toFixed(1);
@@ -1094,6 +1131,7 @@ function renderHistory(){
   var hhtml = '';
   shown.forEach(function(en){
     hhtml += '<div class="histrow"><span>' + esc(en.e || '') + '</span><span>' + esc(en.l || en.k) +
+      ((en.n || 1) > 1 ? ' <b>× ' + (en.n || 1) + '</b>' : '') +
       '</span><span style="color:var(--muted)">' + esc(niceTs(en.ts)) + '</span>' +
       '<button class="hr-x" data-delh="' + esc(en.id) + '" aria-label="Delete entry">✕</button></div>';
   });
@@ -1132,13 +1170,13 @@ function renderLog(){
       updateLogNumbers();
       renderHistory();
       var newId = log[log.length - 1].id;
-      var yc = yearEntries().length;
+      var yc = cnt(yearEntries());
       if(MILESTONES.indexOf(yc) > -1){
         buzz([20, 40, 20]);
         celebrate(yc);
       } else {
         buzz(12);
-        var nMo = monthEntries().filter(function(en){ return en.k === t.k; }).length;
+          var nMo = cnt(monthEntries().filter(function(en){ return en.k === t.k; }));
         toastAction(t.e + ' +1 ' + t.l + ' — ' + nMo + ' this month', 'Undo', function(){
           log = log.filter(function(en){ return en.id !== newId; });
           jSet(K_LOG, log);
@@ -1304,7 +1342,8 @@ $('addEventBtn').onclick = function(){ openEventModal(null); };
 $('exportBtn').onclick = function(){
   var data = {
     app:'civic-compass', ver:VERSION, exported:new Date().toISOString(),
-    reps:reps, events:events, log:log, logTypes:logTypes, name:prefs.name || ''
+    reps:reps, events:events, log:log, logTypes:logTypes, name:prefs.name || '',
+    plan:plan, scripts:scripts, sessions:sessions
   };
   try{
     var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
@@ -1334,10 +1373,13 @@ $('importFile').addEventListener('change', function(){
     if(Array.isArray(data.log)) log = data.log;
     if(Array.isArray(data.logTypes)) logTypes = data.logTypes;
     if(typeof data.name === 'string') prefs.name = data.name;
+    if(data.plan && data.plan.method){ plan = data.plan; jSet(K_PLAN, plan); }
+    if(Array.isArray(data.scripts)){ scripts = data.scripts; jSet(K_SCRIPTS, scripts); }
+    if(Array.isArray(data.sessions)){ sessions = data.sessions; jSet(K_SESS, sessions); }
     prefs.seeded = true;
     jSet(K_REPS, reps); jSet(K_EVENTS, events); jSet(K_LOG, log);
     jSet(K_TYPES, logTypes); jSet(K_PREFS, prefs);
-    renderGreet(); renderReps(); renderEvents(); renderLog();
+    renderGreet(); renderReps(); renderEvents(); renderLog(); renderScripts(); renderPlan();
     toast('Backup restored');
   };
   reader.onerror = function(){ toast('Could not read that file'); };
@@ -1536,6 +1578,228 @@ function renderPlanStep(){
   }
 }
 
+/* ---------- scripts & talking points ---------- */
+function defaultScripts(){
+  return [
+    {id:'s1', title:'At the door', body:'Hi! My name is ____ and I\u2019m a volunteer with ____.\n\nWe\u2019re out talking with neighbors about ____.\n\nIs that something that matters to you?\n\n(Listen. Really listen.)\n\nThank you so much for your time \u2014 have a great day!'},
+    {id:'s2', title:'Calling an office', body:'Hi, my name is ____ and I\u2019m a constituent from ____.\n\nI\u2019m calling about ____.\n\nI\u2019d like to ask that ____.\n\nCould you pass that along? Thank you!'}
+  ];
+}
+var scripts = jGet(K_SCRIPTS, null) || defaultScripts();
+function renderScripts(){
+  var html = '';
+  scripts.forEach(function(s){
+    html += '<div class="card script-card" data-sid="' + esc(s.id) + '">' +
+      '<div class="rep-head"><div class="grow">' +
+      '<div class="rep-name">' + esc(s.title) + '</div>' +
+      '<div class="script-prev">' + esc(s.body) + '</div>' +
+      '</div><span class="editpen">\u203A</span></div></div>';
+  });
+  if(!scripts.length) html = '<div class="card ev-empty" style="padding:16px">No scripts yet. Add the words you want in your pocket.</div>';
+  $('scriptList').innerHTML = html;
+  document.querySelectorAll('[data-sid]').forEach(function(c){
+    c.onclick = function(){ openScriptReader(c.getAttribute('data-sid')); };
+  });
+}
+function openScriptReader(id){
+  var s = scripts.filter(function(x){ return x.id === id; })[0];
+  if(!s) return;
+  openModal(
+    '<div class="rep-head"><div class="grow"><h3>' + esc(s.title) + '</h3></div>' +
+    '<button class="editpen" id="sr-edit" aria-label="Edit">✎</button></div>' +
+    '<div class="reader">' + esc(s.body) + '</div>' +
+    '<div class="modal-row">' +
+    '<button class="abtn ghost" id="sr-share">↗ Share</button>' +
+    '<button class="abtn mail" id="sr-close">Close</button></div>'
+  );
+  $('sr-close').onclick = closeModal;
+  $('sr-share').onclick = function(){ shareText(s.title + '\n\n' + s.body); };
+  $('sr-edit').onclick = function(){ openScriptEditor(id); };
+}
+function openScriptEditor(id){
+  var s = id ? scripts.filter(function(x){ return x.id === id; })[0] : {title:'', body:''};
+  if(!s) return;
+  openModal(
+    '<h3>' + (id ? 'Edit script' : 'New script') + '</h3>' +
+    '<label>Title</label><input id="sc-title" value="' + esc(s.title) + '">' +
+    '<label>The words</label><textarea id="sc-body" style="min-height:180px">' + esc(s.body) + '</textarea>' +
+    '<div class="modal-row">' +
+    '<button class="abtn ghost" id="sc-cancel">Cancel</button>' +
+    '<button class="abtn mail" id="sc-save">Save</button></div>' +
+    (id ? '<button class="del-link" id="sc-del">Delete this script</button>' : '')
+  );
+  $('sc-cancel').onclick = closeModal;
+  $('sc-save').onclick = function(){
+    var t = $('sc-title').value.trim();
+    if(!t){ toast('Give it a title first'); return; }
+    var b = $('sc-body').value;
+    if(id){
+      s.title = t; s.body = b;
+    } else {
+      scripts.push({id:'s' + Date.now(), title:t, body:b});
+    }
+    jSet(K_SCRIPTS, scripts); renderScripts(); closeModal(); toast('Saved');
+  };
+  if(id){
+    $('sc-del').onclick = function(){
+      if(!confirm('Delete "' + s.title + '"?')) return;
+      scripts = scripts.filter(function(x){ return x.id !== id; });
+      jSet(K_SCRIPTS, scripts); renderScripts(); closeModal(); toast('Deleted');
+    };
+  }
+}
+$('addScriptBtn').onclick = function(){ openScriptEditor(null); };
+
+/* ---------- canvass sessions ---------- */
+var SESS_COUNTERS = [
+  {k:'door', e:'🚪', l:'Doors knocked'},
+  {k:'convo', e:'💬', l:'Conversations'},
+  {k:'lit', e:'📄', l:'Lit dropped'},
+  {k:'nothome', e:'🏠', l:'Not home'}
+];
+var sessions = jGet(K_SESS, []);
+var sessActive = jGet(K_SESS_A, null);
+var sessTick = null;
+function sessCounterHtml(){
+  var html = '';
+  SESS_COUNTERS.forEach(function(c){
+    html += '<button class="sess-btn" data-sk="' + c.k + '">' +
+      '<span class="sb-m" role="button" tabindex="0" data-sm="' + c.k + '" aria-label="Minus one">−</span>' +
+      '<span class="sb-e">' + c.e + '</span>' +
+      '<span class="sb-n" id="sn-' + c.k + '">' + (sessActive.counts[c.k] || 0) + '</span>' +
+      '<span class="sb-l">' + c.l + '</span></button>';
+  });
+  return html;
+}
+function fmtDur(ms){
+  var s = Math.floor(ms / 1000);
+  var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+  if(h) return h + 'h ' + (m < 10 ? '0' : '') + m + 'm';
+  return m + ':' + (s % 60 < 10 ? '0' : '') + (s % 60);
+}
+function sessTimerTick(){
+  if(!sessActive) return;
+  $('sessTimer').textContent = fmtDur(Date.now() - sessActive.start);
+}
+function openSession(){
+  $('sessLoc').textContent = sessActive.loc || 'Out in the field';
+  $('sessGrid').innerHTML = sessCounterHtml();
+  $('sessBg').classList.add('show');
+  sessTimerTick();
+  clearInterval(sessTick);
+  sessTick = setInterval(sessTimerTick, 1000);
+  document.querySelectorAll('[data-sk]').forEach(function(b){
+    b.onclick = function(e2){
+      if(e2.target && e2.target.getAttribute && e2.target.getAttribute('data-sm')) return;
+      var k = b.getAttribute('data-sk');
+      sessActive.counts[k] = (sessActive.counts[k] || 0) + 1;
+      jSet(K_SESS_A, sessActive);
+      $('sn-' + k).textContent = sessActive.counts[k];
+      buzz(12);
+      if(MOTION_OK){
+        var r = b.getBoundingClientRect();
+        burst(r.left + r.width/2, r.top + r.height/2);
+      }
+    };
+  });
+  document.querySelectorAll('[data-sm]').forEach(function(b){
+    b.onclick = function(e2){
+      e2.stopPropagation();
+      var k = b.getAttribute('data-sm');
+      if((sessActive.counts[k] || 0) > 0){
+        sessActive.counts[k]--;
+        jSet(K_SESS_A, sessActive);
+        $('sn-' + k).textContent = sessActive.counts[k];
+      }
+    };
+  });
+}
+$('sessStart').onclick = function(){
+  openModal(
+    '<h3>Start a canvass session</h3>' +
+    '<label>Where are you working? (optional)</label>' +
+    '<input id="ss-loc" placeholder="Ward 3, Wayne County, downtown\u2026">' +
+    '<div class="verify" style="text-align:left;margin-top:8px">Big buttons, running timer, one tap per door. Your phone can stay in your pocket between houses.</div>' +
+    '<div class="modal-row">' +
+    '<button class="abtn ghost" id="ss-cancel">Cancel</button>' +
+    '<button class="abtn mail" id="ss-go">Start</button></div>'
+  );
+  $('ss-cancel').onclick = closeModal;
+  $('ss-go').onclick = function(){
+    sessActive = {start: Date.now(), loc: $('ss-loc').value.trim(), counts: {}};
+    jSet(K_SESS_A, sessActive);
+    closeModal();
+    openSession();
+  };
+};
+function sessSummaryText(rec){
+  var bits = ['Canvass session'];
+  if(rec.loc) bits.push(rec.loc);
+  bits.push(fmtDur(rec.end - rec.start));
+  var parts = [];
+  SESS_COUNTERS.forEach(function(c){
+    var n = rec.counts[c.k] || 0;
+    if(n) parts.push(n + ' ' + c.l.toLowerCase());
+  });
+  if(parts.length) bits.push(parts.join(' · '));
+  return bits.join(' — ');
+}
+$('sessEnd').onclick = function(){
+  var total = 0;
+  SESS_COUNTERS.forEach(function(c){ total += (sessActive.counts[c.k] || 0); });
+  var rec = {id:'sx' + Date.now(), start:sessActive.start, end:Date.now(), loc:sessActive.loc, counts:sessActive.counts};
+  openModal(
+    '<h3>Session summary</h3>' +
+    '<div class="reader" style="font-size:16px">' + esc(sessSummaryText(rec)) + '</div>' +
+    '<div class="modal-row">' +
+    '<button class="abtn ghost" id="se-back">Keep going</button>' +
+    '<button class="abtn mail" id="se-save">' + (total ? 'Save session' : 'Discard') + '</button></div>' +
+    (total ? '<button class="del-link" id="se-discard">Discard without saving</button>' : '')
+  );
+  $('se-back').onclick = closeModal;
+  function shutdown(){
+    sessActive = null;
+    try{ localStorage.removeItem(K_SESS_A); }catch(e){}
+    delete mem[K_SESS_A];
+    clearInterval(sessTick);
+    $('sessBg').classList.remove('show');
+    closeModal();
+  }
+  $('se-save').onclick = function(){
+    if(total){
+      sessions.push(rec);
+      jSet(K_SESS, sessions);
+      var before = cnt(yearEntries());
+      SESS_COUNTERS.forEach(function(c){
+        var n = rec.counts[c.k] || 0;
+        if(n) log.push({id:'a' + Date.now() + c.k, k:c.k, e:c.e, l:c.l, ts:rec.end, n:n});
+      });
+      jSet(K_LOG, log);
+      var after = cnt(yearEntries());
+      updateLogNumbers();
+      renderHistory();
+      var hit = null;
+      for(var i = 0; i < MILESTONES.length; i++){
+        if(MILESTONES[i] > before && MILESTONES[i] <= after) hit = MILESTONES[i];
+      }
+      shutdown();
+      if(hit){ buzz([20, 40, 20]); celebrate(hit); }
+      else {
+        buzz(20);
+        toastAction('Session saved — ' + after + ' actions this year', 'Share it', function(){ shareText(sessSummaryText(rec)); }, 4000);
+      }
+    } else {
+      shutdown();
+    }
+  };
+  if(total){
+    $('se-discard').onclick = function(){
+      if(!confirm('Throw this session away?')) return;
+      shutdown();
+    };
+  }
+};
+
 /* ---------- about ---------- */
 $('aboutBtn').onclick = function(){
   openModal(
@@ -1559,7 +1823,7 @@ var TOUR = [
   {tab:'dates', e:'🗓', t:'Dates', b:'The countdown to Election Day, every deadline that matters, and one-tap links to check your registration or pull up your sample ballot.'},
   {tab:'reps', e:'🏛', t:'Reps', b:'Cards for your city, county, state, and federal officials. Tap Call or Website to reach them. Tap the little pencil to edit any card or keep your own talking points. Two cards say \u201CFill me in\u201D — the pencil is how.'},
   {tab:'events', e:'📌', t:'Events', b:'Keep meetings, rallies, and postcard nights here. Events can repeat — \u201C1st & 3rd Tuesday\u201D included — and Share drops one straight into any group chat.'},
-  {tab:'log', e:'✅', t:'Log', b:'Tap a button each time you make a call, write a postcard, or show up somewhere. At the end of the month, share your tally. It adds up faster than you think.'},
+  {tab:'log', e:'✅', t:'Log', b:'Tap a button each time you make a call, write a postcard, or show up. Going door to door? Start a canvass session for big counters and a timer, and keep your scripts one tap away. Share your tally when the month\u2019s done.'},
   {tab:'settings', e:'💾', t:'One last thing', b:'Save a backup now and then from this More tab — it keeps everything safe if you ever switch phones. You can replay this tour from here too. That\u2019s it — go get \u2019em.'}
 ];
 var tourStep = 0;
@@ -1607,11 +1871,13 @@ renderGreet();
 $('verBadge').textContent = VERSION.split(' · ')[0];
 renderDates();
 renderPlan();
+renderScripts();
 renderReps();
 renderEvents();
 renderLog();
 setupInstallBar();
 setInterval(renderDates, 60000);
+if(sessActive) openSession();
 if(!prefs.tourDone) startTour();
 </script>
 </body>
