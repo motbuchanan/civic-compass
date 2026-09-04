@@ -1,28 +1,32 @@
-# Civic Compass · Wadsworth, Ohio
+# Empower Compass · Democrats Empower Medina
 
-A single-file civic companion app: election dates and deadlines, representative
-cards with tap-to-call, a personal events list with recurrence, and a civic
-action log with monthly tallies. All data lives on the device (localStorage);
-backup/restore is built in under More.
+Branded fork of Civic Compass for DEM volunteers: election dates and deadlines,
+representative cards with tap-to-call, events with recurrence and .ics export,
+canvass sessions with big counters and shareable summaries, editable scripts,
+a voting plan builder, and a personal action log. All data lives on the device;
+backup/restore under More.
 
 ## Files
-- `index.html` — the entire app (v1.8)
+- `index.html` — the entire app (EM 1.0)
 - `sw.js` — offline cache. **CACHE name must match the app version on every deploy.**
-- `manifest.json`, `icon-192.png`, `icon-512.png` — PWA install (Android install prompt; iOS uses the apple-touch-icon)
+- `manifest.json`, `icon-192.png`, `icon-512.png` — PWA install
 
-## Deploy
-1. Create a public repo (e.g. `civiccompass`), upload all five files to the root.
-2. Settings → Pages → deploy from `main` / root.
-3. Open `https://motbuchanan.github.io/civiccompass/` on the phone. Android
-   Chrome will offer install; iOS Safari: Share → Add to Home Screen.
+## Deploy (assumed home)
+Repo `empower-compass` → GitHub Pages → https://motbuchanan.github.io/empower-compass/
+The Share-app QR inside the app points at that URL. If the org hosts it
+elsewhere or on their own domain later, regenerate the QR and update APP_URL
+in index.html.
+
+## Fork notes
+- localStorage keys are namespaced `em_v1_*` so this app and the public
+  Civic Compass never share data on the same origin.
+- Scripts, reps, events are all editable in-app — the org maintains its own
+  content. Data refreshes after Nov 3, 2026: KEY_DATES, ELECTION_DAY,
+  DATA_VERIFIED, and defaultReps() in index.html.
+- The public Civic Compass (motbuchanan.github.io/civic-compass/) remains a
+  separate, unbranded deployment. Ship changes to each independently.
 
 ## Update ritual (every change)
-1. Bump `VERSION` in `index.html` (badge is the load-confirmation).
-2. Bump `CACHE` in `sw.js` to the same version — installed phones never update otherwise.
+1. Bump `VERSION` in `index.html`.
+2. Bump `CACHE` in `sw.js` to match.
 3. Commit both together.
-
-## Data refresh checklist (after Nov 3, 2026)
-- `KEY_DATES` + `ELECTION_DAY` + `DATA_VERIFIED` in `index.html` (next: May 2027 primary or Nov 2027 general)
-- Officials in `defaultReps()` if seats changed (note: user edits override defaults
-  on her device — defaults only affect fresh installs / resets)
-- The app shows "ask Mot for a date refresh" automatically once Election Day passes.

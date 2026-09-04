@@ -5,26 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#1b2a4a">
+<meta name="theme-color" content="#1b4965">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Civic Compass · Wadsworth</title>
+<title>Empower Compass · Medina County</title>
 <style>
 :root{
-  --bg:#f6f2ea; --card:#ffffff; --ink:#20242e; --muted:#6b7180;
-  --accent:#1b2a4a; --accent-ink:#f6f2ea;
-  --gold:#c9a227; --gold-ink:#20242e;
-  --line:#e5dfd2; --danger:#b3402e; --ok:#2e7d4f;
+  --bg:#eef4f7; --card:#ffffff; --ink:#16232b; --muted:#5f7280;
+  --accent:#1b4965; --accent-ink:#eef6fa;
+  --gold:#2fbde8; --gold-ink:#0e2a38;
+  --line:#d8e4ea; --danger:#b3402e; --ok:#2e7d4f;
   --shadow:0 1px 2px rgba(32,36,46,.05), 0 5px 16px rgba(32,36,46,.10);
   --hl:rgba(255,255,255,.75);
-  --hgrad:linear-gradient(155deg,#25375f 0%,#1b2a4a 55%,#151f38 100%);
+  --hgrad:linear-gradient(155deg,#226079 0%,#1b4965 55%,#143a4f 100%);
 }
 body.dark{
-  --bg:#141824; --card:#1e2432; --ink:#eae6dc; --muted:#9aa1b0;
-  --accent:#3d5a99; --accent-ink:#f6f2ea;
-  --line:#2c3446; --shadow:0 1px 2px rgba(0,0,0,.4), 0 7px 20px rgba(0,0,0,.42);
+  --bg:#0e1b22; --card:#15262e; --ink:#e2edf2; --muted:#8fa4af;
+  --accent:#2a6480; --accent-ink:#eef6fa;
+  --line:#24404c; --shadow:0 1px 2px rgba(0,0,0,.4), 0 7px 20px rgba(0,0,0,.42);
   --hl:rgba(255,255,255,.06);
-  --hgrad:linear-gradient(155deg,#2f4472 0%,#233259 55%,#182543 100%);
+  --hgrad:linear-gradient(155deg,#256077 0%,#1b4965 55%,#122f3e 100%);
 }
 /* gold surfaces keep dark ink in BOTH themes (hardcoded on-color) */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -38,7 +38,7 @@ header{
   background:var(--hgrad); color:var(--accent-ink);
   padding:calc(14px + env(safe-area-inset-top)) 16px 14px; display:flex; align-items:center; gap:12px;
   position:relative; overflow:hidden;
-  border-bottom:2px solid rgba(201,162,39,.55);
+  border-bottom:2px solid rgba(47,189,232,.55);
 }
 header::before{content:'';position:absolute;right:-36px;top:-52px;width:150px;height:150px;border:2px solid rgba(255,255,255,.07);border-radius:50%;pointer-events:none}
 header::after{content:'';position:absolute;right:-6px;top:-22px;width:90px;height:90px;border:1.5px solid rgba(255,255,255,.06);border-radius:50%;pointer-events:none}
@@ -60,7 +60,7 @@ main{flex:1;overflow-y:auto;padding:16px 14px 92px;max-width:640px;width:100%;ma
 .panel{display:none}
 .panel.active{display:block}
 h2{font-size:15px;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted);margin:20px 2px 10px;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-weight:600;display:flex;align-items:center;gap:10px}
-h2::after{content:'';flex:1;height:1px;background:linear-gradient(90deg, rgba(201,162,39,.55), transparent)}
+h2::after{content:'';flex:1;height:1px;background:linear-gradient(90deg, rgba(47,189,232,.55), transparent)}
 h2:first-child{margin-top:2px}
 .card{
   background:var(--card);border:1px solid var(--line);border-radius:14px;
@@ -71,7 +71,7 @@ h2:first-child{margin-top:2px}
   background:var(--hgrad);color:var(--accent-ink);text-align:center;
   border:none;padding:22px 16px;position:relative;overflow:hidden
 }
-.hero::before{content:'';position:absolute;top:-46%;left:50%;transform:translateX(-50%);width:280px;height:280px;background:radial-gradient(circle, rgba(201,162,39,.30), transparent 62%);pointer-events:none}
+.hero::before{content:'';position:absolute;top:-46%;left:50%;transform:translateX(-50%);width:280px;height:280px;background:radial-gradient(circle, rgba(47,189,232,.30), transparent 62%);pointer-events:none}
 .hero > *{position:relative}
 .hero{min-height:238px;display:flex;flex-direction:column;justify-content:center}
 .hero .dial{position:absolute;top:50%;left:50%;width:198px;height:198px;transform:translate(-50%,-50%);opacity:.6;pointer-events:none}
@@ -94,12 +94,12 @@ h2:first-child{margin-top:2px}
   text-align:center;margin:14px 0 4px;line-height:1.6
 }
 .verify a{color:var(--accent);font-weight:600}
-body.dark .verify a{color:#8fb0ee}
+body.dark .verify a{color:#6fc9e8}
 a.linkrow{
   display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)
 }
 a.linkrow .lr-e{font-size:24px;flex:0 0 32px;text-align:center}
-.lr-ic{flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.4);display:flex;align-items:center;justify-content:center;color:var(--gold)}
+.lr-ic{flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:rgba(47,189,232,.12);border:1px solid rgba(47,189,232,.4);display:flex;align-items:center;justify-content:center;color:var(--gold)}
 .lr-ic svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .ic-s{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
 .nav-ic{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -169,7 +169,7 @@ nav button{
 }
 nav button .ic{font-size:21px;line-height:1}
 nav button.on{color:var(--accent);font-weight:700}
-body.dark nav button.on{color:#8fb0ee}
+body.dark nav button.on{color:#6fc9e8}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:40;align-items:flex-end;justify-content:center}
 .modal-bg.show{display:flex}
 .modal{
@@ -220,7 +220,7 @@ body.dark nav button.on{color:#8fb0ee}
 .tour .t-row .abtn{justify-content:center;padding:13px 18px}
 .tour .t-row .grow1{flex:1}
 .opt{display:block;width:100%;text-align:left;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;padding:13px 14px;margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);cursor:pointer}
-.opt.sel{border-color:var(--gold);background:rgba(201,162,39,.14);font-weight:600}
+.opt.sel{border-color:var(--gold);background:rgba(47,189,232,.14);font-weight:600}
 .plan-card{border-left:5px solid var(--gold)}
 .plan-line{font-size:15px;margin-top:6px}
 .plan-line b{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);display:block}
@@ -251,11 +251,16 @@ body.dark nav button.on{color:#8fb0ee}
 .script-card{cursor:pointer}
 .script-prev{font-size:14px;color:var(--muted);margin-top:4px;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .reader{font-size:19px;line-height:1.75;white-space:pre-wrap}
+.city-pick{display:flex;gap:6px;margin-bottom:14px;background:var(--card);padding:5px;border-radius:14px;border:1px solid var(--line);box-shadow:var(--shadow)}
+.city-tab{flex:1;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:14px;font-weight:600;padding:10px 4px;border:none;border-radius:10px;background:transparent;color:var(--muted);cursor:pointer;transition:background .15s,color .15s}
+.city-tab.on{background:var(--accent);color:var(--accent-ink)}
+.card.flagged{border-color:var(--gold);border-style:dashed}
+.vflag{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--gold-ink);background:var(--gold);display:inline-block;padding:3px 9px;border-radius:10px;margin-bottom:8px}
 .about-body{font-size:15px;line-height:1.65}
 .about-body p{margin-bottom:12px}
 .about-body .a-cred{font-style:italic;color:var(--muted);margin-top:16px}
 .about-body a{color:var(--accent);font-weight:600}
-body.dark .about-body a{color:#8fb0ee}
+body.dark .about-body a{color:#6fc9e8}
 .m-best{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;margin-top:8px;opacity:.85}
 .m-enc{font-size:14px;font-style:italic;margin-top:10px;opacity:.9}
 .chip.soon{background:#e2892b !important;color:#241a08 !important}
@@ -311,20 +316,20 @@ body.dark .about-body a{color:#8fb0ee}
 
 <header>
   <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
-    <circle cx="20" cy="20" r="18" fill="none" stroke="#c9a227" stroke-width="2.5"/>
-    <g id="needleG">
-      <polygon points="20,7 24,20 20,33 16,20" fill="#c9a227"/>
-      <polygon points="20,7 24,20 20,20" fill="#f6f2ea"/>
-      <circle cx="20" cy="20" r="2.6" fill="#f6f2ea"/>
-    </g>
+    <defs>
+      <mask id="cresA"><rect width="40" height="40" fill="#fff"/><circle cx="27" cy="15" r="15" fill="#000"/></mask>
+      <mask id="cresB"><rect width="40" height="40" fill="#fff"/><circle cx="26" cy="16" r="10.5" fill="#000"/></mask>
+    </defs>
+    <circle cx="20" cy="20" r="17" fill="#7fd6f2" mask="url(#cresA)"/>
+    <circle cx="21" cy="19" r="12.5" fill="#2fbde8" mask="url(#cresB)"/>
   </svg>
   <div>
-    <div class="h-title" id="greet">Civic Compass</div>
-    <div class="h-sub">Wadsworth · Medina County · Ohio</div>
+    <div class="h-title" id="greet">Empower Compass</div>
+    <div class="h-sub">Democrats Empower Medina · Medina County, OH</div>
   </div>
   <div class="h-right">
     <button class="iconbtn" id="themeBtn" aria-label="Toggle theme">◐</button>
-    <span class="badge" id="verBadge">v1.8</span>
+    <span class="badge" id="verBadge">EM 1.1</span>
   </div>
 </header>
 
@@ -338,10 +343,11 @@ body.dark .about-body a{color:#8fb0ee}
   <!-- DATES -->
   <section class="panel active" id="p-dates">
     <div class="card hero">
-      <svg class="dial" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="86" fill="none" stroke="rgba(201,162,39,.32)" stroke-width="1.4"/><g stroke="rgba(201,162,39,.5)"><line x1="143.0" y1="25.5" x2="139.5" y2="31.6" stroke-width="1.4"/><line x1="174.5" y1="57.0" x2="168.4" y2="60.5" stroke-width="1.4"/><line x1="186.0" y1="100.0" x2="174.0" y2="100.0" stroke-width="2.4"/><line x1="174.5" y1="143.0" x2="168.4" y2="139.5" stroke-width="1.4"/><line x1="143.0" y1="174.5" x2="139.5" y2="168.4" stroke-width="1.4"/><line x1="100.0" y1="186.0" x2="100.0" y2="174.0" stroke-width="2.4"/><line x1="57.0" y1="174.5" x2="60.5" y2="168.4" stroke-width="1.4"/><line x1="25.5" y1="143.0" x2="31.6" y2="139.5" stroke-width="1.4"/><line x1="14.0" y1="100.0" x2="26.0" y2="100.0" stroke-width="2.4"/><line x1="25.5" y1="57.0" x2="31.6" y2="60.5" stroke-width="1.4"/><line x1="57.0" y1="25.5" x2="60.5" y2="31.6" stroke-width="1.4"/></g><text x="100" y="30" text-anchor="middle" fill="rgba(201,162,39,.85)" font-size="15" font-family="Georgia,serif">N</text></svg>
+      <svg class="dial" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="86" fill="none" stroke="rgba(47,189,232,.32)" stroke-width="1.4"/><g stroke="rgba(47,189,232,.5)"><line x1="143.0" y1="25.5" x2="139.5" y2="31.6" stroke-width="1.4"/><line x1="174.5" y1="57.0" x2="168.4" y2="60.5" stroke-width="1.4"/><line x1="186.0" y1="100.0" x2="174.0" y2="100.0" stroke-width="2.4"/><line x1="174.5" y1="143.0" x2="168.4" y2="139.5" stroke-width="1.4"/><line x1="143.0" y1="174.5" x2="139.5" y2="168.4" stroke-width="1.4"/><line x1="100.0" y1="186.0" x2="100.0" y2="174.0" stroke-width="2.4"/><line x1="57.0" y1="174.5" x2="60.5" y2="168.4" stroke-width="1.4"/><line x1="25.5" y1="143.0" x2="31.6" y2="139.5" stroke-width="1.4"/><line x1="14.0" y1="100.0" x2="26.0" y2="100.0" stroke-width="2.4"/><line x1="25.5" y1="57.0" x2="31.6" y2="60.5" stroke-width="1.4"/><line x1="57.0" y1="25.5" x2="60.5" y2="31.6" stroke-width="1.4"/></g><text x="100" y="30" text-anchor="middle" fill="rgba(47,189,232,.85)" font-size="15" font-family="Georgia,serif">N</text></svg>
       <div class="big" id="heroDays">–</div>
       <div class="lbl" id="heroLbl">days until Election Day</div>
       <div class="when" id="heroWhen"></div>
+      <div style="font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:#7fd6f2;margin-top:10px">Empower · Educate · Elect</div>
       <button class="abtn" id="shareCountBtn">↗ Share the countdown</button>
     </div>
     <div id="planSlot"></div>
@@ -360,6 +366,16 @@ body.dark .about-body a{color:#8fb0ee}
     </a>
     <a class="card linkrow" href="https://www.voteohio.gov" target="_blank" rel="noopener">
       <span class="lr-ic"><svg><use href="#i-globe"></use></svg></span><span><span class="lr-t">VoteOhio.gov</span><br><span class="lr-s">The state's official voting hub</span></span><span class="lr-a">›</span>
+    </a>
+    <h2>Democrats Empower Medina</h2>
+    <a class="card linkrow" href="https://empowermedina.com" target="_blank" rel="noopener">
+      <span class="lr-ic"><svg><use href="#i-globe"></use></svg></span><span><span class="lr-t">empowermedina.com</span><br><span class="lr-s">Who we are · priorities · Empower Hours</span></span><span class="lr-a">›</span>
+    </a>
+    <a class="card linkrow" href="https://empowermedina.com/events" target="_blank" rel="noopener">
+      <span class="lr-ic"><svg><use href="#i-cal"></use></svg></span><span><span class="lr-t">Upcoming events</span><br><span class="lr-s">Lit drops, phone banks, parades, and more</span></span><span class="lr-a">›</span>
+    </a>
+    <a class="card linkrow" href="mailto:democratsempowermedina@gmail.com">
+      <span class="lr-ic"><svg><use href="#i-mail"></use></svg></span><span><span class="lr-t">Email the team</span><br><span class="lr-s">democratsempowermedina@gmail.com</span></span><span class="lr-a">›</span>
     </a>
     <h2>Around town</h2>
     <a class="card linkrow" href="https://www.wadsworthcity.com/AgendaCenter" target="_blank" rel="noopener">
@@ -391,7 +407,7 @@ body.dark .about-body a{color:#8fb0ee}
       <div class="ring">
         <svg viewBox="0 0 100 100" aria-hidden="true">
           <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="6"/>
-          <circle id="ringFg" cx="50" cy="50" r="44" fill="none" stroke="#c9a227" stroke-width="6" stroke-linecap="round" stroke-dasharray="276.5" stroke-dashoffset="276.5"/>
+          <circle id="ringFg" cx="50" cy="50" r="44" fill="none" stroke="#2fbde8" stroke-width="6" stroke-linecap="round" stroke-dasharray="276.5" stroke-dashoffset="276.5"/>
         </svg>
         <div class="m-total" id="mTotal">0</div>
       </div>
@@ -433,7 +449,7 @@ body.dark .about-body a{color:#8fb0ee}
         <button class="abtn ghost" id="howInstallBtn">Show</button>
       </div>
       <div class="set-row">
-        <div>About Civic Compass<div class="sub">What this is and who made it</div></div>
+        <div>About Empower Compass<div class="sub">What this is and who made it</div></div>
         <button class="abtn ghost" id="aboutBtn">View</button>
       </div>
       <div class="set-row">
@@ -447,7 +463,7 @@ body.dark .about-body a{color:#8fb0ee}
     </div>
     <h2>Share this app</h2>
     <div class="card">
-      <svg viewBox="0 0 41 41" width="200" height="200" style="display:block;margin:0 auto;background:#fff;border-radius:8px" shape-rendering="crispEdges"><rect width="41" height="41" fill="#fff"/><path d="M4 4h7v1h-7zM13 4h1v1h-1zM15 4h1v1h-1zM17 4h1v1h-1zM21 4h4v1h-4zM27 4h1v1h-1zM30 4h7v1h-7zM4 5h1v1h-1zM10 5h1v1h-1zM14 5h2v1h-2zM17 5h5v1h-5zM24 5h1v1h-1zM26 5h1v1h-1zM30 5h1v1h-1zM36 5h1v1h-1zM4 6h1v1h-1zM6 6h3v1h-3zM10 6h1v1h-1zM12 6h6v1h-6zM20 6h5v1h-5zM30 6h1v1h-1zM32 6h3v1h-3zM36 6h1v1h-1zM4 7h1v1h-1zM6 7h3v1h-3zM10 7h1v1h-1zM12 7h1v1h-1zM15 7h2v1h-2zM18 7h1v1h-1zM20 7h1v1h-1zM24 7h3v1h-3zM28 7h1v1h-1zM30 7h1v1h-1zM32 7h3v1h-3zM36 7h1v1h-1zM4 8h1v1h-1zM6 8h3v1h-3zM10 8h1v1h-1zM12 8h3v1h-3zM16 8h2v1h-2zM19 8h1v1h-1zM21 8h2v1h-2zM25 8h1v1h-1zM28 8h1v1h-1zM30 8h1v1h-1zM32 8h3v1h-3zM36 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM12 9h1v1h-1zM17 9h4v1h-4zM22 9h1v1h-1zM24 9h1v1h-1zM30 9h1v1h-1zM36 9h1v1h-1zM4 10h7v1h-7zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h1v1h-1zM28 10h1v1h-1zM30 10h7v1h-7zM12 11h1v1h-1zM14 11h1v1h-1zM18 11h2v1h-2zM25 11h3v1h-3zM4 12h1v1h-1zM6 12h5v1h-5zM15 12h5v1h-5zM21 12h1v1h-1zM26 12h2v1h-2zM30 12h5v1h-5zM6 13h3v1h-3zM11 13h1v1h-1zM13 13h1v1h-1zM20 13h1v1h-1zM23 13h3v1h-3zM27 13h1v1h-1zM30 13h2v1h-2zM33 13h2v1h-2zM36 13h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM14 14h1v1h-1zM16 14h1v1h-1zM19 14h2v1h-2zM22 14h1v1h-1zM25 14h1v1h-1zM28 14h3v1h-3zM32 14h1v1h-1zM34 14h2v1h-2zM4 15h2v1h-2zM9 15h1v1h-1zM11 15h1v1h-1zM16 15h1v1h-1zM18 15h2v1h-2zM23 15h7v1h-7zM32 15h3v1h-3zM36 15h1v1h-1zM5 16h1v1h-1zM7 16h1v1h-1zM9 16h2v1h-2zM13 16h2v1h-2zM22 16h2v1h-2zM25 16h1v1h-1zM28 16h2v1h-2zM31 16h3v1h-3zM35 16h1v1h-1zM5 17h2v1h-2zM9 17h1v1h-1zM11 17h2v1h-2zM15 17h2v1h-2zM18 17h3v1h-3zM24 17h1v1h-1zM26 17h5v1h-5zM35 17h2v1h-2zM4 18h2v1h-2zM9 18h2v1h-2zM15 18h1v1h-1zM23 18h1v1h-1zM25 18h1v1h-1zM29 18h2v1h-2zM32 18h4v1h-4zM4 19h1v1h-1zM13 19h3v1h-3zM18 19h1v1h-1zM20 19h1v1h-1zM22 19h4v1h-4zM27 19h4v1h-4zM32 19h3v1h-3zM4 20h1v1h-1zM7 20h2v1h-2zM10 20h3v1h-3zM14 20h1v1h-1zM16 20h3v1h-3zM21 20h1v1h-1zM23 20h1v1h-1zM26 20h1v1h-1zM28 20h2v1h-2zM31 20h2v1h-2zM36 20h1v1h-1zM5 21h1v1h-1zM7 21h3v1h-3zM14 21h3v1h-3zM18 21h1v1h-1zM20 21h4v1h-4zM27 21h1v1h-1zM30 21h2v1h-2zM33 21h4v1h-4zM4 22h1v1h-1zM7 22h1v1h-1zM9 22h2v1h-2zM12 22h3v1h-3zM17 22h3v1h-3zM21 22h1v1h-1zM26 22h1v1h-1zM28 22h1v1h-1zM31 22h2v1h-2zM34 22h2v1h-2zM6 23h1v1h-1zM8 23h1v1h-1zM11 23h1v1h-1zM17 23h1v1h-1zM20 23h5v1h-5zM31 23h5v1h-5zM5 24h2v1h-2zM10 24h4v1h-4zM20 24h1v1h-1zM23 24h4v1h-4zM29 24h1v1h-1zM31 24h3v1h-3zM36 24h1v1h-1zM4 25h2v1h-2zM8 25h2v1h-2zM11 25h1v1h-1zM13 25h4v1h-4zM19 25h1v1h-1zM21 25h2v1h-2zM25 25h1v1h-1zM27 25h1v1h-1zM30 25h1v1h-1zM34 25h1v1h-1zM36 25h1v1h-1zM4 26h1v1h-1zM9 26h3v1h-3zM16 26h1v1h-1zM19 26h2v1h-2zM22 26h1v1h-1zM24 26h2v1h-2zM29 26h2v1h-2zM32 26h2v1h-2zM35 26h1v1h-1zM4 27h1v1h-1zM7 27h3v1h-3zM13 27h5v1h-5zM19 27h1v1h-1zM22 27h1v1h-1zM25 27h5v1h-5zM31 27h1v1h-1zM34 27h1v1h-1zM4 28h1v1h-1zM6 28h3v1h-3zM10 28h2v1h-2zM13 28h1v1h-1zM16 28h2v1h-2zM19 28h1v1h-1zM21 28h1v1h-1zM26 28h1v1h-1zM28 28h5v1h-5zM35 28h2v1h-2zM12 29h1v1h-1zM15 29h4v1h-4zM23 29h3v1h-3zM27 29h2v1h-2zM32 29h1v1h-1zM34 29h1v1h-1zM36 29h1v1h-1zM4 30h7v1h-7zM13 30h2v1h-2zM18 30h2v1h-2zM22 30h1v1h-1zM24 30h2v1h-2zM27 30h2v1h-2zM30 30h1v1h-1zM32 30h1v1h-1zM34 30h2v1h-2zM4 31h1v1h-1zM10 31h1v1h-1zM12 31h1v1h-1zM14 31h5v1h-5zM25 31h4v1h-4zM32 31h5v1h-5zM4 32h1v1h-1zM6 32h3v1h-3zM10 32h1v1h-1zM12 32h2v1h-2zM15 32h1v1h-1zM17 32h3v1h-3zM22 32h1v1h-1zM25 32h1v1h-1zM28 32h6v1h-6zM4 33h1v1h-1zM6 33h3v1h-3zM10 33h1v1h-1zM12 33h2v1h-2zM16 33h1v1h-1zM19 33h2v1h-2zM24 33h1v1h-1zM26 33h2v1h-2zM29 33h1v1h-1zM32 33h2v1h-2zM36 33h1v1h-1zM4 34h1v1h-1zM6 34h3v1h-3zM10 34h1v1h-1zM12 34h1v1h-1zM14 34h1v1h-1zM16 34h1v1h-1zM23 34h1v1h-1zM26 34h2v1h-2zM30 34h2v1h-2zM33 34h2v1h-2zM4 35h1v1h-1zM10 35h1v1h-1zM13 35h2v1h-2zM17 35h1v1h-1zM20 35h1v1h-1zM23 35h3v1h-3zM27 35h1v1h-1zM32 35h3v1h-3zM4 36h7v1h-7zM12 36h3v1h-3zM17 36h1v1h-1zM21 36h1v1h-1zM23 36h1v1h-1zM26 36h4v1h-4zM31 36h1v1h-1zM35 36h1v1h-1z" fill="#20242e"/></svg>
+      <svg viewBox="0 0 41 41" width="200" height="200" style="display:block;margin:0 auto;background:#fff;border-radius:8px" shape-rendering="crispEdges"><rect width="41" height="41" fill="#fff"/><path d="M4 4h7v1h-7zM16 4h2v1h-2zM21 4h5v1h-5zM27 4h1v1h-1zM30 4h7v1h-7zM4 5h1v1h-1zM10 5h1v1h-1zM14 5h2v1h-2zM17 5h5v1h-5zM24 5h1v1h-1zM30 5h1v1h-1zM36 5h1v1h-1zM4 6h1v1h-1zM6 6h3v1h-3zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h4v1h-4zM20 6h7v1h-7zM30 6h1v1h-1zM32 6h3v1h-3zM36 6h1v1h-1zM4 7h1v1h-1zM6 7h3v1h-3zM10 7h1v1h-1zM12 7h4v1h-4zM18 7h1v1h-1zM20 7h1v1h-1zM24 7h1v1h-1zM30 7h1v1h-1zM32 7h3v1h-3zM36 7h1v1h-1zM4 8h1v1h-1zM6 8h3v1h-3zM10 8h1v1h-1zM12 8h1v1h-1zM15 8h1v1h-1zM17 8h1v1h-1zM19 8h1v1h-1zM21 8h2v1h-2zM25 8h1v1h-1zM27 8h1v1h-1zM30 8h1v1h-1zM32 8h3v1h-3zM36 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM12 9h1v1h-1zM14 9h1v1h-1zM17 9h4v1h-4zM22 9h1v1h-1zM24 9h1v1h-1zM30 9h1v1h-1zM36 9h1v1h-1zM4 10h7v1h-7zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h1v1h-1zM28 10h1v1h-1zM30 10h7v1h-7zM12 11h1v1h-1zM18 11h2v1h-2zM25 11h4v1h-4zM4 12h1v1h-1zM6 12h5v1h-5zM15 12h5v1h-5zM21 12h1v1h-1zM26 12h1v1h-1zM30 12h5v1h-5zM6 13h1v1h-1zM8 13h2v1h-2zM12 13h1v1h-1zM14 13h1v1h-1zM16 13h1v1h-1zM20 13h1v1h-1zM23 13h2v1h-2zM27 13h1v1h-1zM30 13h2v1h-2zM33 13h2v1h-2zM36 13h1v1h-1zM7 14h2v1h-2zM10 14h2v1h-2zM19 14h2v1h-2zM22 14h1v1h-1zM26 14h1v1h-1zM28 14h1v1h-1zM32 14h1v1h-1zM34 14h2v1h-2zM4 15h1v1h-1zM8 15h1v1h-1zM13 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM23 15h8v1h-8zM32 15h3v1h-3zM6 16h1v1h-1zM9 16h3v1h-3zM14 16h3v1h-3zM22 16h2v1h-2zM25 16h1v1h-1zM29 16h1v1h-1zM31 16h3v1h-3zM6 17h1v1h-1zM12 17h2v1h-2zM17 17h4v1h-4zM24 17h1v1h-1zM27 17h1v1h-1zM30 17h1v1h-1zM33 17h1v1h-1zM35 17h2v1h-2zM6 18h3v1h-3zM10 18h1v1h-1zM16 18h1v1h-1zM18 18h1v1h-1zM23 18h1v1h-1zM25 18h1v1h-1zM29 18h2v1h-2zM33 18h1v1h-1zM35 18h1v1h-1zM5 19h2v1h-2zM11 19h1v1h-1zM15 19h1v1h-1zM20 19h1v1h-1zM22 19h4v1h-4zM28 19h3v1h-3zM32 19h3v1h-3zM4 20h3v1h-3zM10 20h1v1h-1zM12 20h1v1h-1zM14 20h3v1h-3zM21 20h1v1h-1zM23 20h1v1h-1zM26 20h1v1h-1zM28 20h2v1h-2zM31 20h3v1h-3zM36 20h1v1h-1zM5 21h2v1h-2zM12 21h2v1h-2zM15 21h1v1h-1zM17 21h1v1h-1zM20 21h4v1h-4zM27 21h1v1h-1zM30 21h2v1h-2zM33 21h4v1h-4zM4 22h2v1h-2zM7 22h2v1h-2zM10 22h1v1h-1zM14 22h1v1h-1zM16 22h2v1h-2zM19 22h1v1h-1zM21 22h1v1h-1zM26 22h1v1h-1zM28 22h5v1h-5zM34 22h2v1h-2zM5 23h1v1h-1zM7 23h3v1h-3zM12 23h1v1h-1zM15 23h2v1h-2zM18 23h1v1h-1zM20 23h5v1h-5zM29 23h7v1h-7zM7 24h4v1h-4zM13 24h2v1h-2zM17 24h1v1h-1zM20 24h1v1h-1zM23 24h4v1h-4zM28 24h2v1h-2zM31 24h3v1h-3zM35 24h2v1h-2zM4 25h4v1h-4zM9 25h1v1h-1zM12 25h1v1h-1zM15 25h1v1h-1zM19 25h1v1h-1zM21 25h2v1h-2zM25 25h1v1h-1zM27 25h1v1h-1zM30 25h2v1h-2zM33 25h2v1h-2zM36 25h1v1h-1zM4 26h1v1h-1zM9 26h2v1h-2zM15 26h2v1h-2zM19 26h2v1h-2zM22 26h1v1h-1zM24 26h2v1h-2zM28 26h6v1h-6zM35 26h1v1h-1zM4 27h1v1h-1zM7 27h1v1h-1zM9 27h1v1h-1zM11 27h1v1h-1zM13 27h3v1h-3zM17 27h3v1h-3zM22 27h1v1h-1zM25 27h2v1h-2zM28 27h2v1h-2zM31 27h1v1h-1zM33 27h2v1h-2zM36 27h1v1h-1zM4 28h1v1h-1zM6 28h1v1h-1zM10 28h3v1h-3zM14 28h1v1h-1zM19 28h1v1h-1zM21 28h1v1h-1zM26 28h1v1h-1zM28 28h5v1h-5zM35 28h2v1h-2zM12 29h2v1h-2zM17 29h2v1h-2zM23 29h3v1h-3zM27 29h2v1h-2zM32 29h1v1h-1zM34 29h1v1h-1zM36 29h1v1h-1zM4 30h7v1h-7zM13 30h1v1h-1zM19 30h1v1h-1zM22 30h1v1h-1zM24 30h2v1h-2zM27 30h2v1h-2zM30 30h1v1h-1zM32 30h1v1h-1zM34 30h2v1h-2zM4 31h1v1h-1zM10 31h1v1h-1zM12 31h2v1h-2zM16 31h2v1h-2zM25 31h4v1h-4zM32 31h4v1h-4zM4 32h1v1h-1zM6 32h3v1h-3zM10 32h1v1h-1zM12 32h1v1h-1zM14 32h2v1h-2zM18 32h2v1h-2zM22 32h1v1h-1zM25 32h1v1h-1zM28 32h6v1h-6zM35 32h1v1h-1zM4 33h1v1h-1zM6 33h3v1h-3zM10 33h1v1h-1zM12 33h1v1h-1zM14 33h7v1h-7zM24 33h1v1h-1zM26 33h2v1h-2zM29 33h1v1h-1zM32 33h3v1h-3zM36 33h1v1h-1zM4 34h1v1h-1zM6 34h3v1h-3zM10 34h1v1h-1zM12 34h2v1h-2zM16 34h2v1h-2zM23 34h1v1h-1zM26 34h2v1h-2zM30 34h2v1h-2zM33 34h2v1h-2zM4 35h1v1h-1zM10 35h1v1h-1zM14 35h1v1h-1zM16 35h3v1h-3zM20 35h1v1h-1zM23 35h3v1h-3zM27 35h1v1h-1zM29 35h2v1h-2zM32 35h3v1h-3zM4 36h7v1h-7zM12 36h1v1h-1zM16 36h2v1h-2zM21 36h1v1h-1zM23 36h1v1h-1zM26 36h4v1h-4zM31 36h1v1h-1zM33 36h1v1h-1zM35 36h1v1h-1z" fill="#16232b"/></svg>
       <div class="verify" style="margin:12px 0 4px">Have a friend scan this with their camera,<br>or send them the link.</div>
       <div class="rep-actions" style="justify-content:center"><button class="abtn mail" id="shareAppBtn">↗ Send the link</button></div>
     </div>
@@ -504,8 +520,8 @@ body.dark .about-body a{color:#8fb0ee}
 
 <script>
 'use strict';
-/* ============ Civic Compass · v1.8 · Aug 27 2026 ============ */
-var VERSION = 'v1.8 · Aug 27';
+/* ============ Empower Compass (Democrats Empower Medina fork) · EM 1.1 · Aug 30 2026 ============ */
+var VERSION = 'EM 1.1 · Aug 30';
 var DATA_VERIFIED = 'August 22, 2026';
 
 /* ---------- guarded storage ---------- */
@@ -537,9 +553,9 @@ function animateCount(el, target, ms){
   requestAnimationFrame(frame);
 }
 
-var K_REPS='cc_v1_reps', K_EVENTS='cc_v1_events', K_PREFS='cc_v1_prefs',
-    K_LOG='cc_v1_log', K_TYPES='cc_v1_logtypes', K_PLAN='cc_v1_plan',
-    K_SCRIPTS='cc_v1_scripts', K_SESS='cc_v1_sessions', K_SESS_A='cc_v1_sess_active';
+var K_REPS='em_v1_reps', K_EVENTS='em_v1_events', K_PREFS='em_v1_prefs',
+    K_LOG='em_v1_log', K_TYPES='em_v1_logtypes', K_PLAN='em_v1_plan',
+    K_SCRIPTS='em_v1_scripts', K_SESS='em_v1_sessions', K_SESS_A='em_v1_sess_active', K_CITY='em_v1_city';
 
 /* ---------- key dates (verified against Ohio SOS-sourced info, Jul 21 2026) ---------- */
 var KEY_DATES = [
@@ -552,31 +568,85 @@ var KEY_DATES = [
 var ELECTION_DAY = '2026-11-03';
 
 /* ---------- default officials (verified Jul 21 2026; every card editable) ---------- */
-function defaultReps(){
-  return [
-    {sec:'City of Wadsworth', items:[
-      {id:'r1', name:'Robin Laubaugh', office:'Mayor', phone:'330-335-1521', email:'', web:'https://www.wadsworthcity.com', notes:''},
-      {id:'r2', name:'Daniel Rospert', office:'Council President', phone:'330-335-2759', email:'', web:'https://www.wadsworthcity.com', notes:'Council meets 1st & 3rd Tuesdays. Clerk: 330-335-2759. Current council terms run Jan 2026 \u2013 Dec 2027.'},
-      {id:'r3', name:'Mike Reese', office:'Council · Ward 1', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
-      {id:'r4', name:'Jon Yurchiak', office:'Council · Ward 2', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
-      {id:'r5', name:'Jeanne Hines', office:'Council · Ward 3', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
-      {id:'r6', name:'Angela May', office:'Council · Ward 4', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
-      {id:'r7', name:'Berger · Maxwell · Stugmyer', office:'Council · At-Large (3 seats)', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:'Zach Berger, Chris Maxwell, Thomas Stugmyer'}
-    ]},
-    {sec:'Medina County', items:[
-      {id:'r8', name:'Board of Elections', office:'Voter records · ballots · precincts', phone:'', email:'', web:'https://www.boe.ohio.gov/medina', notes:'Early voting happens here.'}
-    ]},
-    {sec:'State of Ohio', items:[
-      {id:'r9', name:'Mike DeWine', office:'Governor (term-limited · seat on the Nov ballot)', phone:'', email:'', web:'https://governor.ohio.gov', notes:''},
-      {id:'r10', name:'Mark Romanchuk', office:'State Senator · District 22', phone:'', email:'', web:'https://www.ohiosenate.gov', notes:''},
-      {id:'r11', name:'Sharon Ray', office:'State Representative · District 66', phone:'614-466-8140', email:'', web:'https://www.ohiohouse.gov', notes:'Lives in Wadsworth. Not seeking re-election \u2014 this seat is open on the Nov 2026 ballot.'}
-    ]},
-    {sec:'Federal', items:[
-      {id:'r12', name:'Jon Husted', office:'U.S. Senator (seat on the Nov ballot)', phone:'202-224-3121', email:'', web:'https://www.senate.gov', notes:'Capitol switchboard — ask for the senator\u2019s office.'},
-      {id:'r13', name:'Bernie Moreno', office:'U.S. Senator', phone:'202-224-3121', email:'', web:'https://www.senate.gov', notes:'Capitol switchboard — ask for the senator\u2019s office.'},
-      {id:'r14', name:'Max Miller', office:'U.S. Representative · OH-7', phone:'202-224-3121', email:'', web:'https://www.house.gov', notes:'Capitol switchboard — ask for the representative\u2019s office.'}
-    ]}
-  ];
+/* =====================================================================
+   CITY & OFFICIAL DATA  —  Democrats Empower Medina
+   ---------------------------------------------------------------------
+   HOW TO UPDATE (no coding needed):
+   - Each city below is a block: name, then a list of officials.
+   - To fix a name/phone/email, edit the text between the quotes.
+   - "verify:true" shows a gold "Check this" flag on that card. Remove it
+     (delete  verify:true,  ) once your team has confirmed the info.
+   - "need:'...'" prints exactly what's missing. Fill the field, then
+     delete the need:'...' part.
+   - COUNTY, STATE, and FEDERAL blocks show for ALL cities — edit once.
+   - Save the file and re-upload it to GitHub. That's the whole update.
+   Last verified by Mot: Aug 30, 2026 (public sources; DEM team to confirm).
+   ===================================================================== */
+var CITIES = {
+  wadsworth: {
+    label: 'Wadsworth',
+    web: 'https://www.wadsworthcity.com',
+    officials: [
+      {id:'w-mayor', name:'Robin Laubaugh', office:'Mayor', phone:'330-335-1521', email:'', web:'https://www.wadsworthcity.com', notes:''},
+      {id:'w-pres', name:'Daniel Rospert', office:'Council President', phone:'330-335-2759', email:'', web:'https://www.wadsworthcity.com', notes:'Council meets 1st & 3rd Tuesdays. Clerk: 330-335-2759.'},
+      {id:'w-w1', name:'Mike Reese', office:'Council \u00b7 Ward 1', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
+      {id:'w-w2', name:'Jon Yurchiak', office:'Council \u00b7 Ward 2', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
+      {id:'w-w3', name:'Jeanne Hines', office:'Council \u00b7 Ward 3', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
+      {id:'w-w4', name:'Angela May', office:'Council \u00b7 Ward 4', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:''},
+      {id:'w-al', name:'Berger \u00b7 Maxwell \u00b7 Stugmyer', office:'Council \u00b7 At-Large (3 seats)', phone:'', email:'', web:'https://www.wadsworthcity.com', notes:'Zach Berger, Chris Maxwell, Thomas Stugmyer'}
+    ]
+  },
+  brunswick: {
+    label: 'Brunswick',
+    web: 'https://www.brunswick.oh.us',
+    officials: [
+      {id:'b-mayor', name:'Ron Falconi', office:'Mayor', phone:'330-220-8686', email:'rfalconi@brunswick.oh.us', web:'https://www.brunswick.oh.us/contact-the-city/', notes:'Brunswick council is officially nonpartisan. Confirm party framing with your team.', verify:true},
+      {id:'b-w1', name:'Mike Abella Jr.', office:'Council \u00b7 Ward 1', phone:'330-460-6209', email:'mabella@brunswick.oh.us', web:'https://www.brunswick.oh.us/city-council/', notes:''},
+      {id:'b-w2', name:'Nick Hanek', office:'Council \u00b7 Ward 2 (Vice Mayor / President)', phone:'330-204-4103', email:'nhanek@brunswick.oh.us', web:'https://www.brunswick.oh.us/city-council/', notes:''},
+      {id:'b-w3', name:'Nate Witsaman', office:'Council \u00b7 Ward 3', phone:'234-546-0755', email:'nwitsaman@brunswick.oh.us', web:'https://www.brunswick.oh.us/city-council/', notes:''},
+      {id:'b-w4', name:'Keith A. Kuczma', office:'Council \u00b7 Ward 4', phone:'330-840-4865', email:'kkuczma@brunswick.oh.us', web:'https://www.brunswick.oh.us/city-council/', notes:''},
+      {id:'b-al1', name:'Joe Delsanter', office:'Council \u00b7 At-Large (President Pro Tem)', phone:'330-635-8198', email:'jdelsanter@brunswick.oh.us', web:'https://www.brunswick.oh.us/city-council/', notes:''},
+      {id:'b-al2', name:'Kristy Piper', office:'Council \u00b7 At-Large', phone:'', email:'kpiper@brunswick.oh.us', web:'https://www.brunswick.oh.us/city-council/', notes:'Phone not listed on city site \u2014 add if your team has it.', need:'phone'},
+      {id:'b-al3', name:'Tim Smith', office:'Council \u00b7 At-Large', phone:'', email:'tsmith@brunswick.oh.us', web:'https://www.brunswick.oh.us/city-council/', notes:'Phone not listed on city site \u2014 add if your team has it.', need:'phone'}
+    ]
+  },
+  medina: {
+    label: 'Medina',
+    web: 'https://medinaoh.org',
+    officials: [
+      {id:'m-mayor', name:'Jim Shields', office:'Mayor', phone:'330-722-9020', email:'', web:'https://medinaoh.org/city-hall/government/', notes:''},
+      {id:'m-pres', name:'John M. Coyne III', office:'Council President', phone:'', email:'', web:'https://medinaoh.org/city-hall/city-council/', notes:'', need:'phone or email'},
+      {id:'m-w1', name:'Chet Simmons', office:'Council \u00b7 Ward 1', phone:'', email:'', web:'https://medinaoh.org/city-hall/city-council/', notes:'', need:'phone or email'},
+      {id:'m-w2', name:'Dennis Simpson', office:'Council \u00b7 Ward 2', phone:'330-725-3302', email:'', web:'https://medinaoh.org/city-hall/city-council/', notes:''},
+      {id:'m-w3', name:'Regi Haire', office:'Council \u00b7 Ward 3', phone:'330-722-7471', email:'', web:'https://medinaoh.org/city-hall/city-council/', notes:''},
+      {id:'m-w4', name:'', office:'Council \u00b7 Ward 4', phone:'', email:'', web:'https://medinaoh.org/city-hall/city-council/', notes:'Ward 4 councilperson \u2014 add from your roster.', need:'name'},
+      {id:'m-al1', name:'Natalie DiSalvo', office:'Council \u00b7 At-Large', phone:'', email:'', web:'https://medinaoh.org/city-hall/city-council/', notes:'', need:'phone or email'},
+      {id:'m-al2', name:'', office:'Council \u00b7 At-Large (2nd seat)', phone:'', email:'', web:'https://medinaoh.org/city-hall/city-council/', notes:'Second at-large seat \u2014 add from your roster.', need:'name'}
+    ]
+  }
+};
+/* shown for EVERY city */
+var SHARED_SECTIONS = [
+  {sec:'Medina County', items:[
+    {id:'c-boe', name:'Board of Elections', office:'Voter records \u00b7 ballots \u00b7 precincts', phone:'330-722-9262', email:'', web:'https://boe.medinaco.org', notes:'Early voting happens here.'}
+  ]},
+  {sec:'State of Ohio', items:[
+    {id:'s-gov', name:'Mike DeWine', office:'Governor (term-limited \u00b7 seat on the Nov ballot)', phone:'', email:'', web:'https://governor.ohio.gov', notes:''},
+    {id:'s-sen22', name:'Mark Romanchuk', office:'State Senator \u00b7 District 22', phone:'', email:'', web:'https://www.ohiosenate.gov', notes:'', verify:true},
+    {id:'s-rep', name:'Sharon Ray', office:'State Representative \u00b7 District 66 (Wadsworth area)', phone:'614-466-8140', email:'', web:'https://www.ohiohouse.gov', notes:'Districts vary across the county \u2014 Brunswick/Medina may differ. Confirm each area\u2019s rep.', verify:true}
+  ]},
+  {sec:'Federal', items:[
+    {id:'f-sen1', name:'Jon Husted', office:'U.S. Senator (seat on the Nov ballot)', phone:'202-224-3121', email:'', web:'https://www.senate.gov', notes:'Capitol switchboard \u2014 ask for the senator\u2019s office.'},
+    {id:'f-sen2', name:'Bernie Moreno', office:'U.S. Senator', phone:'202-224-3121', email:'', web:'https://www.senate.gov', notes:'Capitol switchboard \u2014 ask for the senator\u2019s office.'},
+    {id:'f-rep', name:'Max Miller', office:'U.S. Representative \u00b7 OH-7', phone:'202-224-3121', email:'', web:'https://www.house.gov', notes:'Confirm the district for each city \u2014 the county spans more than one.', verify:true}
+  ]}
+];
+function deepClone(x){ return JSON.parse(JSON.stringify(x)); }
+function buildReps(cityKey){
+  var c = CITIES[cityKey] || CITIES.wadsworth;
+  var out = [{sec:'City of ' + c.label, items:deepClone(c.officials)}];
+  for(var i=0;i<SHARED_SECTIONS.length;i++) out.push(deepClone(SHARED_SECTIONS[i]));
+  return out;
 }
 function defaultLogTypes(){
   return [
@@ -588,7 +658,11 @@ function defaultLogTypes(){
 }
 
 /* ---------- state ---------- */
-var reps = jGet(K_REPS, null) || defaultReps();
+var cityKey = jGet(K_CITY, 'wadsworth');
+if(!CITIES[cityKey]) cityKey = 'wadsworth';
+var repsEdits = jGet(K_REPS, {});
+if(Array.isArray(repsEdits)) repsEdits = {};
+var reps = repsEdits[cityKey] || buildReps(cityKey);
 var events = jGet(K_EVENTS, []);
 var prefs = jGet(K_PREFS, {theme:'', name:'', installDismissed:false, seeded:false});
 var log = jGet(K_LOG, []);
@@ -713,10 +787,10 @@ $('themeBtn').onclick = function(){
 
 /* ---------- header / version ---------- */
 function renderGreet(){
-  $('greet').textContent = prefs.name ? ('Hi, ' + prefs.name + '!') : 'Civic Compass';
+  $('greet').textContent = prefs.name ? ('Hi, ' + prefs.name + '!') : 'Empower Compass';
 }
-$('verBadge').onclick = function(){ toast('Civic Compass ' + VERSION); };
-var APP_URL = 'https://motbuchanan.github.io/civic-compass/';
+$('verBadge').onclick = function(){ toast('Empower Compass ' + VERSION); };
+var APP_URL = 'https://motbuchanan.github.io/empower-compass/';
 $('shareCountBtn').onclick = function(){
   var d = daysUntil(ELECTION_DAY);
   var txt;
@@ -796,6 +870,17 @@ function renderDates(){
 }
 
 /* ---------- REPS ---------- */
+function saveReps(){
+  repsEdits[cityKey] = reps;
+  jSet(K_REPS, repsEdits);
+}
+function switchCity(key){
+  if(!CITIES[key]) return;
+  cityKey = key;
+  jSet(K_CITY, key);
+  reps = repsEdits[cityKey] || buildReps(cityKey);
+  renderReps();
+}
 function findRep(id){
   for(var i=0;i<reps.length;i++){
     for(var j=0;j<reps[i].items.length;j++){
@@ -805,14 +890,20 @@ function findRep(id){
   return null;
 }
 function renderReps(){
-  var html = '';
+  var html = '<div class="city-pick" id="cityPick">';
+  ['wadsworth','brunswick','medina'].forEach(function(k){
+    html += '<button class="city-tab' + (k === cityKey ? ' on' : '') + '" data-city="' + k + '">' + esc(CITIES[k].label) + '</button>';
+  });
+  html += '</div>';
   reps.forEach(function(section, si){
     html += '<h2>' + esc(section.sec) + '</h2>';
     section.items.forEach(function(r){
-      var isFill = r.fillin && !r.name;
-      html += '<div class="card' + (isFill ? ' fillin' : '') + '">';
+      var flagged = r.verify || r.need;
+      html += '<div class="card' + (flagged ? ' flagged' : '') + '">';
+      if(r.verify) html += '<div class="vflag">⚠ Check this before launch</div>';
+      else if(r.need) html += '<div class="vflag">⚠ ' + esc(r.need.charAt(0).toUpperCase() + r.need.slice(1)) + ' needed</div>';
       html += '<div class="rep-head"><div class="grow">';
-      html += '<div class="rep-name">' + esc(r.name || 'Fill me in') + '</div>';
+      html += '<div class="rep-name">' + esc(r.name || (r.need ? '— ' + r.need + ' —' : 'Fill me in')) + '</div>';
       html += '<div class="rep-office">' + esc(r.office) + '</div>';
       html += '</div><button class="editpen" data-edit="' + esc(r.id) + '" aria-label="Edit">✎</button></div>';
       if(r.notes) html += '<div class="rep-notes">' + esc(r.notes) + '</div>';
@@ -832,6 +923,9 @@ function renderReps(){
   });
   document.querySelectorAll('[data-addsec]').forEach(function(b){
     b.onclick = function(){ openRepModal(null, +b.getAttribute('data-addsec')); };
+  });
+  document.querySelectorAll('[data-city]').forEach(function(b){
+    b.onclick = function(){ switchCity(b.getAttribute('data-city')); };
   });
 }
 
@@ -932,8 +1026,8 @@ function icsFilename(ev){
 function buildICS(ev){
   var occ = new Date(nextOccurrence(ev, new Date()));
   var y = occ.getFullYear(), mo = pad2(occ.getMonth() + 1), da = pad2(occ.getDate());
-  var lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Civic Compass//EN', 'BEGIN:VEVENT'];
-  lines.push('UID:' + ev.id + '@civic-compass');
+  var lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Empower Compass//EN', 'BEGIN:VEVENT'];
+  lines.push('UID:' + ev.id + '@empower-compass');
   var now = new Date();
   lines.push('DTSTAMP:' + now.getUTCFullYear() + pad2(now.getUTCMonth() + 1) + pad2(now.getUTCDate()) +
     'T' + pad2(now.getUTCHours()) + pad2(now.getUTCMinutes()) + '00Z');
@@ -1028,7 +1122,8 @@ var ENCOURAGE = [
   'Democracy is a practice, not an event.',
   'Somebody has to know the details. Might as well be you.',
   'Every movement is mostly folding chairs and phone calls.',
-  'Local is where it actually happens.'
+  'Local is where it actually happens.',
+  'Medina is bluer than you think.'
 ];
 function dayOfYear(){
   var now = new Date();
@@ -1036,7 +1131,7 @@ function dayOfYear(){
 }
 function burst(x, y){
   if(!MOTION_OK) return;
-  var colors = ['#c9a227', '#e6c65a', '#f6f2ea'];
+  var colors = ['#2fbde8', '#7fd6f2', '#eef6fa'];
   for(var i = 0; i < 8; i++){
     var s = document.createElement('span');
     s.className = 'spark';
@@ -1052,7 +1147,7 @@ function burst(x, y){
 }
 function confetti(){
   if(!MOTION_OK) return;
-  var colors = ['#c9a227', '#e6c65a', '#1b2a4a', '#f6f2ea', '#2e7d4f'];
+  var colors = ['#2fbde8', '#7fd6f2', '#1b4965', '#eef6fa', '#7fd6f2'];
   for(var i = 0; i < 60; i++){
     var s = document.createElement('span');
     s.className = 'confetti';
@@ -1261,20 +1356,20 @@ function openRepModal(id, secIdx){
       if(loc){
         var keep = loc.rep;
         for(var k in vals){ keep[k] = vals[k]; }
-        if(keep.name) delete keep.fillin;
+        if(keep.name){ delete keep.fillin; delete keep.need; delete keep.verify; }
       }
     } else {
       vals.id = 'r' + Date.now();
       reps[secIdx].items.push(vals);
     }
-    jSet(K_REPS, reps); renderReps(); closeModal(); toast('Saved');
+    saveReps(); renderReps(); closeModal(); toast('Saved');
   };
   if(id){
     $('f-del').onclick = function(){
       if(!confirm('Remove this card?')) return;
       var loc = findRep(id);
       if(loc) reps[loc.sec].items.splice(loc.idx, 1);
-      jSet(K_REPS, reps); renderReps(); closeModal(); toast('Removed');
+      saveReps(); renderReps(); closeModal(); toast('Removed');
     };
   }
 }
@@ -1341,8 +1436,8 @@ $('addEventBtn').onclick = function(){ openEventModal(null); };
 /* ---------- backup / restore ---------- */
 $('exportBtn').onclick = function(){
   var data = {
-    app:'civic-compass', ver:VERSION, exported:new Date().toISOString(),
-    reps:reps, events:events, log:log, logTypes:logTypes, name:prefs.name || '',
+    app:'empower-compass', ver:VERSION, exported:new Date().toISOString(),
+    reps:repsEdits, cityKey:cityKey, events:events, log:log, logTypes:logTypes, name:prefs.name || '',
     plan:plan, scripts:scripts, sessions:sessions
   };
   try{
@@ -1351,7 +1446,7 @@ $('exportBtn').onclick = function(){
     a.href = URL.createObjectURL(blob);
     var d = new Date();
     var stamp = d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
-    a.download = 'civic-compass-backup-' + stamp + '.json';
+    a.download = 'empower-compass-backup-' + stamp + '.json';
     document.body.appendChild(a); a.click();
     setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 2000);
     toast('Backup saved to your downloads');
@@ -1365,10 +1460,12 @@ $('importFile').addEventListener('change', function(){
   var reader = new FileReader();
   reader.onload = function(){
     var data;
-    try{ data = JSON.parse(reader.result); }catch(e){ toast('That file isn\u2019t a Civic Compass backup'); return; }
-    if(!data || data.app !== 'civic-compass'){ toast('That file isn\u2019t a Civic Compass backup'); return; }
+    try{ data = JSON.parse(reader.result); }catch(e){ toast('That file isn\u2019t an Empower Compass backup'); return; }
+    if(!data || data.app !== 'empower-compass'){ toast('That file isn\u2019t an Empower Compass backup'); return; }
     if(!confirm('Replace everything in this app with the backup from ' + (data.exported ? data.exported.slice(0,10) : 'that file') + '?')) return;
-    if(Array.isArray(data.reps)) reps = data.reps;
+    if(data.reps && !Array.isArray(data.reps)){ repsEdits = data.reps; }
+    if(data.cityKey && CITIES[data.cityKey]){ cityKey = data.cityKey; jSet(K_CITY, cityKey); }
+    reps = repsEdits[cityKey] || buildReps(cityKey);
     if(Array.isArray(data.events)) events = data.events;
     if(Array.isArray(data.log)) log = data.log;
     if(Array.isArray(data.logTypes)) logTypes = data.logTypes;
@@ -1377,7 +1474,7 @@ $('importFile').addEventListener('change', function(){
     if(Array.isArray(data.scripts)){ scripts = data.scripts; jSet(K_SCRIPTS, scripts); }
     if(Array.isArray(data.sessions)){ sessions = data.sessions; jSet(K_SESS, sessions); }
     prefs.seeded = true;
-    jSet(K_REPS, reps); jSet(K_EVENTS, events); jSet(K_LOG, log);
+    jSet(K_REPS, repsEdits); jSet(K_EVENTS, events); jSet(K_LOG, log);
     jSet(K_TYPES, logTypes); jSet(K_PREFS, prefs);
     renderGreet(); renderReps(); renderEvents(); renderLog(); renderScripts(); renderPlan();
     toast('Backup restored');
@@ -1389,7 +1486,7 @@ $('importFile').addEventListener('change', function(){
 /* ---------- settings ---------- */
 $('shareAppBtn').onclick = function(){
   if(navigator.share){
-    navigator.share({title:'Civic Compass', url:APP_URL}).catch(function(){});
+    navigator.share({title:'Empower Compass', url:APP_URL}).catch(function(){});
   } else {
     shareText(APP_URL);
   }
@@ -1401,7 +1498,7 @@ $('nameBtn').onclick = function(){
 };
 $('resetRepsBtn').onclick = function(){
   if(!confirm('Put all official cards back to the originals? Your edits will be lost.')) return;
-  reps = defaultReps(); jSet(K_REPS, reps); renderReps(); toast('Officials reset');
+  reps = buildReps(cityKey); repsEdits[cityKey] = reps; jSet(K_REPS, repsEdits); renderReps(); toast(CITIES[cityKey].label + ' officials reset');
 };
 
 /* ---------- install hint ---------- */
@@ -1718,7 +1815,7 @@ $('sessStart').onclick = function(){
   openModal(
     '<h3>Start a canvass session</h3>' +
     '<label>Where are you working? (optional)</label>' +
-    '<input id="ss-loc" placeholder="Ward 3, Wayne County, downtown\u2026">' +
+    '<input id="ss-loc" value="' + esc(CITIES[cityKey].label) + '" placeholder="Brunswick, Medina square, Ward 3\u2026">' +
     '<div class="verify" style="text-align:left;margin-top:8px">Big buttons, running timer, one tap per door. Your phone can stay in your pocket between houses.</div>' +
     '<div class="modal-row">' +
     '<button class="abtn ghost" id="ss-cancel">Cancel</button>' +
@@ -1726,7 +1823,7 @@ $('sessStart').onclick = function(){
   );
   $('ss-cancel').onclick = closeModal;
   $('ss-go').onclick = function(){
-    sessActive = {start: Date.now(), loc: $('ss-loc').value.trim(), counts: {}};
+    sessActive = {start: Date.now(), loc: $('ss-loc').value.trim() || CITIES[cityKey].label, counts: {}};
     jSet(K_SESS_A, sessActive);
     closeModal();
     openSession();
@@ -1803,14 +1900,15 @@ $('sessEnd').onclick = function(){
 /* ---------- about ---------- */
 $('aboutBtn').onclick = function(){
   openModal(
-    '<h3>About Civic Compass</h3>' +
+    '<h3>About Empower Compass</h3>' +
     '<div class="about-body">' +
-    '<p>Civic Compass is an independent, nonpartisan tool for keeping up with local civic life in Wadsworth and Medina County: election dates and deadlines, who represents you, and your own events and actions.</p>' +
-    '<p>It is not affiliated with any government office, board of elections, political party, or organization.</p>' +
+    '<p>Empower Compass is a volunteer companion app built for Democrats Empower Medina: election dates and deadlines, who represents you, canvassing sessions, scripts, and your own action log for Medina County, Ohio.</p>' +
+    '<p>It is an independent volunteer project \u2014 not an official publication of any government office or board of elections.</p>' +
     '<p>Everything you enter stays on your phone. This app collects nothing, tracks nothing, and sends nothing anywhere. Sharing happens only when you tap Share.</p>' +
     '<p>Dates and officials last verified ' + esc(DATA_VERIFIED) + ', from official sources: Ohio Secretary of State, Medina County Board of Elections, City of Wadsworth, and the Ohio General Assembly. Always confirm details at <a href="https://www.voteohio.gov" target="_blank" rel="noopener">VoteOhio.gov</a>.</p>' +
-    '<p>Civic Compass is built on a framework that can be tailored to any city, county, or district.</p>' +
-    '<p class="a-cred">An independent project by Mot Buchanan \u00b7 <a href="https://motbuchanan.com" target="_blank" rel="noopener">motbuchanan.com</a></p>' +
+    '<p>Reach the team at <a href="mailto:democratsempowermedina@gmail.com">democratsempowermedina@gmail.com</a> or <a href="https://empowermedina.com" target="_blank" rel="noopener">empowermedina.com</a>.</p>' +
+    '<p>Built on a framework that can be tailored to any city, county, or district.</p>' +
+    '<p class="a-cred">Built for Democrats Empower Medina by Mot Buchanan \u00b7 <a href="https://motbuchanan.com" target="_blank" rel="noopener">motbuchanan.com</a></p>' +
     '</div>' +
     '<div class="modal-row"><button class="abtn mail" id="ab-close">Close</button></div>'
   );
@@ -1819,9 +1917,9 @@ $('aboutBtn').onclick = function(){
 
 /* ---------- welcome tour ---------- */
 var TOUR = [
-  {tab:'dates', e:'🧭', t:'Welcome to Civic Compass', b:'Your pocket guide to staying involved: election dates, the people who represent you, your events, and the actions you take. Everything lives on your phone — nothing is shared unless you share it.'},
+  {tab:'dates', e:'🩵', t:'Welcome to Empower Compass', b:'Your pocket companion for Democrats Empower Medina: election dates, who represents you, your events, canvass sessions, and the actions you take. Everything lives on your phone \u2014 nothing is shared unless you share it.'},
   {tab:'dates', e:'🗓', t:'Dates', b:'The countdown to Election Day, every deadline that matters, and one-tap links to check your registration or pull up your sample ballot.'},
-  {tab:'reps', e:'🏛', t:'Reps', b:'Cards for your city, county, state, and federal officials. Tap Call or Website to reach them. Tap the little pencil to edit any card or keep your own talking points. Two cards say \u201CFill me in\u201D — the pencil is how.'},
+  {tab:'reps', e:'🏛', t:'Reps', b:'Pick your city up top \u2014 Brunswick, Medina, or Wadsworth \u2014 and the officials swap. County, state, and federal show for everyone. Cards with a gold flag need your team to confirm or fill something. Tap the pencil to edit any card.'},
   {tab:'events', e:'📌', t:'Events', b:'Keep meetings, rallies, and postcard nights here. Events can repeat — \u201C1st & 3rd Tuesday\u201D included — and Share drops one straight into any group chat.'},
   {tab:'log', e:'✅', t:'Log', b:'Tap a button each time you make a call, write a postcard, or show up. Going door to door? Start a canvass session for big counters and a timer, and keep your scripts one tap away. Share your tally when the month\u2019s done.'},
   {tab:'settings', e:'💾', t:'One last thing', b:'Save a backup now and then from this More tab — it keeps everything safe if you ever switch phones. You can replay this tour from here too. That\u2019s it — go get \u2019em.'}
