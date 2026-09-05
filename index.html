@@ -170,7 +170,7 @@ nav button{
 nav button .ic{font-size:21px;line-height:1}
 nav button.on{color:var(--accent);font-weight:700}
 body.dark nav button.on{color:#6fc9e8}
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:40;align-items:flex-end;justify-content:center}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:90;align-items:flex-end;justify-content:center}
 .modal-bg.show{display:flex}
 .modal{
   background:var(--card);width:100%;max-width:640px;border-radius:18px 18px 0 0;
@@ -247,7 +247,7 @@ body.dark nav button.on{color:#6fc9e8}
 .sess-btn .sb-n{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:44px;font-weight:800;line-height:1;color:var(--gold)}
 .sess-btn .sb-l{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:13px;font-weight:600;opacity:.9}
 .sess-btn .sb-m{position:absolute;top:8px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.25);color:var(--accent-ink);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.sess-end{margin-top:14px;width:100%;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;font-weight:700;background:var(--gold);color:var(--gold-ink);border:none;border-radius:14px;padding:16px;cursor:pointer}
+.sess-end{position:relative;z-index:2;margin-top:14px;width:100%;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;font-weight:700;background:var(--gold);color:var(--gold-ink);border:none;border-radius:14px;padding:16px;cursor:pointer}
 .script-card{cursor:pointer}
 .script-prev{font-size:14px;color:var(--muted);margin-top:4px;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .reader{font-size:19px;line-height:1.75;white-space:pre-wrap}
@@ -329,7 +329,7 @@ body.dark .about-body a{color:#6fc9e8}
   </div>
   <div class="h-right">
     <button class="iconbtn" id="themeBtn" aria-label="Toggle theme">◐</button>
-    <span class="badge" id="verBadge">EM 1.1</span>
+    <span class="badge" id="verBadge">EM 1.1.1</span>
   </div>
 </header>
 
@@ -521,7 +521,7 @@ body.dark .about-body a{color:#6fc9e8}
 <script>
 'use strict';
 /* ============ Empower Compass (Democrats Empower Medina fork) · EM 1.1 · Aug 30 2026 ============ */
-var VERSION = 'EM 1.1 · Aug 30';
+var VERSION = 'EM 1.1.1 · Sep 5';
 var DATA_VERIFIED = 'August 22, 2026';
 
 /* ---------- guarded storage ---------- */
@@ -1756,6 +1756,9 @@ var SESS_COUNTERS = [
 ];
 var sessions = jGet(K_SESS, []);
 var sessActive = jGet(K_SESS_A, null);
+if(sessActive && (typeof sessActive.counts !== 'object' || sessActive.counts === null || Array.isArray(sessActive.counts))){
+  sessActive.counts = {};
+}
 var sessTick = null;
 function sessCounterHtml(){
   var html = '';
@@ -1763,7 +1766,7 @@ function sessCounterHtml(){
     html += '<button class="sess-btn" data-sk="' + c.k + '">' +
       '<span class="sb-m" role="button" tabindex="0" data-sm="' + c.k + '" aria-label="Minus one">−</span>' +
       '<span class="sb-e">' + c.e + '</span>' +
-      '<span class="sb-n" id="sn-' + c.k + '">' + (sessActive.counts[c.k] || 0) + '</span>' +
+      '<span class="sb-n" id="sn-' + c.k + '">' + ((sessActive.counts && sessActive.counts[c.k]) || 0) + '</span>' +
       '<span class="sb-l">' + c.l + '</span></button>';
   });
   return html;
@@ -1779,6 +1782,8 @@ function sessTimerTick(){
   $('sessTimer').textContent = fmtDur(Date.now() - sessActive.start);
 }
 function openSession(){
+  if(!sessActive){ $('sessBg').classList.remove('show'); return; }
+  if(typeof sessActive.counts !== 'object' || !sessActive.counts){ sessActive.counts = {}; }
   $('sessLoc').textContent = sessActive.loc || 'Out in the field';
   $('sessGrid').innerHTML = sessCounterHtml();
   $('sessBg').classList.add('show');
@@ -1789,6 +1794,7 @@ function openSession(){
     b.onclick = function(e2){
       if(e2.target && e2.target.getAttribute && e2.target.getAttribute('data-sm')) return;
       var k = b.getAttribute('data-sk');
+      if(!sessActive.counts) sessActive.counts = {};
       sessActive.counts[k] = (sessActive.counts[k] || 0) + 1;
       jSet(K_SESS_A, sessActive);
       $('sn-' + k).textContent = sessActive.counts[k];
@@ -1842,8 +1848,32 @@ function sessSummaryText(rec){
   return bits.join(' — ');
 }
 $('sessEnd').onclick = function(){
+  // hard-safety: if state is broken, force-exit rather than trap the user
+  if(!sessActive || typeof sessActive.counts !== 'object' || !sessActive.counts){
+    sessActive = null;
+    try{ localStorage.removeItem(K_SESS_A); }catch(e){}
+    delete mem[K_SESS_A];
+    try{ clearInterval(sessTick); }catch(e){}
+    $('sessBg').classList.remove('show');
+    closeModal();
+    toast('Session ended');
+    return;
+  }
+  if(!sessActive){ $('sessBg').classList.remove('show'); closeModal(); return; }
+  if(!sessActive.counts) sessActive.counts = {};
   var total = 0;
   SESS_COUNTERS.forEach(function(c){ total += (sessActive.counts[c.k] || 0); });
+  // Nothing logged? Just exit — no summary sheet to get lost on.
+  if(!total){
+    sessActive = null;
+    try{ localStorage.removeItem(K_SESS_A); }catch(e){}
+    delete mem[K_SESS_A];
+    try{ clearInterval(sessTick); }catch(e){}
+    $('sessBg').classList.remove('show');
+    closeModal();
+    toast('Session ended');
+    return;
+  }
   var rec = {id:'sx' + Date.now(), start:sessActive.start, end:Date.now(), loc:sessActive.loc, counts:sessActive.counts};
   openModal(
     '<h3>Session summary</h3>' +
@@ -1975,7 +2005,7 @@ renderEvents();
 renderLog();
 setupInstallBar();
 setInterval(renderDates, 60000);
-if(sessActive) openSession();
+if(sessActive){ try{ openSession(); }catch(e){ try{ localStorage.removeItem(K_SESS_A); }catch(e2){} sessActive=null; var sb=document.getElementById('sessBg'); if(sb) sb.classList.remove('show'); } }
 if(!prefs.tourDone) startTour();
 </script>
 </body>
