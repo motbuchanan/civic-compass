@@ -1,22 +1,16 @@
-# Empower Compass · Democrats Empower Medina
+# civic-compass — RETIRED / REDIRECT ONLY
 
-Volunteer companion app for DEM: election dates and deadlines, representative
-cards with tap-to-call across Wadsworth / Brunswick / Medina, events with
-recurrence and .ics export, canvass sessions with big counters and shareable
-summaries, editable scripts, a voting plan builder, and a personal action log.
-All data lives on the device; backup/restore under More.
+This repo no longer hosts the app. It exists only to forward the old shared
+link to the current home:
 
-## Files
-- `index.html` — the entire app (EM 1.2)
-- `sw.js` — offline cache. **CACHE name must match the app version on every deploy.**
-- `manifest.json`, `icon-192.png`, `icon-512.png` — PWA install
-- `HOW-TO-UPDATE-CITIES.md` — plain-English guide for updating officials
+  https://motbuchanan.github.io/empower-compass/
 
-## Update ritual (every change)
-1. Bump `VERSION` in `index.html` (stamp the REAL current date).
-2. Bump `CACHE` in `sw.js` to match.
-3. Commit both together.
+- `index.html` — meta-refresh + JS redirect to empower-compass, with a manual
+  "Open" button as fallback.
+- `sw.js` — self-unregistering worker that clears the old cache and any
+  previously-installed service worker, so people who installed the old version
+  get moved over instead of being stuck on a cached copy.
 
-## Data refresh after Nov 3, 2026
-Update `KEY_DATES`, `ELECTION_DAY`, `DATA_VERIFIED`, and confirm officials in
-`CITIES` and `SHARED_SECTIONS` — all near the top of `index.html`.
+Do NOT deploy app changes here. The real app lives in the `empower-compass`
+repo. If you ever want to fully retire this, leave the redirect in place as
+long as the old link might still be circulating.
